@@ -19,9 +19,75 @@ namespace OLBIL.OncologyWebApp.Migrations
                 .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("OLBIL.OncologyWebApp.Entities.AppUser", b =>
+                {
+                    b.Property<Guid>("AppUserId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("AppUserId");
+
+                    b.ToTable("AppUsers");
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyWebApp.Entities.Appointment", b =>
+                {
+                    b.Property<int>("AppointmentId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("PatientId");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("AppointmentId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyWebApp.Entities.HealthProfessional", b =>
+                {
+                    b.Property<int>("HealthProfessionalId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("PersonId");
+
+                    b.HasKey("HealthProfessionalId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("HealthProfessionals");
+                });
+
             modelBuilder.Entity("OLBIL.OncologyWebApp.Entities.OncologyPatient", b =>
                 {
                     b.Property<int>("OncologyPatientId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("AdmissionDate");
+
+                    b.Property<string>("InformantsRelationship");
+
+                    b.Property<Guid?>("PersonId");
+
+                    b.Property<string>("ReasonForReferral");
+
+                    b.Property<DateTime?>("RegistrationDate");
+
+                    b.HasKey("OncologyPatientId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("OncologyPatients");
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyWebApp.Entities.Person", b =>
+                {
+                    b.Property<Guid>("PersonId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AdditionalLastName");
@@ -30,7 +96,7 @@ namespace OLBIL.OncologyWebApp.Migrations
 
                     b.Property<string>("AddressLine2");
 
-                    b.Property<DateTime?>("AdmissionDate");
+                    b.Property<Guid?>("AppUserId");
 
                     b.Property<DateTime?>("Birthdate");
 
@@ -50,8 +116,6 @@ namespace OLBIL.OncologyWebApp.Migrations
 
                     b.Property<string>("HomePhone");
 
-                    b.Property<string>("InformantsRelationship");
-
                     b.Property<string>("LastName");
 
                     b.Property<string>("MethodOfTranspotation");
@@ -66,17 +130,44 @@ namespace OLBIL.OncologyWebApp.Migrations
 
                     b.Property<string>("Race");
 
-                    b.Property<string>("ReasonForReferral");
-
-                    b.Property<DateTime?>("RegistrationDate");
-
                     b.Property<string>("SchoolLevel");
 
                     b.Property<string>("State");
 
-                    b.HasKey("OncologyPatientId");
+                    b.HasKey("PersonId");
 
-                    b.ToTable("OncologyPatients");
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Person");
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyWebApp.Entities.Appointment", b =>
+                {
+                    b.HasOne("OLBIL.OncologyWebApp.Entities.OncologyPatient", "Patient")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyWebApp.Entities.HealthProfessional", b =>
+                {
+                    b.HasOne("OLBIL.OncologyWebApp.Entities.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyWebApp.Entities.OncologyPatient", b =>
+                {
+                    b.HasOne("OLBIL.OncologyWebApp.Entities.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyWebApp.Entities.Person", b =>
+                {
+                    b.HasOne("OLBIL.OncologyWebApp.Entities.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
                 });
 #pragma warning restore 612, 618
         }
