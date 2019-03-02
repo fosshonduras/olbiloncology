@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OLBIL.OncologyWebApp.DataAccess;
+using OLBIL.OncologyApplication.DataAccess;
 
 namespace OLBIL.OncologyWebApp
 {

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace OLBIL.OncologyWebApp.Entities
+namespace OLBIL.OncologyApplication.Models
 {
-    public class Person : BaseEntity
+    public class PersonModel
     {
         public Guid PersonId { get; set; }
 
@@ -28,8 +31,5 @@ namespace OLBIL.OncologyWebApp.Entities
         public string FamilyStatus { get; set; }
         public string SchoolLevel { get; set; }
         public string MethodOfTranspotation { get; set; }
-
-        public Guid? AppUserId { get; set; }
-        public virtual AppUser AppUser { get; set; }
     }
 }

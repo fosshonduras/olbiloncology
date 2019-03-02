@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using OLBIL.OncologyWebApp.Entities;
+using OLBIL.OncologyCore.Entities;
 
-namespace OLBIL.OncologyWebApp.DataAccess
+namespace OLBIL.OncologyApplication.DataAccess
 {
     public class OncologyContext : DbContext
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OLBIL.OncologyWebApp.Models
+namespace OLBIL.OncologyApplication.Models
 {
     public class OncologyPatientModel
     {

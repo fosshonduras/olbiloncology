@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OLBIL.OncologyWebApp.Entities
+namespace OLBIL.OncologyCore.Entities
 {
     public class HealthProfessional : BaseEntity
     {

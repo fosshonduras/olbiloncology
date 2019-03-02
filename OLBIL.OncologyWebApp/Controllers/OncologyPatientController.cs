@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OLBIL.OncologyWebApp.DataAccess;
-using OLBIL.OncologyWebApp.Entities;
-using OLBIL.OncologyWebApp.Models;
+using OLBIL.OncologyApplication.DataAccess;
+using OLBIL.OncologyCore.Entities;
+using OLBIL.OncologyApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

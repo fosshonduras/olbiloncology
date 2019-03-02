@@ -1,4 +1,4 @@
-﻿namespace OLBIL.OncologyWebApp.Entities
+﻿namespace OLBIL.OncologyCore.Entities
 {
     public class BaseEntity
     {

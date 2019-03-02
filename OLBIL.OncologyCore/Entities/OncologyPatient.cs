@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace OLBIL.OncologyWebApp.Entities
+namespace OLBIL.OncologyCore.Entities
 {
     public class OncologyPatient : BaseEntity
     {

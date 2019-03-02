@@ -10,6 +10,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <UserSecretsId>7dce1bf3-2f52-49d5-954c-7efd1aaa0cd0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,6 +34,11 @@
 
   <ItemGroup>
     <None Include="Controllers\OncologyPatientController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OLBIL.OncologyApplication\OLBIL.OncologyApplication.csproj" />
+    <ProjectReference Include="..\OLBIL.OncologyCore\OLBIL.OncologyCore.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
