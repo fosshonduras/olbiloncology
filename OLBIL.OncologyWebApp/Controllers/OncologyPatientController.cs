@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList;
+using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatient;
 
 namespace OLBIL.OncologyWebApp.Controllers
 {
@@ -36,20 +37,15 @@ namespace OLBIL.OncologyWebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<OncologyPatient>>> GetAll()
+        public async Task<ActionResult<List<OncologyPatientsListModel>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetOncologyPatientsListQuery()));
         }
 
         [HttpGet("{id}", Name = "GetPatient")]
-        public ActionResult<OncologyPatient> GetPatient(int id)
+        public async Task<ActionResult<OncologyPatientModel>> GetPatient(int id)
         {
-            var item = _context.OncologyPatients.Include(o => o.Person).FirstOrDefault(o => o.OncologyPatientId == id);
-            if(item == null)
-            {
-                return NotFound();
-            }
-            return item;
+            return Ok(await Mediator.Send(new GetOncologyPatientQuery { Id = id }));
         }
 
         [HttpPost]
