@@ -13,6 +13,7 @@ using MediatR.Pipeline;
 using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList;
 using OLBIL.OncologyApplication.Infrastructure.AutoMapper;
 using System;
+using OLBIL.OncologyWebApp.Filters;
 
 namespace OLBIL.OncologyWebApp
 {
@@ -39,7 +40,9 @@ namespace OLBIL.OncologyWebApp
                 options => options.UseNpgsql(Configuration.GetConnectionString("ElephantDB"))
                 );
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services
+                .AddMvc(opt => opt.Filters.Add(typeof(OlbilExceptionFilterAttribute)))
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerDocument(config => 
                 config.PostProcess = document =>
