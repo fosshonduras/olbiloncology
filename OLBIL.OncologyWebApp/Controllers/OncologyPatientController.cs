@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OLBIL.OncologyApplication.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList;
 using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatient;
@@ -11,7 +10,7 @@ namespace OLBIL.OncologyWebApp.Controllers
     public class OncologyPatientController: OlbilController
     {
         [HttpGet]
-        public async Task<ActionResult<List<OncologyPatientsListModel>>> GetAll()
+        public async Task<ActionResult<OncologyPatientsListModel>> GetAll()
         {
             return Ok(await Mediator.Send(new GetOncologyPatientsListQuery()));
         }
