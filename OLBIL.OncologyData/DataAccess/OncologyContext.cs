@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using OLBIL.OncologyCore.Entities;
 
-namespace OLBIL.OncologyApplication.DataAccess
+namespace OLBIL.OncologyData
 {
     public class OncologyContext : DbContext
     {

@@ -5,15 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="MediatR" Version="6.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OLBIL.OncologyCore\OLBIL.OncologyCore.csproj" />
-    <ProjectReference Include="..\OLBIL.OncologyData\OLBIL.OncologyData.csproj" />
   </ItemGroup>
 
 </Project>

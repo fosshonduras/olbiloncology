@@ -49,8 +49,8 @@ export class PatientsComponent implements OnInit {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   getRegistered() {
-    this.http.get<any[]>(this.baseUrl + 'api/oncologyPatient/').subscribe(result => {
-      this.rowData = result.map(r => {
+    this.http.get<any>(this.baseUrl + 'api/oncologyPatient/').subscribe(result => {
+      this.rowData = result.items.map(r => {
         return {...r, ...r.person}
       });
     }, error => console.error(error));

@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OLBIL.OncologyApplication.DataAccess;
+using OLBIL.OncologyData;
 using OLBIL.OncologyCore.Entities;
 using OLBIL.OncologyApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList;
 
 namespace OLBIL.OncologyWebApp.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class OncologyPatientController: ControllerBase
+    public class OncologyPatientController: OlbilController
     {
         private readonly OncologyContext _context;
 
@@ -36,9 +36,9 @@ namespace OLBIL.OncologyWebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<OncologyPatient>> GetAll()
+        public async Task<ActionResult<List<OncologyPatient>>> GetAll()
         {
-            return _context.OncologyPatients.Include(o => o.Person).ToList();
+            return Ok(await Mediator.Send(new GetOncologyPatientsListQuery()));
         }
 
         [HttpGet("{id}", Name = "GetPatient")]

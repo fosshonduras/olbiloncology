@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using OLBIL.OncologyApplication.DataAccess;
+using OLBIL.OncologyData;
 
 namespace OLBIL.OncologyWebApp.Migrations
 {

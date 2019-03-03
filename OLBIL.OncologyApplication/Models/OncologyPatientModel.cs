@@ -1,8 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using OLBIL.OncologyApplication.Interfaces;
+using OLBIL.OncologyCore.Entities;
+using System;
 
 namespace OLBIL.OncologyApplication.Models
 {
-    public class OncologyPatientModel
+    public class OncologyPatientModel: IHaveCustomMapping
     {
         public int OncologyPatientId { get; set; }
 
@@ -14,5 +17,11 @@ namespace OLBIL.OncologyApplication.Models
 
         // Oncology
         public string ReasonForReferral { get; set; }
+
+        public void CreateMappings(Profile configuration)
+        {
+            configuration.CreateMap<OncologyPatient, OncologyPatientModel>()
+                .ForMember(cDTO => cDTO.Person, opt => opt.MapFrom(c => c.Person));
+        }
     }
 }
