@@ -12,6 +12,7 @@ using MediatR;
 using MediatR.Pipeline;
 using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList;
 using OLBIL.OncologyApplication.Infrastructure.AutoMapper;
+using System;
 
 namespace OLBIL.OncologyWebApp
 {
@@ -39,6 +40,26 @@ namespace OLBIL.OncologyWebApp
                 );
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerDocument(config => 
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "OLBIL Oncology API";
+                    document.Info.Description = "The API for the Oncology module of OLBIL";
+                    document.Info.TermsOfService = "None";
+                    document.Info.Contact = new NSwag.SwaggerContact
+                    {
+                        Name = "Juan Carlos Espinoza",
+                        Email = "hello@jcespinoza.com",
+                        Url = "https://jcespinoza.com"
+                    };
+                    document.Info.License = new NSwag.SwaggerLicense
+                    {
+                        Name = $"Copyright © {DateTime.Now.Year} OLBIL"
+                    };
+                }
+            );
 
             // Customise default API behavour
             services.Configure<ApiBehaviorOptions>(options =>
@@ -72,6 +93,12 @@ namespace OLBIL.OncologyWebApp
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseSwagger();
+            app.UseSwaggerUi3(settings =>
+            {
+                settings.Path = "/api";
+            });
 
             app.UseMvc(routes =>
             {
