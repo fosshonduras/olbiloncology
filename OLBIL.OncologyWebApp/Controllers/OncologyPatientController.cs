@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList;
 using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatient;
 using OLBIL.OncologyApplication.OncologyPatients.Commands.CreateOncologyPatient;
+using OLBIL.OncologyApplication.OncologyPatients.Commands.AttemptCreation;
 
 namespace OLBIL.OncologyWebApp.Controllers
 {
@@ -21,10 +22,16 @@ namespace OLBIL.OncologyWebApp.Controllers
             return Ok(await Mediator.Send(new GetOncologyPatientQuery { Id = id }));
         }
 
+        [HttpPost("attempt",Name = "AttemptCreation")]
+        public async Task<ActionResult<OncologyPatientsListModel>> AttemptCreatePatient([FromBody]OncologyPatientModel model)
+        {
+            return Ok(await Mediator.Send(new AttemptOncologyPatientCreationCommand { Model = model}));
+        }
+
         [HttpPost]
         public async Task<ActionResult<int>> CreatePatient([FromBody]OncologyPatientModel model)
         {
-            return Ok(await Mediator.Send(new CreateOncologyPatientCommand { Model = model }));
+            return Created($"{AppConstants.API_URL_PREFIX}/oncologyPatient/", await Mediator.Send(new CreateOncologyPatientCommand { Model = model }));
         }
     }
 }

@@ -59,7 +59,7 @@ export class PatientsComponent implements OnInit {
 
   createPatient(regForm) {
     this.isSaving = true;
-    this.http.post<any>(this.baseUrl + 'api/oncologyPatient/', this.patient).subscribe(res => {
+    this.http.post<any>(this.baseUrl + 'api/oncologyPatient/attempt', this.patient).subscribe(res => {
       this.patient = { person: {} }
       this.isSaving = false;
       this.getRegistered();

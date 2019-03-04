@@ -1,7 +1,7 @@
 ﻿using OLBIL.OncologyApplication.Models;
 using System.Collections.Generic;
 
-namespace OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList
+namespace OLBIL.OncologyApplication.Models
 {
     public class OncologyPatientsListModel
     {
