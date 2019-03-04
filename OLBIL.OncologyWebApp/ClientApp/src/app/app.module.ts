@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 
 import { AgGridModule } from 'ag-grid-angular';
 
@@ -12,6 +11,8 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { PatientsComponent } from './patients/patients.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
+import { PatientsModule } from './patients/patients.module';
+import { AppRoutingModule } from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -26,13 +27,9 @@ import { AppointmentsComponent } from './appointments/appointments.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'patients', component: PatientsComponent },
-      { path: 'appointments', component: AppointmentsComponent }
-    ]),
-    AgGridModule.withComponents([])
+    AppRoutingModule,
+    AgGridModule.withComponents([]),
+    PatientsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
