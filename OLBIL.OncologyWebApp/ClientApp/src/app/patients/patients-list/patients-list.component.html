@@ -1,0 +1,11 @@
+<section id="registered">
+  <h3>Registrados</h3>
+  <div style="overflow: hidden">
+    <ag-grid-angular class="ag-theme-bootstrap"
+                     [rowData]="rowData"
+                     [columnDefs]="columnDefs">
+    </ag-grid-angular>
+  </div>
+
+  <a [routerLink]="['../create']" class="btn btn-link">Registrar Nuevo</a>
+</section>

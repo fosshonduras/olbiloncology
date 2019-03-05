@@ -36,8 +36,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\patients\patients.routes.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\src\app\appointments\" />
-    <Folder Include="ClientApp\src\app\patients\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +50,10 @@
   <ItemGroup>
     <ProjectReference Include="..\OLBIL.OncologyApplication\OLBIL.OncologyApplication.csproj" />
     <ProjectReference Include="..\OLBIL.OncologyData\OLBIL.OncologyData.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\patients\patients.routes.ts" />
   </ItemGroup>
   
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
