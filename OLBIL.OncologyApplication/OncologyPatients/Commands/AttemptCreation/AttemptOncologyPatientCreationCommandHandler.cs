@@ -28,12 +28,12 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands.AttemptCreation
                 .Where(o =>
                     o.Person != null &&
                     (
-                        o.Person.FirstName == model.Person.FirstName ||
-                        o.Person.MiddleName == model.Person.MiddleName ||
-                        o.Person.LastName == model.Person.LastName ||
-                        o.Person.AdditionalLastName == model.Person.AdditionalLastName ||
-                        o.Person.Birthdate == model.Person.Birthdate ||
-                        o.Person.GovernmentIDNumber == model.Person.GovernmentIDNumber
+                        (o.Person.FirstName != null && o.Person.FirstName == model.Person.FirstName) ||
+                        (o.Person.MiddleName != null && o.Person.MiddleName == model.Person.MiddleName) ||
+                        (o.Person.LastName != null && o.Person.LastName == model.Person.LastName) ||
+                        (o.Person.AdditionalLastName != null && o.Person.AdditionalLastName == model.Person.AdditionalLastName) ||
+                        (o.Person.Birthdate != null && o.Person.Birthdate == model.Person.Birthdate) ||
+                        (o.Person.GovernmentIDNumber != null && o.Person.GovernmentIDNumber == model.Person.GovernmentIDNumber)
                     )
                 );
             return new OncologyPatientsListModel

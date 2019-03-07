@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
 import { PatientsComponent } from './patients/patients.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { PatientsModule } from './patients/patients.module';
@@ -16,7 +15,6 @@ import { AppRoutingModule } from "./app-routing.module";
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
     PatientsComponent,
     AppointmentsComponent
   ],

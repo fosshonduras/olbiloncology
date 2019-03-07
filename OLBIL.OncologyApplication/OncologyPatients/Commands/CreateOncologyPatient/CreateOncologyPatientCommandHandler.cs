@@ -47,7 +47,11 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands.CreateOncologyPati
             {
                 GovernmentIDNumber = pModel.GovernmentIDNumber,
                 FirstName = pModel.FirstName,
-                LastName = pModel.LastName
+                MiddleName = pModel.MiddleName,
+                LastName = pModel.LastName,
+                AdditionalLastName = pModel.AdditionalLastName,
+                Birthdate = pModel.Birthdate,
+                Birthplace = pModel.Birthplace
             };
 
             var newPatient = new OncologyPatient

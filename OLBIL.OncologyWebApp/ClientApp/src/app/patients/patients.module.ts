@@ -8,14 +8,17 @@ import { AgGridModule } from 'ag-grid-angular';
 
 import { PatientsListComponent } from './patients-list/patients-list.component';
 import { CreatePatientComponent } from './create-patient/create-patient.component';
+import { EditPatientComponent } from './edit-patient/edit-patient.component';
+import { AgGridComponentsModule } from '../helper-components/ag-grid-components.module';
 
 @NgModule({
-  declarations: [PatientsListComponent, CreatePatientComponent],
+  declarations: [PatientsListComponent, CreatePatientComponent, EditPatientComponent],
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
     RouterModule,
+    AgGridComponentsModule,
     AgGridModule.withComponents([]),
   ]
 })

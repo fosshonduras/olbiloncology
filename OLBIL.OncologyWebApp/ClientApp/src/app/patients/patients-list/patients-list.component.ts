@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 
 @Component({
   selector: 'app-patients-list',
@@ -8,38 +9,25 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PatientsListComponent implements OnInit {
   columnDefs = [
-    { headerName: 'Identidad Nacional', field: 'governmentIDNumber' },
+    {
+      headerName: 'Identidad Nacional', field: 'governmentIDNumber',
+      //cellRenderer: ({ data }) => { console.log(data); return `<a [routerLink]="['./:patientId/edit', '${data.oncologyPatientId}']">${data.person.governmentIDNumber}</a>`; },
+      cellRendererFramework: LinkRendererComponent,
+      cellRendererParams: ({ data }) => {
+        return ({
+          inRouterLink: `../edit`,
+          routeParam: data.oncologyPatientId,
+          value: data.person.governmentIDNumber
+        });
+      }
+    },
     { headerName: 'Nombre', field: 'firstName' },
     { headerName: 'Apellido', field: 'lastName' },
-    { headerName: 'Nacionalidad', field: 'nationality' }
+    { headerName: 'Nacionalidad', field: 'nationality' },
+    { headerName: 'Fecha de Nacimiento', field: 'birthdate' }
   ];
 
-  rowData = [
-    {
-      governmentId: "0101-1990-00201",
-      firstName: "Adan",
-      lastName: "Fernandez",
-      nationality: "Hondureña"
-    },
-    {
-      governmentId: "0101-1990-00202",
-      firstName: "Adan",
-      lastName: "Fernandez",
-      nationality: "Nicaraguense"
-    },
-    {
-      governmentId: "0101-1990-00203",
-      firstName: "Adan",
-      lastName: "Fernandez",
-      nationality: "Salvadoreña"
-    },
-    {
-      governmentId: "0101-1990-00203",
-      firstName: "Adan",
-      lastName: "Fernandez",
-      nationality: "Salvadoreña"
-    }
-  ];
+  rowData: any[] = [ ];
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
