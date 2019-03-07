@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 
 @Component({
   selector: 'app-create-patient',
@@ -24,7 +25,16 @@ export class CreatePatientComponent implements OnInit {
   matchingRecords: any[] = [];
 
   columnDefs = [
-    { headerName: 'Identidad Nacional', field: 'governmentIDNumber' },
+    {
+      headerName: 'Identidad Nacional', field: 'governmentIDNumber', cellRendererFramework: LinkRendererComponent,
+      cellRendererParams: ({ data }) => {
+        return ({
+          inRouterLink: `../edit`,
+          routeParam: data.oncologyPatientId,
+          value: data.person.governmentIDNumber
+        });
+      }
+    },
     { headerName: 'Nombre', field: 'firstName' },
     { headerName: 'Apellido', field: 'lastName' },
     { headerName: 'Nacionalidad', field: 'nationality' },

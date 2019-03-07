@@ -6,3 +6,8 @@ section {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+/* Add application styles & imports to this file! */
+#toast-container > div {
+  opacity: 1;
+}

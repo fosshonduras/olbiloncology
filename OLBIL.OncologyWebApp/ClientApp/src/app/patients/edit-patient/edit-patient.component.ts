@@ -17,6 +17,7 @@ export class EditPatientComponent implements OnInit {
   @Input()
   isNewRecord: boolean = false;
   showEditForm: boolean = true;
+  isSaving: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -38,17 +39,30 @@ export class EditPatientComponent implements OnInit {
     this.http.get<any>(`${this.baseUrl}api/oncologyPatient/${id}`).subscribe(result => {
       this.patient = result;
     }, err => {
-      console.error(err.error[0]);
+      this.toastr.warning(this.extractErrorMessage(err));
     });
   }
 
   saveRecord(regForm) {
+    if (this.isSaving) return;
+    this.isSaving = true;
     if (this.isNewRecord) {
       this.http.post<any>(`${this.baseUrl}api/oncologyPatient/`, this.patient).subscribe(result => {
-
+        this.toastr.success("Paciente registrado.");
+        setTimeout(() => {
+          this.router.navigate(['./list'], { relativeTo: this.route.parent });
+        }, 2000);
       }, err => {
-        this.toastr.error(err.error[0]);
+        this.isSaving = false;
+        this.toastr.warning(this.extractErrorMessage(err));
       });
     }
+  }
+
+  extractErrorMessage(err) {
+    let errorObject = err.error;
+    let messageArray = errorObject.error;
+    let message = messageArray.join("\n");
+    return message;
   }
 }

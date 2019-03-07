@@ -11,7 +11,6 @@ export class PatientsListComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'Identidad Nacional', field: 'governmentIDNumber',
-      //cellRenderer: ({ data }) => { console.log(data); return `<a [routerLink]="['./:patientId/edit', '${data.oncologyPatientId}']">${data.person.governmentIDNumber}</a>`; },
       cellRendererFramework: LinkRendererComponent,
       cellRendererParams: ({ data }) => {
         return ({
