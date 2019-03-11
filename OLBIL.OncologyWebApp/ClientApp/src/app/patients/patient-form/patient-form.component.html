@@ -1,0 +1,49 @@
+<form #regEditForm="ngForm" *ngIf="showEditForm" (ngSubmit)="saveRecord(regEditForm)" novalidate>
+  <div class="form-row">
+    <div class="form-group col col-auto">
+      <label for="governmentIDNumber">Número de Identidad</label>
+      <input [(ngModel)]="patient.person.governmentIDNumber" type="text" class="form-control" name="governmentIDNumber" id="governmentIDNumber"
+             aria-describedby="governmentIdHelp" placeholder="Ej. 0101200100101">
+      <small id="governmentIdHelp" class="form-text text-muted">Preferiblemente sin guiones.</small>
+    </div>
+    <div class="form-group col col-auto">
+      <label for="nationality">Nacionalidad</label>
+      <input [(ngModel)]="patient.person.nationality" type="text" class="form-control" name="nationality" id="nationality" placeholder="Ej. Hondureña">
+    </div>
+    <div class="form-group col col-auto">
+      <label for="birthdate">Fecha de Nacimiento</label>
+      <input [(ngModel)]="patient.person.birthdate" type="date" class="form-control" required name="birthdate" id="birthdate" placeholder="Ej. 1990/12/25" />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col col-auto">
+      <label for="firstName">Nombre</label>
+      <input [(ngModel)]="patient.person.firstName" type="text" class="form-control" required name="firstName" id="firstName" placeholder="Ej. Maria">
+    </div>
+    <div class="form-group col col-auto">
+      <label for="middleName">Segundo Nombre</label>
+      <input [(ngModel)]="patient.person.middleName" type="text" class="form-control" required name="middleName" id="middleName" placeholder="Ej. José">
+    </div>
+    <div class="form-group col col-auto">
+      <label for="lastName">Apellido</label>
+      <input [(ngModel)]="patient.person.lastName" type="text" class="form-control" required name="lastName" id="lastName" placeholder="Ej. Perez">
+    </div>
+    <div class="form-group col col-auto">
+      <label for="additionalLastName">Segundo Apellido</label>
+      <input [(ngModel)]="patient.person.additionalLastName" type="text" class="form-control" required name="additionalLastName" id="additionalLastName" placeholder="Ej. Rodriguez">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col col-auto">
+      <div class="form-group col col-auto">
+        <label for="firstName">Fecha de Admisión a Oncología</label>
+        <input [(ngModel)]="patient.admissionDate" type="text" class="form-control" required name="admissionDate" id="admissionDate" placeholder="Ej. Maria">
+      </div>
+
+    </div>
+  </div>
+  <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
+  <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</form>

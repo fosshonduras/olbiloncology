@@ -10,9 +10,10 @@ import { PatientsListComponent } from './patients-list/patients-list.component';
 import { CreatePatientComponent } from './create-patient/create-patient.component';
 import { EditPatientComponent } from './edit-patient/edit-patient.component';
 import { AgGridComponentsModule } from '../helper-components/ag-grid-components.module';
+import { PatientFormComponent } from './patient-form/patient-form.component';
 
 @NgModule({
-  declarations: [PatientsListComponent, CreatePatientComponent, EditPatientComponent],
+  declarations: [PatientsListComponent, CreatePatientComponent, EditPatientComponent, PatientFormComponent],
   imports: [
     CommonModule,
     FormsModule,
