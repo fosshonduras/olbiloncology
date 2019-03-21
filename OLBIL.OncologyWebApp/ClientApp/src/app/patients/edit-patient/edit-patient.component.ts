@@ -49,6 +49,7 @@ export class EditPatientComponent implements OnInit {
     this.client.getPatient(+id).subscribe(result => {
       this.patient = result;
       this.patient.person.birthdate = moment(this.patient.person.birthdate).format(moment.HTML5_FMT.DATE);
+      this.patient.admissionDate = moment(this.patient.admissionDate).format(moment.HTML5_FMT.DATE);
     }, err => {
       this.toastr.warning(this.extractErrorMessage(err));
     });
@@ -58,6 +59,7 @@ export class EditPatientComponent implements OnInit {
     if (this.isSaving) return;
     this.isSaving = true;
     this.patient.person.birthdate = new Date(this.patient.person.birthdate);
+    this.patient.admissionDate = new Date(this.patient.admissionDate);
     if (this.isNewRecord) {
       this.client.createPatient(this.patient).subscribe(result => {
         this.toastr.success("Paciente registrado.");

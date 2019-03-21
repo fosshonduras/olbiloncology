@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using OLBIL.OncologyCore.Entities;
+using OLBIL.OncologyData.Mappings;
 
 namespace OLBIL.OncologyData
 {
@@ -27,7 +28,17 @@ namespace OLBIL.OncologyData
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Person>().ToTable("Person");
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(OncologyPatientTypeConfiguration).Assembly);
+            foreach(var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                entity.Relational().TableName = entity.Relational().TableName.ToLower();
+
+                foreach (var prop in entity.GetProperties())
+                {
+                    prop.Relational().ColumnName = prop.Relational().ColumnName.ToLower();
+                }
+            }
+            
         }
     }
 }
