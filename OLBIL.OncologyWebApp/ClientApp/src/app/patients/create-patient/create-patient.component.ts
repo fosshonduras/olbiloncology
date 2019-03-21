@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
+import { environment } from "../../../environments/environment";
+import { OncologyPatientModel, PersonModel, OncologyPatientClient } from 'src/app/api-clients';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-create-patient',
@@ -8,15 +11,7 @@ import { LinkRendererComponent } from '../../helper-components/LinkRendererCompo
   styleUrls: ['./create-patient.component.css']
 })
 export class CreatePatientComponent implements OnInit {
-  patient: any = {
-    person: {
-      firstName: "Karla",
-      lastName: "Tulio",
-      governmentIDNumber: "01012020",
-      nationality: 'Nigeriano',
-      birthdate: '2000-12-12'
-    }
-  };
+  patient: any;
   newPatient: any = {};
   isSaving: boolean = false;
   showForm: boolean = true;
@@ -41,11 +36,30 @@ export class CreatePatientComponent implements OnInit {
     { headerName: 'Fecha de Nacimiento', field: 'birthdate' }
   ];
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+  constructor(
+    private client: OncologyPatientClient
+    //private http: HttpClient, @Inject('BASE_URL') private baseUrl: string
+  ) {
+    //if (!environment.production) {
+      this.patient = new OncologyPatientModel({
+        oncologyPatientId: -1,
+        person: new PersonModel( {
+          //personId: 'A',
+          //firstName: "Karla",
+          //lastName: "Tulio",
+          //governmentIDNumber: "01012020",
+          //nationality: 'Nigeriano',
+          //birthdate: new Date('2000-12-12')
+        })
+      });
+    //}
+  }
 
   submitRegistrationAttempt(regForm) {
     this.isSaving = true;
-    this.http.post<any>(this.baseUrl + 'api/oncologyPatient/attempt', this.patient).subscribe(result => {
+    this.patient.person.birthdate = new Date(this.patient.person.birthdate);
+    this.client.attemptCreatePatient(this.patient)
+      .subscribe(result => {
       this.matchingRecords = result.items.map(r => {
         return { ...r, ...r.person }
       });

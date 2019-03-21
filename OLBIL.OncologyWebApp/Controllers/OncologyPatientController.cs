@@ -5,6 +5,7 @@ using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList
 using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatient;
 using OLBIL.OncologyApplication.OncologyPatients.Commands.CreateOncologyPatient;
 using OLBIL.OncologyApplication.OncologyPatients.Commands.AttemptCreation;
+using OLBIL.OncologyApplication.OncologyPatients.Commands.UpdatePatient;
 
 namespace OLBIL.OncologyWebApp.Controllers
 {
@@ -32,6 +33,13 @@ namespace OLBIL.OncologyWebApp.Controllers
         public async Task<ActionResult<int>> CreatePatient([FromBody]OncologyPatientModel model)
         {
             return Created($"{AppConstants.API_URL_PREFIX}/oncologyPatient/", await Mediator.Send(new CreateOncologyPatientCommand { Model = model }));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdatePatient([FromBody]OncologyPatientModel model)
+        {
+            await Mediator.Send(new UpdateOncologyPatientCommand { Model = model });
+            return NoContent();
         }
     }
 }

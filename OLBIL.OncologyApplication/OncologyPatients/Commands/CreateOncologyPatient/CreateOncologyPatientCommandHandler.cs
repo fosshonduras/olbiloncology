@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
 using OLBIL.OncologyCore.Entities;
@@ -13,9 +14,11 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands.CreateOncologyPati
     public class CreateOncologyPatientCommandHandler : IRequestHandler<CreateOncologyPatientCommand, int>
     {
         private readonly OncologyContext _context;
-        public CreateOncologyPatientCommandHandler(OncologyContext context)
+        private readonly IMapper _mapper;
+        public CreateOncologyPatientCommandHandler(OncologyContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<int> Handle(CreateOncologyPatientCommand request, CancellationToken cancellationToken)
@@ -43,19 +46,13 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands.CreateOncologyPati
                 }
             }
 
-            person = new Person
-            {
-                GovernmentIDNumber = pModel.GovernmentIDNumber,
-                FirstName = pModel.FirstName,
-                MiddleName = pModel.MiddleName,
-                LastName = pModel.LastName,
-                AdditionalLastName = pModel.AdditionalLastName,
-                Birthdate = pModel.Birthdate,
-                Birthplace = pModel.Birthplace
-            };
+            person = _mapper.Map<Person>(pModel);
 
             var newPatient = new OncologyPatient
             {
+                AdmissionDate = request.Model.AdmissionDate,
+                InformantsRelationship = request.Model.InformantsRelationship,
+                ReasonForReferral = request.Model.ReasonForReferral,
                 RegistrationDate = DateTime.Now,
                 Person = person
             };

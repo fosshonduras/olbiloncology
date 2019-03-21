@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using OLBIL.OncologyApplication.Interfaces;
+using OLBIL.OncologyCore.Entities;
+using System;
 
 namespace OLBIL.OncologyApplication.Models
 {
-    public class PersonModel
+    public class PersonModel : IHaveCustomMapping
     {
-        public Guid PersonId { get; set; }
+        public Guid? PersonId { get; set; }
 
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -31,5 +31,12 @@ namespace OLBIL.OncologyApplication.Models
         public string FamilyStatus { get; set; }
         public string SchoolLevel { get; set; }
         public string MethodOfTranspotation { get; set; }
+
+        public void CreateMappings(Profile configuration)
+        {
+            configuration.CreateMap<PersonModel, Person>()
+                .ForMember(cDTO => cDTO.AppUser, opt => opt.Ignore())
+                .ForMember(cDTO => cDTO.AppUserId, opt => opt.Ignore());
+        }
     }
 }

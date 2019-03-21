@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import * as  moment from "moment";
+import { OncologyPatientClient, IOncologyPatientModel, OncologyPatientModel, PersonModel } from 'src/app/api-clients';
 
 @Component({
   selector: 'app-edit-patient',
@@ -10,9 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EditPatientComponent implements OnInit {
   @Input()
-  patient: any = {
-    person: {}
-  };
+  patient: any = { person: {} };
 
   @Input()
   isNewRecord: boolean = false;
@@ -20,8 +20,7 @@ export class EditPatientComponent implements OnInit {
   isSaving: boolean = false;
 
   constructor(
-    private http: HttpClient,
-    @Inject('BASE_URL') private baseUrl: string,
+    private client: OncologyPatientClient,
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService
@@ -33,11 +32,23 @@ export class EditPatientComponent implements OnInit {
     if (!this.isNewRecord && id === null) {
       alert("Id not provided");
     } else if (this.isNewRecord) {
+      //this.patient = new OncologyPatientModel({
+      //  oncologyPatientId: 314,
+      //  person: new PersonModel({
+      //    personId: 'A',
+      //    firstName: "Karla",
+      //    lastName: "Tulio",
+      //    governmentIDNumber: "01012020",
+      //    nationality: 'Nigeriano',
+      //    birthdate: moment('2000-12-12')
+      //  })
+      //});
       return;
     }
 
-    this.http.get<any>(`${this.baseUrl}api/oncologyPatient/${id}`).subscribe(result => {
+    this.client.getPatient(+id).subscribe(result => {
       this.patient = result;
+      this.patient.person.birthdate = moment(this.patient.person.birthdate).format(moment.HTML5_FMT.DATE);
     }, err => {
       this.toastr.warning(this.extractErrorMessage(err));
     });
@@ -46,15 +57,26 @@ export class EditPatientComponent implements OnInit {
   saveRecord(regForm) {
     if (this.isSaving) return;
     this.isSaving = true;
+    this.patient.person.birthdate = new Date(this.patient.person.birthdate);
     if (this.isNewRecord) {
-      this.http.post<any>(`${this.baseUrl}api/oncologyPatient/`, this.patient).subscribe(result => {
+      this.client.createPatient(this.patient).subscribe(result => {
         this.toastr.success("Paciente registrado.");
         setTimeout(() => {
           this.router.navigate(['./list'], { relativeTo: this.route.parent });
         }, 2000);
       }, err => {
         this.isSaving = false;
-        this.toastr.warning(this.extractErrorMessage(err));
+        this.toastr.warning(err.error ? this.extractErrorMessage(err) : err.message);
+      });
+    } else {
+      this.client.updatePatient(this.patient).subscribe(result => {
+        this.toastr.success("Paciente actualizado.");
+        setTimeout(() => {
+          this.router.navigate(['./list'], { relativeTo: this.route.parent });
+        }, 2000);
+      }, err => {
+        this.isSaving = false;
+        this.toastr.warning(err.error ? this.extractErrorMessage(err) : err.message);
       });
     }
   }
