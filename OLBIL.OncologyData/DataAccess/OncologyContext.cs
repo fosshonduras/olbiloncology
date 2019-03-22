@@ -18,6 +18,10 @@ namespace OLBIL.OncologyData
         public DbSet<Person> People { get; set; }
         public DbSet<HealthProfessional> HealthProfessionals { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<HospitalUnit> Units { get; set; }
+        public DbSet<Ward> Wards { get; set; }
+        public DbSet<Bed> Beds { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,6 +33,7 @@ namespace OLBIL.OncologyData
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(OncologyPatientTypeConfiguration).Assembly);
+            
             foreach(var entity in modelBuilder.Model.GetEntityTypes())
             {
                 entity.Relational().TableName = entity.Relational().TableName.ToLower();
@@ -38,7 +43,6 @@ namespace OLBIL.OncologyData
                     prop.Relational().ColumnName = prop.Relational().ColumnName.ToLower();
                 }
             }
-            
         }
     }
 }
