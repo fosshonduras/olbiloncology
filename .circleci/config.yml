@@ -2,11 +2,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:10-slim
       - image: microsoft/dotnet:2.2-sdk
 
     steps:
       - checkout
+     - run:
+        name: Installing Node
+        command: curl -sL https://deb.nodesource.com/setup_10.x | -E bash
+        && apt-get install -y nodejs
       - run:
           name: Restore solution
           command: dotnet restore
