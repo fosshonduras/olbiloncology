@@ -6,7 +6,7 @@ jobs:
 
     steps:
       - checkout
-     - run:
+      - run:
         name: Installing Node
         command: curl -sL https://deb.nodesource.com/setup_10.x | -E bash && apt-get install -y nodejs
       - run:
