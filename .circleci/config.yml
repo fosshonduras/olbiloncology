@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Installing Node
-          command: curl -sL https://deb.nodesource.com/setup_10.x | -E bash && apt-get install -y nodejs
+          command: curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs
       - run:
           name: Restore solution
           command: dotnet restore
