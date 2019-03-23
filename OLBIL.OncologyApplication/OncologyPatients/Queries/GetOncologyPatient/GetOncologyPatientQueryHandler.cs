@@ -22,15 +22,16 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatient
             _mapper = mapper;
         }
         public async Task<OncologyPatientModel> Handle(GetOncologyPatientQuery request, CancellationToken cancellationToken)
-        {
-            
+        {            
             var item = _mapper.Map<OncologyPatientModel>(await _context
                 .OncologyPatients.Include(o => o.Person).Where(o => o.OncologyPatientId == request.Id)
                 .SingleOrDefaultAsync(cancellationToken));
+
             if(item == null)
             {
-                throw new NotFoundException(nameof(OncologyPatient), request.Id);
+                throw new NotFoundException(nameof(OncologyPatient), nameof(request.Id), request.Id);
             }
+
             return item;
         }
     }

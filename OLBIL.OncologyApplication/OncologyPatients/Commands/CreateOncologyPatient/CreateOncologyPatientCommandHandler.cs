@@ -15,6 +15,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands.CreateOncologyPati
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
+
         public CreateOncologyPatientCommandHandler(OncologyContext context, IMapper mapper)
         {
             _context = context;
@@ -28,7 +29,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands.CreateOncologyPati
                 .FirstOrDefaultAsync(cancellationToken);
             if(patient != null)
             {
-                throw new AlreadyExistsException(nameof(OncologyPatient), request.Model.OncologyPatientId);
+                throw new AlreadyExistsException(nameof(OncologyPatient), nameof(request.Model.OncologyPatientId), request.Model.OncologyPatientId);
             }
             var pModel = request.Model.Person;
             var personId = pModel?.PersonId;
@@ -42,7 +43,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands.CreateOncologyPati
                 var patient2 = _context.OncologyPatients.Include(o => o.Person).FirstOrDefault(p => p.Person.GovernmentIDNumber == pModel.GovernmentIDNumber);
                 if(patient2 != null)
                 {
-                    throw new AlreadyExistsException(nameof(OncologyPatient), pModel.GovernmentIDNumber);
+                    throw new AlreadyExistsException(nameof(OncologyPatient), nameof(pModel.GovernmentIDNumber), pModel.GovernmentIDNumber);
                 }
             }
 

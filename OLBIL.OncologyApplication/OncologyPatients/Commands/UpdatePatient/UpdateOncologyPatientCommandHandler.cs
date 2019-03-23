@@ -31,7 +31,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands.UpdatePatient
                 .FirstOrDefaultAsync(cancellationToken);
             if (patient == null)
             {
-                throw new NotFoundException(nameof(OncologyPatient), request.Model.OncologyPatientId);
+                throw new NotFoundException(nameof(OncologyPatient), nameof(request.Model.OncologyPatientId), request.Model.OncologyPatientId);
             }
             var pModel = request.Model.Person;
             var personId = pModel?.PersonId;
@@ -41,7 +41,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands.UpdatePatient
 
             if (person == null)
             {
-                throw new NotFoundException(nameof(OncologyPatient), pModel.GovernmentIDNumber);
+                throw new NotFoundException(nameof(OncologyPatient), nameof(pModel.GovernmentIDNumber), pModel.GovernmentIDNumber);
 
             }
 

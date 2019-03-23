@@ -4,8 +4,8 @@ namespace OLBIL.OncologyApplication.Exceptions
 {
     public class AlreadyExistsException : Exception
     {
-        public AlreadyExistsException(string name, object key)
-            : base($"Entity \"{name}\" with key ({key}) already exists.")
+        public AlreadyExistsException(string name, string keyName, object key)
+            : base($"Entity \"{name}\" with {keyName} ({key}) already exists.")
         {
         }
     }
