@@ -33,7 +33,7 @@ namespace OLBIL.OncologyData
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(OncologyPatientTypeConfiguration).Assembly);
-            
+
             foreach(var entity in modelBuilder.Model.GetEntityTypes())
             {
                 entity.Relational().TableName = entity.Relational().TableName.ToLower();

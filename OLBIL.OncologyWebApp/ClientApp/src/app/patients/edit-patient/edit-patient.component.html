@@ -1,5 +1,6 @@
-<h4>Paciente: {{patient.oncologyPatientId || '(nuevo)'}}</h4>
+<h4>Paciente: {{patient.oncologyPatientId == -1 ? '(nuevo)' : patient.oncologyPatientId}}</h4>
 <form #regEditForm="ngForm" *ngIf="showEditForm" (ngSubmit)="saveRecord(regEditForm)" novalidate>
+  <h5>Identificación</h5>
   <div class="form-row">
     <div class="form-group col col-auto">
       <label for="governmentIDNumber">Número de Identidad</label>
@@ -15,7 +16,12 @@
       <label for="birthdate">Fecha de Nacimiento</label>
       <input [(ngModel)]="patient.person.birthdate" type="date" class="form-control" required name="birthdate" id="birthdate" placeholder="Ej. 1990/12/25" />
     </div>
+    <div class="form-group col col-auto">
+      <label for="birthplace">Lugar de Nacimiento</label>
+      <input [(ngModel)]="patient.person.birthplace" type="text" class="form-control" required name="birthplace" id="birthplace" placeholder="Ej. Gracias, Lempira" />
+    </div>
   </div>
+  <h5>Nombres</h5>
   <div class="form-row">
     <div class="form-group col col-auto">
       <label for="firstName">Nombre</label>
@@ -38,6 +44,7 @@
       <input [(ngModel)]="patient.person.preferredName" type="text" class="form-control" required name="preferredName" id="additionalLastName" placeholder="Ej. Yaki">
     </div>
   </div>
+  <h5>Localidad</h5>
   <div class="form-row">
     <div class="form-group col col-auto">
       <label for="address">Dirección Linea 1</label>
@@ -64,14 +71,34 @@
       <input [(ngModel)]="patient.person.homePhone" type="tel" class="form-control" required name="homePhone" id="homePhone" placeholder="Ej. 2220-1234">
     </div>
     <div class="form-group col col-auto">
-      <label for="address">Celular</label>
+      <label for="mobilePhone">Celular</label>
       <input [(ngModel)]="patient.person.mobilePhone" type="tel" class="form-control" required name="mobilePhone" id="mobilePhone" placeholder="Ej. 8345-1234">
     </div>
+  </div>
+  <h5>Demografía</h5>
+  <div class="form-row">
     <div class="form-group col col-auto">
-      <label for="address">Ciudad</label>
-      <input [(ngModel)]="patient.person.city" type="text" class="form-control" required name="city" id="city" placeholder="Ej. Tegucigalpa">
+      <label for="race">Raza</label>
+      <input [(ngModel)]="patient.person.race" type="text" class="form-control" required name="race" id="race" placeholder="Ej. Mestiza">
+    </div>
+    <div class="form-group col col-auto">
+      <label for="inputGender">Género</label>
+      <select id="inputGender" [(ngModel)]="patient.person.gender" class="form-control" name="gender">
+        <option *ngFor="let gender of availableGenders" [value]="gender.id">{{gender.name}}</option>
+      </select>
+    </div>
+    <div class="form-group col col-auto">
+      <label for="familyStatus">Estatus Familiar</label>
+      <input [(ngModel)]="patient.person.familyStatus" type="text" class="form-control" required name="familyStatus" id="familyStatus" placeholder="Ej. Padres biológicos">
+    </div>
+    <div class="form-group col col-auto">
+      <label for="schoolLevel">Escolaridad</label>
+      <select id="schoolLevel" [(ngModel)]="patient.person.schoolLevel" class="form-control" name="schoolLevel">
+        <option *ngFor="let level of schoolLevels" [value]="level.id">{{level.name}}</option>
+      </select>
     </div>
   </div>
+  <h5>Historial Oncología</h5>
   <div class="form-row">
     <div class="form-group col col-auto">
       <label for="firstName">Fecha de Admisión a Oncología</label>

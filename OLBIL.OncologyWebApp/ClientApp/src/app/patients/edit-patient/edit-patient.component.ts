@@ -19,6 +19,21 @@ export class EditPatientComponent implements OnInit {
   showEditForm: boolean = true;
   isSaving: boolean = false;
 
+  availableGenders: any[] = [
+    { id: 1, name: "Masculino" },
+    { id: 2, name: "Femenino" },
+    { id: 3, name: "Indeterminado" }
+  ];
+
+  schoolLevels: any[] = [
+    { id: 1, name: "Ninguno" },
+    { id: 2, name: "Pre-Escolar" },
+    { id: 3, name: "Primaria" },
+    { id: 3, name: "Secundaria" },
+    { id: 3, name: "Bachillerato" },
+    { id: 3, name: "Universidad" }
+  ];
+
   constructor(
     private client: OncologyPatientClient,
     private route: ActivatedRoute,
@@ -32,34 +47,28 @@ export class EditPatientComponent implements OnInit {
     if (!this.isNewRecord && id === null) {
       alert("Id not provided");
     } else if (this.isNewRecord) {
-      //this.patient = new OncologyPatientModel({
-      //  oncologyPatientId: 314,
-      //  person: new PersonModel({
-      //    personId: 'A',
-      //    firstName: "Karla",
-      //    lastName: "Tulio",
-      //    governmentIDNumber: "01012020",
-      //    nationality: 'Nigeriano',
-      //    birthdate: moment('2000-12-12')
-      //  })
-      //});
+      this.updateDatesInPatient();
       return;
     }
 
     this.client.getPatient(+id).subscribe(result => {
       this.patient = result;
-      this.patient.person.birthdate = moment(this.patient.person.birthdate).format(moment.HTML5_FMT.DATE);
-      this.patient.admissionDate = moment(this.patient.admissionDate).format(moment.HTML5_FMT.DATE);
+      this.updateDatesInPatient();
     }, err => {
       this.toastr.warning(this.extractErrorMessage(err));
     });
   }
 
+    private updateDatesInPatient() {
+        this.patient.person.birthdate = this.patient.person.birthdate && moment(this.patient.person.birthdate).format(moment.HTML5_FMT.DATE);
+        this.patient.admissionDate = this.patient.admissionDate && moment(this.patient.admissionDate).format(moment.HTML5_FMT.DATE);
+    }
+
   saveRecord(regForm) {
     if (this.isSaving) return;
     this.isSaving = true;
-    this.patient.person.birthdate = new Date(this.patient.person.birthdate);
-    this.patient.admissionDate = new Date(this.patient.admissionDate);
+    this.patient.person.birthdate = this.patient.person.birthdate && new Date(this.patient.person.birthdate);
+    this.patient.admissionDate = this.patient.admissionDate && new Date(this.patient.admissionDate);
     if (this.isNewRecord) {
       this.client.createPatient(this.patient).subscribe(result => {
         this.toastr.success("Paciente registrado.");
