@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import * as  moment from "moment";
-import { OncologyPatientClient, IOncologyPatientModel, OncologyPatientModel, PersonModel } from 'src/app/api-clients';
+import { OncologyPatientsClient } from 'src/app/api-clients';
 
 @Component({
   selector: 'app-edit-patient',
@@ -35,7 +34,7 @@ export class EditPatientComponent implements OnInit {
   ];
 
   constructor(
-    private client: OncologyPatientClient,
+    private client: OncologyPatientsClient,
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService
@@ -59,10 +58,10 @@ export class EditPatientComponent implements OnInit {
     });
   }
 
-    private updateDatesInPatient() {
-        this.patient.person.birthdate = this.patient.person.birthdate && moment(this.patient.person.birthdate).format(moment.HTML5_FMT.DATE);
-        this.patient.admissionDate = this.patient.admissionDate && moment(this.patient.admissionDate).format(moment.HTML5_FMT.DATE);
-    }
+  private updateDatesInPatient() {
+      this.patient.person.birthdate = this.patient.person.birthdate && moment(this.patient.person.birthdate).format(moment.HTML5_FMT.DATE);
+      this.patient.admissionDate = this.patient.admissionDate && moment(this.patient.admissionDate).format(moment.HTML5_FMT.DATE);
+  }
 
   saveRecord(regForm) {
     if (this.isSaving) return;

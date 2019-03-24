@@ -8,36 +8,34 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.Wards.Commands
+namespace OLBIL.OncologyApplication.Beds.Commands
 {
-    public class UpdateWardCommandHandler : IRequestHandler<UpdateWardCommand>
+    public class UpdateBedCommandHandler : IRequestHandler<UpdateBedCommand>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
 
-        public UpdateWardCommandHandler(OncologyContext context, IMapper mapper)
+        public UpdateBedCommandHandler(OncologyContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateWardCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateBedCommand request, CancellationToken cancellationToken)
         {
             var model = request.Model;
-            var item = await _context.Wards
-                .Where(p => p.WardId == model.WardId)
+            var item = await _context.Beds
+                .Where(p => p.BedId == model.BedId)
                 .FirstOrDefaultAsync(cancellationToken);
             if (item == null)
             {
-                throw new NotFoundException(nameof(Ward), nameof(model.WardId), model.WardId);
+                throw new NotFoundException(nameof(Bed), nameof(model.BedId), model.BedId);
             }
 
-            item.BuildingId = model.BuildingId;
-            item.FloorNumber = model.FloorNumber;
             item.Name = model.Name;
-            item.UnitId = model.UnitId;
-            item.WardGenderId = model.WardGenderId;
-            item.WardStatusId = model.WardStatusId;
+            item.LongDescription = model.LongDescription;
+            item.WardId = model.WardId;
+            item.BedStatusId = model.BedStatusId;
 
             await _context.SaveChangesAsync(cancellationToken);
             return new Unit();

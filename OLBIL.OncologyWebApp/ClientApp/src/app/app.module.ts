@@ -12,7 +12,7 @@ import { PatientsComponent } from './patients/root/patients.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { PatientsModule } from './patients/patients.module';
 import { AppRoutingModule } from "./app-routing.module";
-import { OncologyPatientClient } from './api-clients';
+import { OncologyPatientsClient } from './api-clients';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { OncologyPatientClient } from './api-clients';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot()
   ],
-  providers: [OncologyPatientClient],
+  providers: [OncologyPatientsClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

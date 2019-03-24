@@ -1,8 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
-import { environment } from "../../../environments/environment";
-import { OncologyPatientModel, PersonModel, OncologyPatientClient } from 'src/app/api-clients';
+import { OncologyPatientModel, PersonModel, OncologyPatientsClient } from '../../api-clients';
 import * as moment from 'moment';
 
 @Component({
@@ -37,8 +35,7 @@ export class CreatePatientComponent implements OnInit {
   ];
 
   constructor(
-    private client: OncologyPatientClient
-    //private http: HttpClient, @Inject('BASE_URL') private baseUrl: string
+    private client: OncologyPatientsClient
   ) {
     //if (!environment.production) {
       this.patient = new OncologyPatientModel({
@@ -57,7 +54,7 @@ export class CreatePatientComponent implements OnInit {
 
   submitRegistrationAttempt(regForm) {
     this.isSaving = true;
-    this.patient.person.birthdate = new Date(this.patient.person.birthdate);
+    this.patient.person.birthdate = this.patient.person.birthdate && new Date(this.patient.person.birthdate);
     this.client.attemptCreatePatient(this.patient)
       .subscribe(result => {
       this.matchingRecords = result.items.map(r => {
@@ -89,6 +86,10 @@ export class CreatePatientComponent implements OnInit {
     this.showForm = false;
     this.showMatchesGrid = true;
     this.showEditForm = false;
+  }
+
+  volverAPreliminar() {
+    this.showOnlyValidationForm();
   }
 
   continueRegistration() {

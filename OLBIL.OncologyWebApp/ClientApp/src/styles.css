@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~ag-grid-community/dist/styles/ag-grid.css";
-@import "~ag-grid-community/dist/styles/ag-theme-bootstrap.css";
+@import "~ag-grid-community/dist/styles/ag-theme-blue.css";
 
 section {
   margin-top: 10px;
@@ -10,4 +10,11 @@ section {
 /* Add application styles & imports to this file! */
 #toast-container > div {
   opacity: 1;
+}
+
+
+.olbil-datagrid-container {
+  overflow: hidden;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

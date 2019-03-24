@@ -1,10 +1,14 @@
 <section id="registered">
   <h3>Registrados</h3>
-  <div style="overflow: hidden">
-    <ag-grid-angular class="ag-theme-bootstrap"
+  <div class="olbil-datagrid-container">
+    <ag-grid-angular *ngIf="rowData.length > 0"
+                     class="ag-theme-blue"
                      [rowData]="rowData"
                      [columnDefs]="columnDefs">
     </ag-grid-angular>
+    <div class="text-center" *ngIf="rowData.length == 0">
+      <p>No hay pacientes registrados.</p>
+    </div>
   </div>
 
   <a [routerLink]="['../create']" class="btn btn-outline-secondary btn-link">Registrar Nuevo</a>

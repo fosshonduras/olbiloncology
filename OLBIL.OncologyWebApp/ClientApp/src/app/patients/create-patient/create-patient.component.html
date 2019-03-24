@@ -48,17 +48,27 @@
             Los siguientes pacientes fueron encontrados con información similar.
             Haga click sobre uno para editarlo o <strong>Continuar</strong> para registrar nuevo paciente.
           </div>
-          <div style="overflow: hidden">
-            <ag-grid-angular class="ag-theme-bootstrap"
+          <div class="olbil-datagrid-container">
+            <ag-grid-angular *ngIf="matchingRecords.length > 0"
+                             class="ag-theme-blue"
                              [rowData]="matchingRecords"
                              [columnDefs]="columnDefs">
             </ag-grid-angular>
+            <div class="text-center" *ngIf="matchingRecords.length == 0">
+              <p>No se encontraron coincidencias.</p>
+            </div>
           </div>
-          <div class="form-group">
-            <button class="btn btn-outline-primary" (click)="continueRegistration()">Continuar</button>
+          <div class="m-2 form-row">
+            <div class="col-auto">
+              <button class="btn btn-outline-primary" (click)="continueRegistration()">Continuar</button>
+            </div>
+            <div class="col-auto">
+              
+              <button class="btn btn-outline-secondary" (click)="volverAPreliminar()">Refinar búsqueda</button>
+            </div>
           </div>
-        </div>
       </div>
+    </div>
     </div>
     <div class="card">
       <div class="card-header" id="editFormCard">
@@ -66,6 +76,9 @@
       </div>
       <div class="collapse" [class.show]="showEditForm" data-parent="mainAccordion">
         <div class="card-body">
+          <div class="form-row">
+            <button class="btn btn-link" (click)="volverAPreliminar()">...Volver a búsqueda</button>
+          </div>
           <app-edit-patient *ngIf="showEditForm" [isNewRecord]="true" [patient]="newPatient"></app-edit-patient>
         </div>
       </div>

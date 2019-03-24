@@ -9,7 +9,7 @@ using OLBIL.OncologyApplication.OncologyPatients.Commands.UpdatePatient;
 
 namespace OLBIL.OncologyWebApp.Controllers
 {
-    public class OncologyPatientController: OlbilController
+    public class OncologyPatientsController: OlbilController
     {
         [HttpGet]
         public async Task<ActionResult<OncologyPatientsListModel>> GetAll()
