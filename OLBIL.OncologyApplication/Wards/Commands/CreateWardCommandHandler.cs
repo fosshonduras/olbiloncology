@@ -35,11 +35,11 @@ namespace OLBIL.OncologyApplication.Wards.Commands
             var newRecord = new Ward
             {
                 Name = model.Name,
-                BuildingId = model.BuildingId,
-                FloorNumber = model.FloorNumber,
-                UnitId = model.UnitId,
-                WardGenderId = model.WardGenderId,
-                WardStatusId = model.WardStatusId
+                BuildingId = model.BuildingId.Value,
+                FloorNumber = model.FloorNumber.Value,
+                UnitId = model.UnitId.Value,
+                WardGenderId = model.WardGenderId.Value,
+                WardStatusId = model.WardStatusId.Value
             };
 
             _context.Wards.Add(newRecord);

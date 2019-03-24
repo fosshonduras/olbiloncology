@@ -4,13 +4,13 @@ import { HomeComponent } from './home/home.component';
 import { PatientsComponent } from './patients/root/patients.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { PATIENTS_ROUTES } from './patients/patients.routes';
-import { AdministrationComponent } from './administration/root/administration.component';
+import { AdminRootComponent } from './administration/admin-root/admin-root.component';
 import { ADMINISTRATION_ROUTES } from './administration/administration.routes';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'patients', component: PatientsComponent, children: PATIENTS_ROUTES },
-  { path: 'administration', component: AdministrationComponent, children: ADMINISTRATION_ROUTES },
+  { path: 'administration', component: AdminRootComponent, children: ADMINISTRATION_ROUTES },
   { path: 'appointments', component: AppointmentsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];

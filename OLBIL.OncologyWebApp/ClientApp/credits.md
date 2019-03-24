@@ -1,2 +1,3 @@
 Some icons were provided by:
-Freepik: https://www.freepik.com
+Freepik: https://www.flaticon.com/authors/freepik
+UltimaTearm: https://www.flaticon.com/authors/ultimatearm

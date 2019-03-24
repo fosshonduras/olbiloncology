@@ -24,16 +24,16 @@ namespace OLBIL.OncologyApplication.Buildings.Commands
         public async Task<Unit> Handle(UpdateBuildingCommand request, CancellationToken cancellationToken)
         {
             var model = request.Model;
-            var building = await _context.Buildings
+            var item = await _context.Buildings
                 .Where(p => p.BuildingId == model.BuildingId)
                 .FirstOrDefaultAsync(cancellationToken);
-            if (building == null)
+            if (item == null)
             {
                 throw new NotFoundException(nameof(Building), nameof(model.BuildingId), model.BuildingId);
             }
 
-            building.Code = model.Code;
-            building.Name = model.Name;
+            item.Code = model.Code;
+            item.Name = model.Name;
 
             await _context.SaveChangesAsync(cancellationToken);
             return new Unit();

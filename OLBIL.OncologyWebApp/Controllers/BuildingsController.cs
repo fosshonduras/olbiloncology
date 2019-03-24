@@ -21,14 +21,14 @@ namespace OLBIL.OncologyWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> CreatePatient([FromBody]BuildingModel model)
+        public async Task<ActionResult<int>> CreateBuilding([FromBody]BuildingModel model)
         {
             //return Created($"{AppConstants.API_URL_PREFIX}/buildings/", await Mediator.Send(new CreateBuildingCommand { Model = model }));
             return Ok(await Mediator.Send(new CreateBuildingCommand { Model = model }));
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdatePatient([FromBody]BuildingModel model)
+        public async Task<ActionResult> UpdateBuilding([FromBody]BuildingModel model)
         {
             await Mediator.Send(new UpdateBuildingCommand { Model = model });
             return NoContent();

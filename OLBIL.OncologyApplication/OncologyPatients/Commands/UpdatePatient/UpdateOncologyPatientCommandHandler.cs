@@ -54,7 +54,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands.UpdatePatient
 
         private void MapPatientDetails(UpdateOncologyPatientCommand request, OncologyPatient patient)
         {
-            patient.OncologyPatientId = request.Model.OncologyPatientId;
+            patient.OncologyPatientId = request.Model.OncologyPatientId.Value;
             patient.RegistrationDate = request.Model.RegistrationDate;
             patient.AdmissionDate = request.Model.AdmissionDate;
             patient.InformantsRelationship = request.Model.InformantsRelationship;

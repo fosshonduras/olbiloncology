@@ -68,33 +68,30 @@ export class EditPatientComponent implements OnInit {
     this.isSaving = true;
     this.patient.person.birthdate = this.patient.person.birthdate && new Date(this.patient.person.birthdate);
     this.patient.admissionDate = this.patient.admissionDate && new Date(this.patient.admissionDate);
+
     if (this.isNewRecord) {
-      this.client.createPatient(this.patient).subscribe(result => {
-        this.toastr.success("Paciente registrado.");
-        setTimeout(() => {
-          this.router.navigate(['./list'], { relativeTo: this.route.parent });
-        }, 2000);
-      }, err => {
-        this.isSaving = false;
-        this.toastr.warning(err.error ? this.extractErrorMessage(err) : err.message);
-      });
+      this.client.createPatient(this.patient)
+        .subscribe(r => this.handleSuccess(r), e => this.handleFailure(e));
     } else {
-      this.client.updatePatient(this.patient).subscribe(result => {
-        this.toastr.success("Paciente actualizado.");
-        setTimeout(() => {
-          this.router.navigate(['./list'], { relativeTo: this.route.parent });
-        }, 2000);
-      }, err => {
-        this.isSaving = false;
-        this.toastr.warning(err.error ? this.extractErrorMessage(err) : err.message);
-      });
+      this.client.updatePatient(this.patient)
+        .subscribe(r => this.handleSuccess(r), e => this.handleFailure(e));
     }
   }
 
+  handleFailure(err) {
+    this.isSaving = false;
+    this.toastr.warning(err.error ? this.extractErrorMessage(err) : err.message);
+  }
+
+  handleSuccess(result) {
+    this.toastr.success("Datos guardados.");
+    setTimeout(() => {
+      this.router.navigate(['./list'], { relativeTo: this.route.parent });
+    }, 2000);
+  }
+
   extractErrorMessage(err) {
-    let errorObject = err.error;
-    let messageArray = errorObject.error;
-    let message = messageArray.join("\n");
+    let message = JSON.parse(err.response).error;
     return message;
   }
 }

@@ -7,7 +7,7 @@ namespace OLBIL.OncologyApplication.Models
 {
     public class OncologyPatientModel: IHaveCustomMapping
     {
-        public int OncologyPatientId { get; set; }
+        public int? OncologyPatientId { get; set; }
 
         public PersonModel Person { get; set; }
         

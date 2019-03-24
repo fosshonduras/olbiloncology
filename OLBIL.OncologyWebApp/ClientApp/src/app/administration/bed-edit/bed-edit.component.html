@@ -1,0 +1,35 @@
+<section id="edit-container">
+  <h3>{{ pageTitle }}</h3>
+  <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
+    <div class="form-row">
+      <p>Id en Sistema: {{bed.bedId || '(nuevo)'}}</p>
+    </div>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="nameInput">Nombre</label>
+        <input [(ngModel)]="bed.name" type="text" class="form-control" required name="name" id="nameInput" placeholder="Ej. Mujeres 05">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="longDescriptionInput">Descripción larga</label>
+        <input [(ngModel)]="bed.longDescription" type="text" class="form-control" required name="longDescription" id="longDescriptionInput" placeholder="Ej. Camillas de la sala de Mujeres #05">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="wardIdInput">Sala</label>
+        <input [(ngModel)]="bed.wardId" type="text" class="form-control" name="wardId" id="wardInput" placeholder="Ej. 1" aria-describedby="help-ward">
+        <small id="help-ward" class="text-muted">Este es el ID en el sistema.</small>
+      </div>
+      <div class="form-group col col-auto">
+        <label for="statusIdInput">Status</label>
+        <select [(ngModel)]="bed.bedStatusId" name="status" id="statusIdInput" class="form-control">
+          <option *ngFor="let status of bedStatuses" [value]="status.bedStatusId">{{status.name}}</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
+    <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Guardando...</span>
+    </div>
+  </form>
+</section>

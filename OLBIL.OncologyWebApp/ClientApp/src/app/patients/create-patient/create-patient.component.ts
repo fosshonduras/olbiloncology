@@ -37,24 +37,17 @@ export class CreatePatientComponent implements OnInit {
   constructor(
     private client: OncologyPatientsClient
   ) {
-    //if (!environment.production) {
       this.patient = new OncologyPatientModel({
         oncologyPatientId: -1,
         person: new PersonModel( {
-          //personId: 'A',
-          //firstName: "Karla",
-          //lastName: "Tulio",
-          //governmentIDNumber: "01012020",
-          //nationality: 'Nigeriano',
-          //birthdate: new Date('2000-12-12')
         })
       });
-    //}
   }
 
   submitRegistrationAttempt(regForm) {
     this.isSaving = true;
     this.patient.person.birthdate = this.patient.person.birthdate && new Date(this.patient.person.birthdate);
+
     this.client.attemptCreatePatient(this.patient)
       .subscribe(result => {
       this.matchingRecords = result.items.map(r => {

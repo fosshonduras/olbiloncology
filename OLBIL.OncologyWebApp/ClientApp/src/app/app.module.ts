@@ -13,7 +13,8 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { PatientsModule } from './patients/patients.module';
 import { AppRoutingModule } from "./app-routing.module";
 import { OncologyPatientsClient } from './api-clients';
-import { AdministrationComponent } from './administration/root/administration.component';
+import { AdminRootComponent } from './administration/admin-root/admin-root.component';
+import { AdministrationModule } from './administration/administration.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { AdministrationComponent } from './administration/root/administration.co
     NavMenuComponent,
     HomeComponent,
     PatientsComponent,
-    AdministrationComponent,
+    AdminRootComponent,
     AppointmentsComponent
   ],
   imports: [
@@ -29,6 +30,7 @@ import { AdministrationComponent } from './administration/root/administration.co
     HttpClientModule,
     AppRoutingModule,
     PatientsModule,
+    AdministrationModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot()
   ],

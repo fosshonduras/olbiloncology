@@ -34,8 +34,8 @@ namespace OLBIL.OncologyApplication.Beds.Commands
 
             item.Name = model.Name;
             item.LongDescription = model.LongDescription;
-            item.WardId = model.WardId;
-            item.BedStatusId = model.BedStatusId;
+            item.WardId = model.WardId.Value;
+            item.BedStatusId = model.BedStatusId.Value;
 
             await _context.SaveChangesAsync(cancellationToken);
             return new Unit();

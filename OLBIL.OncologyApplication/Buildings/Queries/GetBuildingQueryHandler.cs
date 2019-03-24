@@ -12,8 +12,7 @@ using System.Threading.Tasks;
 namespace OLBIL.OncologyApplication.Buildings.Queries
 {
     public class GetBuildingQueryHandler : IRequestHandler<GetBuildingQuery, BuildingModel>
-    {
-        
+    {     
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
 

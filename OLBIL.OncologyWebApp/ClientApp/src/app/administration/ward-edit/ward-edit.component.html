@@ -1,0 +1,46 @@
+<section id="edit-container">
+  <h3>{{ pageTitle }}</h3>
+  <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
+    <div class="form-row">
+      <p>Id en Sistema: {{ward.wardId || '(nuevo)'}}</p>
+    </div>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="nameInput">Nombre</label>
+        <input [(ngModel)]="ward.name" type="text" class="form-control" required name="name" id="nameInput" placeholder="Ej. Consulta Externa">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="buildingIdInput">Edificio</label>
+        <input [(ngModel)]="ward.buildingId" type="text" class="form-control" name="buildingId" id="buildingInput" placeholder="Ej. 2" aria-describedby="help-building">
+        <small id="help-building" class="text-muted">Este es el ID en el sistema.</small>
+      </div>
+      <div class="form-group col col-auto">
+        <label for="floorNumberInput">Nivel</label>
+        <input [(ngModel)]="ward.floorNumber" type="text" class="form-control" name="floorNumber" id="floorNumberInput" placeholder="Ej. 2">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="unitIdInput">Unidad</label>
+        <input [(ngModel)]="ward.unitId" type="text" class="form-control" name="unitId" id="uniIdInput" placeholder="Ej. 3" aria-describedby="help-unit">
+        <small id="help-unit" class="text-muted">Este es el ID en el sistema.</small>
+      </div>
+      <div class="form-group col col-auto">
+        <label for="statusIdInput">Status</label>
+        <select [(ngModel)]="ward.wardStatusId" name="status" id="statusIdInput" class="form-control">
+          <option *ngFor="let status of wardStatuses" [value]="status.wardStatusId">{{status.name}}</option>
+        </select>
+      </div>
+      <div class="form-group col col-auto">
+        <label for="genderIdInput">Género</label>
+        <select [(ngModel)]="ward.wardGenderId" name="gender" id="genderIdInput" class="form-control">
+          <option *ngFor="let gender of wardGenders" [value]="gender.wardGenderId">{{gender.name}}</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
+    <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Guardando...</span>
+    </div>
+  </form>
+</section>

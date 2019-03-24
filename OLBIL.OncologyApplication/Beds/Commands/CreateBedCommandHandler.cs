@@ -36,8 +36,8 @@ namespace OLBIL.OncologyApplication.Beds.Commands
             {
                 Name = model.Name,
                 LongDescription = model.LongDescription,
-                WardId = model.WardId,
-                BedStatusId = model.BedStatusId
+                WardId = model.WardId.Value,
+                BedStatusId = model.BedStatusId.Value
             };
 
             _context.Beds.Add(newRecord);

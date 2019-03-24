@@ -32,12 +32,12 @@ namespace OLBIL.OncologyApplication.Wards.Commands
                 throw new NotFoundException(nameof(Ward), nameof(model.WardId), model.WardId);
             }
 
-            item.BuildingId = model.BuildingId;
-            item.FloorNumber = model.FloorNumber;
+            item.BuildingId = model.BuildingId.Value;
+            item.FloorNumber = model.FloorNumber.Value;
             item.Name = model.Name;
-            item.UnitId = model.UnitId;
-            item.WardGenderId = model.WardGenderId;
-            item.WardStatusId = model.WardStatusId;
+            item.UnitId = model.UnitId.Value;
+            item.WardGenderId = model.WardGenderId.Value;
+            item.WardStatusId = model.WardStatusId.Value;
 
             await _context.SaveChangesAsync(cancellationToken);
             return new Unit();

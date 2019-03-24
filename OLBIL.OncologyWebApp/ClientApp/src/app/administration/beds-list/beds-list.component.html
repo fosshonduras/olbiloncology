@@ -1,0 +1,15 @@
+<section id="registered">
+  <h3>Camas</h3>
+  <div class="olbil-datagrid-container">
+    <ag-grid-angular *ngIf="rowData.length > 0"
+                     class="ag-theme-blue"
+                     [rowData]="rowData"
+                     [columnDefs]="columnDefs">
+    </ag-grid-angular>
+    <div class="text-center" *ngIf="rowData.length == 0">
+      <p>No hay camas registradas.</p>
+    </div>
+  </div>
+
+  <a [routerLink]="['new']" class="btn btn-outline-secondary btn-link">Registrar Nueva</a>
+</section>
