@@ -8,6 +8,7 @@ import { OncologyPatientsClient } from '../../api-clients';
   styleUrls: ['./patients-list.component.css']
 })
 export class PatientsListComponent implements OnInit {
+  isLoading: boolean = true;
   columnDefs = [
     {
       headerName: 'Identidad Nacional', field: 'governmentIDNumber',
@@ -33,9 +34,11 @@ export class PatientsListComponent implements OnInit {
   }
 
   getRegistered() {
+    this.isLoading = true;
     this.client.getAll()
       .subscribe(result => {
         this.rowData = result.items.map(r => {
+          this.isLoading = false;
           return { ...r, ...r.person }
         });
       }, error => console.error(error));

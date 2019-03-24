@@ -6,8 +6,12 @@
                      [rowData]="rowData"
                      [columnDefs]="columnDefs">
     </ag-grid-angular>
-    <div class="text-center" *ngIf="rowData.length == 0">
+
+    <div class="text-center" *ngIf="!isLoading && rowData.length == 0">
       <p>No hay pacientes registrados.</p>
+    </div>
+    <div *ngIf="isLoading" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Cargando...</span>
     </div>
   </div>
 

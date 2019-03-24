@@ -8,6 +8,7 @@ import { LinkRendererComponent } from '../../helper-components/LinkRendererCompo
   styleUrls: ['./beds-list.component.css']
 })
 export class BedsListComponent implements OnInit {
+  isLoading: boolean = false;
 
   rowData: BedModel[] = [];
 
@@ -33,9 +34,11 @@ export class BedsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.client.getAll()
       .subscribe(result => {
         this.rowData = result.items;
+        this.isLoading = false;
       }, err => {
         console.log(err);
       })

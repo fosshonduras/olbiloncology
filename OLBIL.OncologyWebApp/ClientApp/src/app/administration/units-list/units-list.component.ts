@@ -8,6 +8,7 @@ import { LinkRendererComponent } from '../../helper-components/LinkRendererCompo
   styleUrls: ['./units-list.component.css']
 })
 export class UnitsListComponent implements OnInit {
+  isLoading: boolean = false;
   rowData: UnitModel[] = [];
 
   columnDefs = [
@@ -31,9 +32,12 @@ export class UnitsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
+
     this.client.getAll()
       .subscribe(result => {
         this.rowData = result.items;
+        this.isLoading = false;
       }, err => {
         console.log(err);
       })

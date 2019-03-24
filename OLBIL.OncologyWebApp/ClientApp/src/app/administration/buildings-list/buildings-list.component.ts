@@ -8,6 +8,7 @@ import { BuildingModel, BuildingsClient } from 'src/app/api-clients';
   styleUrls: ['./buildings-list.component.css']
 })
 export class BuildingsListComponent implements OnInit {
+  isLoading: boolean = false;
   rowData: BuildingModel[] = [];
 
   columnDefs = [
@@ -31,9 +32,12 @@ export class BuildingsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
+
     this.client.getAll()
       .subscribe(result => {
         this.rowData = result.items;
+        this.isLoading = false;
       }, err => {
         console.log(err);
       })

@@ -8,7 +8,7 @@ import { WardsClient, WardModel } from '../../api-clients';
   styleUrls: ['./wards-list.component.css']
 })
 export class WardsListComponent implements OnInit {
-
+  isLoading: boolean = false;
   rowData: WardModel[] = [];
 
   columnDefs = [
@@ -35,9 +35,12 @@ export class WardsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
+
     this.client.getAll()
       .subscribe(result => {
         this.rowData = result.items;
+        this.isLoading = false;
       }, err => {
         console.log(err);
       })
