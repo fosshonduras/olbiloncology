@@ -1,0 +1,37 @@
+<section id="administration_section">
+  <div class="card-deck">
+    <div class="card mb-3" style="max-width: 18rem;">
+      <div class="card-header">
+        <h4><a [routerLink]="['./buildings']">Edificios</a></h4>
+      </div>
+
+      <div class="card-body text-primary">
+        <a [routerLink]="['./buildings']">
+          <img class="card-img" src="../../../assets/img/hospital-building-icon.svg" width="150" height="150" alt="Icon of hospital building">
+        </a>
+      </div>
+    </div>
+    <div class="card mb-3" style="max-width: 18rem;">
+      <div class="card-header">
+        <h4><a [routerLink]="['./ward']">Salas</a></h4>
+      </div>
+
+      <div class="card-body text-primary">
+        <a [routerLink]="['./wards']">
+          <img class="card-img" src="../../../assets/img/hospital-ward-icon.svg" width="150" height="150" alt="Icon of hospital ward">
+        </a>
+      </div>
+    </div>
+    <div class="card mb-3" style="max-width: 18rem;">
+      <div class="card-header">
+        <h4><a [routerLink]="['./beds']">Camas</a></h4>
+      </div>
+
+      <div class="card-body text-primary">
+        <a [routerLink]="['./beds']">
+          <img class="card-img" src="../../../assets/img/hospital-bed-icon.svg" width="150" height="150" alt="Icon of hospital bed">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

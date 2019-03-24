@@ -13,6 +13,7 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { PatientsModule } from './patients/patients.module';
 import { AppRoutingModule } from "./app-routing.module";
 import { OncologyPatientsClient } from './api-clients';
+import { AdministrationComponent } from './administration/root/administration.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { OncologyPatientsClient } from './api-clients';
     NavMenuComponent,
     HomeComponent,
     PatientsComponent,
+    AdministrationComponent,
     AppointmentsComponent
   ],
   imports: [
