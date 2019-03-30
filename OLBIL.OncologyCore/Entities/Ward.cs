@@ -13,7 +13,7 @@ namespace OLBIL.OncologyCore.Entities
         public string Name { get; set; }
         public int BuildingId { get; set; }
         public int FloorNumber { get; set; }
-        public int UnitId { get; set; }
+        public int HospitalUnitId { get; set; }
         public WardGender WardGenderId { get; set; }
         public WardStatus WardStatusId { get; set; }
 

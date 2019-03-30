@@ -2,7 +2,7 @@
   <h3>{{ pageTitle }}</h3>
   <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
     <div class="form-row">
-      <p>Id en Sistema: {{unit.unitId || '(nuevo)'}}</p>
+      <p>Id en Sistema: {{unit.hospitalUnitId || '(nuevo)'}}</p>
     </div>
     <div class="form-row">
       <div class="form-group col col-auto">

@@ -35,7 +35,7 @@ namespace OLBIL.OncologyApplication.Wards.Commands
             item.BuildingId = model.BuildingId.Value;
             item.FloorNumber = model.FloorNumber.Value;
             item.Name = model.Name;
-            item.UnitId = model.UnitId.Value;
+            item.HospitalUnitId = model.HospitalUnitId.Value;
             item.WardGenderId = model.WardGenderId.Value;
             item.WardStatusId = model.WardStatusId.Value;
 

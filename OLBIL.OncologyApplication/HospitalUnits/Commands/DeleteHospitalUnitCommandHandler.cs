@@ -10,25 +10,25 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.HospitalUnits.Commands
 {
-    public class DeleteUnitCommandHandler : IRequestHandler<DeleteUnitCommand>
+    public class DeleteHospitalUnitCommandHandler : IRequestHandler<DeleteHospitalUnitCommand>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
 
-        public DeleteUnitCommandHandler(OncologyContext context, IMapper mapper)
+        public DeleteHospitalUnitCommandHandler(OncologyContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(DeleteUnitCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteHospitalUnitCommand request, CancellationToken cancellationToken)
         {
             var item = await _context.Units
-                .Where(p => p.UnitId == request.Id)
+                .Where(p => p.HospitalUnitId == request.Id)
                 .FirstOrDefaultAsync(cancellationToken);
             if (item == null)
             {
-                throw new NotFoundException(nameof(HospitalUnit), nameof(item.UnitId), request.Id);
+                throw new NotFoundException(nameof(HospitalUnit), nameof(item.HospitalUnitId), request.Id);
             }
 
             _context.Units.Remove(item);

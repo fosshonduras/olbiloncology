@@ -10,33 +10,38 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.HospitalUnits.Commands
 {
-    public class UpdateUnitCommandHandler : IRequestHandler<UpdateUnitCommand>
+    public class CreateHospitalUnitCommandHandler : IRequestHandler<CreateHospitalUnitCommand, int>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
 
-        public UpdateUnitCommandHandler(OncologyContext context, IMapper mapper)
+        public CreateHospitalUnitCommandHandler(OncologyContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdateUnitCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateHospitalUnitCommand request, CancellationToken cancellationToken)
         {
             var model = request.Model;
             var item = await _context.Units
-                .Where(p => p.UnitId == model.UnitId)
+                .Where(p => p.HospitalUnitId == model.HospitalUnitId)
                 .FirstOrDefaultAsync(cancellationToken);
-            if (item == null)
+            if(item != null)
             {
-                throw new NotFoundException(nameof(HospitalUnit), nameof(model.UnitId), model.UnitId);
+                throw new AlreadyExistsException(nameof(HospitalUnit), nameof(model.HospitalUnitId), model.HospitalUnitId);
             }
 
-            item.Code = model.Code;
-            item.Name = model.Name;
+            var newRecord = new HospitalUnit
+            {
+                Name = model.Name,
+                Code = model.Code,
+            };
 
+            _context.Units.Add(newRecord);
             await _context.SaveChangesAsync(cancellationToken);
-            return new Unit();
+
+            return newRecord.HospitalUnitId;
         }
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UnitModel, UnitsClient } from '../../api-clients';
+import { HospitalUnitModel, HospitalUnitsClient } from '../../api-clients';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 
 @Component({
@@ -9,17 +9,17 @@ import { LinkRendererComponent } from '../../helper-components/LinkRendererCompo
 })
 export class UnitsListComponent implements OnInit {
   isLoading: boolean = false;
-  rowData: UnitModel[] = [];
+  rowData: HospitalUnitModel[] = [];
 
   columnDefs = [
-    { headerName: 'Unit ID', field: 'unitId' },
+    { headerName: 'Unit ID', field: 'hospitalUnitId' },
     {
       headerName: 'Código', field: 'code',
       cellRendererFramework: LinkRendererComponent,
       cellRendererParams: ({ data }) => {
         return ({
           inRouterLink: `./`,
-          routeParam: data.unitId,
+          routeParam: data.hospitalUnitId,
           value: data.code
         });
       }
@@ -28,7 +28,7 @@ export class UnitsListComponent implements OnInit {
   ];
 
   constructor(
-    private client: UnitsClient
+    private client: HospitalUnitsClient
   ) { }
 
   ngOnInit() {

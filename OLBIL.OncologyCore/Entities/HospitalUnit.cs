@@ -8,7 +8,7 @@ namespace OLBIL.OncologyCore.Entities
         {
             Wards = new HashSet<Ward>();
         }
-        public int UnitId { get; set; }
+        public int HospitalUnitId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
 

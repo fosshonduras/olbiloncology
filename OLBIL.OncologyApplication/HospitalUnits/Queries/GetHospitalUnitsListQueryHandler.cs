@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.HospitalUnits.Queries
 {
-    public class GetUnitsListQueryHandler : IRequestHandler<GetUnitsListQuery, UnitsListModel>
+    public class GetHospitalUnitsListQueryHandler : IRequestHandler<GetHospitalUnitsListQuery, HospitalUnitsListModel>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
 
-        public GetUnitsListQueryHandler(OncologyContext context, IMapper mapper)
+        public GetHospitalUnitsListQueryHandler(OncologyContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<UnitsListModel> Handle(GetUnitsListQuery request, CancellationToken cancellationToken)
+        public async Task<HospitalUnitsListModel> Handle(GetHospitalUnitsListQuery request, CancellationToken cancellationToken)
         {
-            return new UnitsListModel
+            return new HospitalUnitsListModel
             {
                 Items = await _context.Units
-                                   .ProjectTo<UnitModel>(_mapper.ConfigurationProvider)
+                                   .ProjectTo<HospitalUnitModel>(_mapper.ConfigurationProvider)
                                    .ToListAsync(cancellationToken)
             };
         }

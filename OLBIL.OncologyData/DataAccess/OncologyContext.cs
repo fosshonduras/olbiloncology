@@ -42,7 +42,7 @@ namespace OLBIL.OncologyData
                 }
             }
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(OncologyPatientTypeConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonTypeConfiguration).Assembly);
         }
     }
 }

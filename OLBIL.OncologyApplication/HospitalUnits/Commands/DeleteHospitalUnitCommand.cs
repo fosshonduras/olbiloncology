@@ -2,7 +2,7 @@
 
 namespace OLBIL.OncologyApplication.HospitalUnits.Commands
 {
-    public class DeleteUnitCommand: IRequest
+    public class DeleteHospitalUnitCommand: IRequest
     {
         public int Id { get; set; }
     }

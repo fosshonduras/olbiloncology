@@ -3,8 +3,7 @@ using OLBIL.OncologyApplication.Models;
 
 namespace OLBIL.OncologyApplication.HospitalUnits.Queries
 {
-    public class GetUnitQuery: IRequest<UnitModel>
+    public class GetHospitalUnitsListQuery: IRequest<HospitalUnitsListModel>
     {
-        public int Id { get; set; }
     }
 }

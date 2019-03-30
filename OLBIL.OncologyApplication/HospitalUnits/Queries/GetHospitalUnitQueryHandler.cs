@@ -11,26 +11,26 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.HospitalUnits.Queries
 {
-    public class GetUnitQueryHandler : IRequestHandler<GetUnitQuery, UnitModel>
+    public class GetHospitalUnitQueryHandler : IRequestHandler<GetHospitalUnitQuery, HospitalUnitModel>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
 
-        public GetUnitQueryHandler(OncologyContext context, IMapper mapper)
+        public GetHospitalUnitQueryHandler(OncologyContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<UnitModel> Handle(GetUnitQuery request, CancellationToken cancellationToken)
+        public async Task<HospitalUnitModel> Handle(GetHospitalUnitQuery request, CancellationToken cancellationToken)
         {
-            var item = _mapper.Map<UnitModel>(await _context
-                .Units.Where(o => o.UnitId == request.Id)
+            var item = _mapper.Map<HospitalUnitModel>(await _context
+                .Units.Where(o => o.HospitalUnitId == request.Id)
                 .SingleOrDefaultAsync(cancellationToken));
 
             if(item == null)
             {
-                throw new NotFoundException(nameof(HospitalUnit), nameof(item.UnitId), request.Id);
+                throw new NotFoundException(nameof(HospitalUnit), nameof(item.HospitalUnitId), request.Id);
             }
 
             return item;

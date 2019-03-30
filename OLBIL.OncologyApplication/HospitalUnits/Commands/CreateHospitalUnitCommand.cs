@@ -3,8 +3,8 @@ using OLBIL.OncologyApplication.Models;
 
 namespace OLBIL.OncologyApplication.HospitalUnits.Commands
 {
-    public class CreateUnitCommand : IRequest<int>
+    public class CreateHospitalUnitCommand : IRequest<int>
     {
-        public UnitModel Model { get; set; }
+        public HospitalUnitModel Model { get; set; }
     }
 }

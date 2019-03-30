@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UnitModel, UnitsClient } from '../../api-clients';
+import { HospitalUnitModel, HospitalUnitsClient } from '../../api-clients';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -12,16 +12,16 @@ export class UnitEditComponent implements OnInit {
   pageTitle: string;
   isNewRecord: boolean = false;
   unitId: number = -1;
-  unit: UnitModel;
+  unit: HospitalUnitModel;
   isSaving: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
-    private client: UnitsClient
+    private client: HospitalUnitsClient
   ) {
-    this.unit = new UnitModel();
+    this.unit = new HospitalUnitModel();
   }
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class UnitEditComponent implements OnInit {
 
   setupTargetRecord(): any {
     if (!this.isNewRecord) {
-      this.client.getUnit(this.unitId)
+      this.client.getHospitalUnit(this.unitId)
         .subscribe(result => {
           this.unit = result;
         }, err => {
@@ -52,10 +52,10 @@ export class UnitEditComponent implements OnInit {
   submitRegistration(regForm) {
     this.isSaving = true;
     if (this.isNewRecord) {
-      this.client.createUnit(this.unit)
+      this.client.createHospitalUnit(this.unit)
         .subscribe(r => this.handleSuccess(r), e => this.handleFailure(e));
     } else {
-      this.client.updateUnit(this.unit)
+      this.client.updateHospitalUnit(this.unit)
         .subscribe(r => this.handleSuccess(r), e => this.handleFailure(e));
     }
   }
