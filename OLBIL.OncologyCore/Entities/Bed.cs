@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OLBIL.OncologyCore.Entities
+namespace OLBIL.OncologyDomain.Entities
 {
     public class Bed : BaseEntity
     {

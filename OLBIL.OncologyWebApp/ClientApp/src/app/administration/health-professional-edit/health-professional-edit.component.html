@@ -1,0 +1,113 @@
+<section id="edit-container">
+  <h3>{{ pageTitle }}</h3>
+  <form #regEditForm="ngForm" *ngIf="showEditForm" (ngSubmit)="saveRecord(regEditForm)" novalidate>
+    <div class="form-row">
+      <p>Id en Sistema: {{medic.healthProfessionalId || '(nuevo)'}}</p>
+    </div>
+    <h5>Identificación</h5>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="governmentIDNumber">Número de Identidad</label>
+        <input [(ngModel)]="medic.person.governmentIDNumber" type="text" class="form-control" name="governmentIDNumber" id="governmentIDNumber"
+               aria-describedby="governmentIdHelp" placeholder="Ej. 0101200100101">
+        <small id="governmentIdHelp" class="form-text text-muted">Sin guiones.</small>
+      </div>
+      <div class="form-group col col-auto">
+        <label for="nationality">Nacionalidad</label>
+        <input [(ngModel)]="medic.person.nationality" type="text" class="form-control" name="nationality" id="nationality" placeholder="Ej. Hondureña">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="birthdate">Fecha de Nacimiento</label>
+        <input [(ngModel)]="medic.person.birthdate" type="date" class="form-control" required name="birthdate" id="birthdate" placeholder="Ej. 1990/12/25" />
+      </div>
+      <div class="form-group col col-auto">
+        <label for="birthplace">Lugar de Nacimiento</label>
+        <input [(ngModel)]="medic.person.birthplace" type="text" class="form-control" required name="birthplace" id="birthplace" placeholder="Ej. Gracias, Lempira" />
+      </div>
+    </div>
+    <h5>Nombres</h5>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="firstName">Nombre</label>
+        <input [(ngModel)]="medic.person.firstName" type="text" class="form-control" required name="firstName" id="firstName" placeholder="Ej. Maria">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="middleName">Segundo Nombre</label>
+        <input [(ngModel)]="medic.person.middleName" type="text" class="form-control" required name="middleName" id="middleName" placeholder="Ej. José">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="lastName">Apellido</label>
+        <input [(ngModel)]="medic.person.lastName" type="text" class="form-control" required name="lastName" id="lastName" placeholder="Ej. Perez">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="additionalLastName">Segundo Apellido</label>
+        <input [(ngModel)]="medic.person.additionalLastName" type="text" class="form-control" required name="additionalLastName" id="additionalLastName" placeholder="Ej. Rodriguez">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="preferredName">Nombre de Preferencia</label>
+        <input [(ngModel)]="medic.person.preferredName" type="text" class="form-control" required name="preferredName" id="additionalLastName" placeholder="Ej. Yaki">
+      </div>
+    </div>
+    <h5>Localidad</h5>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="address">Dirección Linea 1</label>
+        <input [(ngModel)]="medic.person.address" type="text" class="form-control" required name="address" id="address" placeholder="Ej. Col. 5 de Mayo, 6 Ave, 2 y 3 Calle">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="addressLine2">Dirección Linea 2</label>
+        <input [(ngModel)]="medic.person.addressLine2" type="text" class="form-control" required name="addressLine2" id="addressLine2" placeholder="Ej. Edificio Dr. Galindo, Apt. 314">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="city">Ciudad o Municipio</label>
+        <input [(ngModel)]="medic.person.city" type="text" class="form-control" required name="city" id="city" placeholder="Ej. Tegucigalpa">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="state">Estado o Departamento</label>
+        <input [(ngModel)]="medic.person.state" type="text" class="form-control" required name="state" id="state" placeholder="Ej. Francisco Morazán">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="country">País</label>
+        <input [(ngModel)]="medic.person.country" type="text" class="form-control" required name="country" id="country" placeholder="Ej. Honduras">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="homePhone">Teléfono</label>
+        <input [(ngModel)]="medic.person.homePhone" type="tel" class="form-control" required name="homePhone" id="homePhone" placeholder="Ej. 2220-1234">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="mobilePhone">Celular</label>
+        <input [(ngModel)]="medic.person.mobilePhone" type="tel" class="form-control" required name="mobilePhone" id="mobilePhone" placeholder="Ej. 8345-1234">
+      </div>
+    </div>
+    <h5>Demografía</h5>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="race">Raza</label>
+        <input [(ngModel)]="medic.person.race" type="text" class="form-control" required name="race" id="race" placeholder="Ej. Mestiza">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="inputGender">Género</label>
+        <select id="inputGender" [(ngModel)]="medic.person.gender" class="form-control" name="gender">
+          <option *ngFor="let gender of availableGenders" [value]="gender.id">{{gender.name}}</option>
+        </select>
+      </div>
+      <div class="form-group col col-auto">
+        <label for="familyStatus">Estatus Familiar</label>
+        <input [(ngModel)]="medic.person.familyStatus" type="text" class="form-control" required name="familyStatus" id="familyStatus" placeholder="Ej. Padres biológicos">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="schoolLevel">Escolaridad</label>
+        <select id="schoolLevel" [(ngModel)]="medic.person.schoolLevel" class="form-control" name="schoolLevel">
+          <option *ngFor="let level of schoolLevels" [value]="level.id">{{level.name}}</option>
+        </select>
+      </div>
+    </div>
+
+
+    <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
+    <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </form>
+
+</section>

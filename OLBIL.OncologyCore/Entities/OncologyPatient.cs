@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OLBIL.OncologyCore.Entities
+namespace OLBIL.OncologyDomain.Entities
 {
     public class OncologyPatient : BaseEntity
     {

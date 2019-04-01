@@ -16,9 +16,11 @@ import { BedEditComponent } from './bed-edit/bed-edit.component';
 import { AdminLandingComponent } from './admin-landing/admin-landing.component';
 import { UnitsListComponent } from './units-list/units-list.component';
 import { UnitEditComponent } from './unit-edit/unit-edit.component';
+import { HealthProfessionalsListComponent } from './health-professionals-list/health-professionals-list.component';
+import { HealthProfessionalEditComponent } from './health-professional-edit/health-professional-edit.component';
 
 @NgModule({
-  declarations: [BuildingsListComponent, BuildingEditComponent, WardEditComponent, WardsListComponent, BedsListComponent, BedEditComponent, AdminLandingComponent, UnitsListComponent, UnitEditComponent],
+  declarations: [BuildingsListComponent, BuildingEditComponent, WardEditComponent, WardsListComponent, BedsListComponent, BedEditComponent, AdminLandingComponent, UnitsListComponent, UnitEditComponent, HealthProfessionalsListComponent, HealthProfessionalEditComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
-using OLBIL.OncologyCore.Entities;
+using OLBIL.OncologyDomain.Entities;
 using OLBIL.OncologyData;
 using System.Linq;
 using System.Threading;
@@ -23,15 +23,15 @@ namespace OLBIL.OncologyApplication.Wards.Commands
 
         public async Task<Unit> Handle(DeleteWardCommand request, CancellationToken cancellationToken)
         {
-            var building = await _context.Wards
+            var item = await _context.Wards
                 .Where(p => p.WardId == request.Id)
                 .FirstOrDefaultAsync(cancellationToken);
-            if (building == null)
+            if (item == null)
             {
-                throw new NotFoundException(nameof(Ward), nameof(building.WardId), request.Id);
+                throw new NotFoundException(nameof(Ward), nameof(item.WardId), request.Id);
             }
 
-            _context.Wards.Remove(building);
+            _context.Wards.Remove(item);
 
             await _context.SaveChangesAsync(cancellationToken);
             return new Unit();

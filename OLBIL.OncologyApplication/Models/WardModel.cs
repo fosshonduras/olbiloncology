@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using OLBIL.OncologyApplication.Interfaces;
-using OLBIL.OncologyCore.Entities;
+using OLBIL.OncologyDomain.Entities;
 
 namespace OLBIL.OncologyApplication.Models
 {

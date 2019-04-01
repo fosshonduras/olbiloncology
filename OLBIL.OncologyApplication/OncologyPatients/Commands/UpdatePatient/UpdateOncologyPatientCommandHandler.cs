@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
 using OLBIL.OncologyApplication.Models;
-using OLBIL.OncologyCore.Entities;
+using OLBIL.OncologyDomain.Entities;
 using OLBIL.OncologyData;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyWebApp", "OLBIL.OncologyWebApp\OLBIL.OncologyWebApp.csproj", "{A6437B19-3BC5-4819-8D9C-993C71F52EE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyCore", "OLBIL.OncologyCore\OLBIL.OncologyCore.csproj", "{4A1C8916-3779-4BC9-9E8C-21D267110912}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyDomain", "OLBIL.OncologyCore\OLBIL.OncologyDomain.csproj", "{4A1C8916-3779-4BC9-9E8C-21D267110912}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyApplication", "OLBIL.OncologyApplication\OLBIL.OncologyApplication.csproj", "{5D1A8D31-391A-472F-91D4-4F210B6C4E7B}"
 EndProject

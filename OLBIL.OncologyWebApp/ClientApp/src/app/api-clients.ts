@@ -12,7 +12,6 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -440,6 +439,221 @@ export class BuildingsClient {
             }));
         }
         return _observableOf<BuildingModel | null>(<any>null);
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class HealthProfessionalsClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject('BASE_URL') baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
+    }
+
+    getAll(): Observable<HealthProfessionalsListModel | null> {
+        let url_ = this.baseUrl + "/api/HealthProfessionals";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<HealthProfessionalsListModel | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<HealthProfessionalsListModel | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<HealthProfessionalsListModel | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? HealthProfessionalsListModel.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<HealthProfessionalsListModel | null>(<any>null);
+    }
+
+    createHealthProfessional(model: HealthProfessionalModel): Observable<number> {
+        let url_ = this.baseUrl + "/api/HealthProfessionals";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(model);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateHealthProfessional(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateHealthProfessional(<any>response_);
+                } catch (e) {
+                    return <Observable<number>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<number>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateHealthProfessional(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<number>(<any>null);
+    }
+
+    updateHealthProfessional(model: HealthProfessionalModel): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/HealthProfessionals";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(model);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateHealthProfessional(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateHealthProfessional(<any>response_);
+                } catch (e) {
+                    return <Observable<FileResponse | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FileResponse | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateHealthProfessional(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FileResponse | null>(<any>null);
+    }
+
+    getHealthProfessional(id: number): Observable<HealthProfessionalModel | null> {
+        let url_ = this.baseUrl + "/api/HealthProfessionals/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetHealthProfessional(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetHealthProfessional(<any>response_);
+                } catch (e) {
+                    return <Observable<HealthProfessionalModel | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<HealthProfessionalModel | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetHealthProfessional(response: HttpResponseBase): Observable<HealthProfessionalModel | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? HealthProfessionalModel.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<HealthProfessionalModel | null>(<any>null);
     }
 }
 
@@ -1332,6 +1546,214 @@ export interface IBuildingModel {
     name?: string | undefined;
 }
 
+export class HealthProfessionalsListModel implements IHealthProfessionalsListModel {
+    items?: HealthProfessionalModel[] | undefined;
+
+    constructor(data?: IHealthProfessionalsListModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items!.push(HealthProfessionalModel.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): HealthProfessionalsListModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new HealthProfessionalsListModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IHealthProfessionalsListModel {
+    items?: HealthProfessionalModel[] | undefined;
+}
+
+export class HealthProfessionalModel implements IHealthProfessionalModel {
+    healthProfessionalId?: number | undefined;
+    personId?: string | undefined;
+    person?: PersonModel | undefined;
+
+    constructor(data?: IHealthProfessionalModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.healthProfessionalId = data["healthProfessionalId"];
+            this.personId = data["personId"];
+            this.person = data["person"] ? PersonModel.fromJS(data["person"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): HealthProfessionalModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new HealthProfessionalModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["healthProfessionalId"] = this.healthProfessionalId;
+        data["personId"] = this.personId;
+        data["person"] = this.person ? this.person.toJSON() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IHealthProfessionalModel {
+    healthProfessionalId?: number | undefined;
+    personId?: string | undefined;
+    person?: PersonModel | undefined;
+}
+
+export class PersonModel implements IPersonModel {
+    personId?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    additionalLastName?: string | undefined;
+    preferredName?: string | undefined;
+    governmentIDNumber?: string | undefined;
+    address?: string | undefined;
+    addressLine2?: string | undefined;
+    city?: string | undefined;
+    state?: string | undefined;
+    country?: string | undefined;
+    homePhone?: string | undefined;
+    mobilePhone?: string | undefined;
+    nationality?: string | undefined;
+    race?: string | undefined;
+    gender?: string | undefined;
+    birthdate?: Date | undefined;
+    birthplace?: string | undefined;
+    familyStatus?: string | undefined;
+    schoolLevel?: string | undefined;
+    methodOfTranspotation?: string | undefined;
+
+    constructor(data?: IPersonModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.personId = data["personId"];
+            this.firstName = data["firstName"];
+            this.middleName = data["middleName"];
+            this.lastName = data["lastName"];
+            this.additionalLastName = data["additionalLastName"];
+            this.preferredName = data["preferredName"];
+            this.governmentIDNumber = data["governmentIDNumber"];
+            this.address = data["address"];
+            this.addressLine2 = data["addressLine2"];
+            this.city = data["city"];
+            this.state = data["state"];
+            this.country = data["country"];
+            this.homePhone = data["homePhone"];
+            this.mobilePhone = data["mobilePhone"];
+            this.nationality = data["nationality"];
+            this.race = data["race"];
+            this.gender = data["gender"];
+            this.birthdate = data["birthdate"] ? new Date(data["birthdate"].toString()) : <any>undefined;
+            this.birthplace = data["birthplace"];
+            this.familyStatus = data["familyStatus"];
+            this.schoolLevel = data["schoolLevel"];
+            this.methodOfTranspotation = data["methodOfTranspotation"];
+        }
+    }
+
+    static fromJS(data: any): PersonModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new PersonModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["personId"] = this.personId;
+        data["firstName"] = this.firstName;
+        data["middleName"] = this.middleName;
+        data["lastName"] = this.lastName;
+        data["additionalLastName"] = this.additionalLastName;
+        data["preferredName"] = this.preferredName;
+        data["governmentIDNumber"] = this.governmentIDNumber;
+        data["address"] = this.address;
+        data["addressLine2"] = this.addressLine2;
+        data["city"] = this.city;
+        data["state"] = this.state;
+        data["country"] = this.country;
+        data["homePhone"] = this.homePhone;
+        data["mobilePhone"] = this.mobilePhone;
+        data["nationality"] = this.nationality;
+        data["race"] = this.race;
+        data["gender"] = this.gender;
+        data["birthdate"] = this.birthdate ? this.birthdate.toISOString() : <any>undefined;
+        data["birthplace"] = this.birthplace;
+        data["familyStatus"] = this.familyStatus;
+        data["schoolLevel"] = this.schoolLevel;
+        data["methodOfTranspotation"] = this.methodOfTranspotation;
+        return data; 
+    }
+}
+
+export interface IPersonModel {
+    personId?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    additionalLastName?: string | undefined;
+    preferredName?: string | undefined;
+    governmentIDNumber?: string | undefined;
+    address?: string | undefined;
+    addressLine2?: string | undefined;
+    city?: string | undefined;
+    state?: string | undefined;
+    country?: string | undefined;
+    homePhone?: string | undefined;
+    mobilePhone?: string | undefined;
+    nationality?: string | undefined;
+    race?: string | undefined;
+    gender?: string | undefined;
+    birthdate?: Date | undefined;
+    birthplace?: string | undefined;
+    familyStatus?: string | undefined;
+    schoolLevel?: string | undefined;
+    methodOfTranspotation?: string | undefined;
+}
+
 export class HospitalUnitsListModel implements IHospitalUnitsListModel {
     items?: HospitalUnitModel[] | undefined;
 
@@ -1518,126 +1940,6 @@ export interface IOncologyPatientModel {
     admissionDate?: Date | undefined;
     informantsRelationship?: string | undefined;
     reasonForReferral?: string | undefined;
-}
-
-export class PersonModel implements IPersonModel {
-    personId?: string | undefined;
-    firstName?: string | undefined;
-    middleName?: string | undefined;
-    lastName?: string | undefined;
-    additionalLastName?: string | undefined;
-    preferredName?: string | undefined;
-    governmentIDNumber?: string | undefined;
-    address?: string | undefined;
-    addressLine2?: string | undefined;
-    city?: string | undefined;
-    state?: string | undefined;
-    country?: string | undefined;
-    homePhone?: string | undefined;
-    mobilePhone?: string | undefined;
-    nationality?: string | undefined;
-    race?: string | undefined;
-    gender?: string | undefined;
-    birthdate?: Date | undefined;
-    birthplace?: string | undefined;
-    familyStatus?: string | undefined;
-    schoolLevel?: string | undefined;
-    methodOfTranspotation?: string | undefined;
-
-    constructor(data?: IPersonModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.personId = data["personId"];
-            this.firstName = data["firstName"];
-            this.middleName = data["middleName"];
-            this.lastName = data["lastName"];
-            this.additionalLastName = data["additionalLastName"];
-            this.preferredName = data["preferredName"];
-            this.governmentIDNumber = data["governmentIDNumber"];
-            this.address = data["address"];
-            this.addressLine2 = data["addressLine2"];
-            this.city = data["city"];
-            this.state = data["state"];
-            this.country = data["country"];
-            this.homePhone = data["homePhone"];
-            this.mobilePhone = data["mobilePhone"];
-            this.nationality = data["nationality"];
-            this.race = data["race"];
-            this.gender = data["gender"];
-            this.birthdate = data["birthdate"] ? new Date(data["birthdate"].toString()) : <any>undefined;
-            this.birthplace = data["birthplace"];
-            this.familyStatus = data["familyStatus"];
-            this.schoolLevel = data["schoolLevel"];
-            this.methodOfTranspotation = data["methodOfTranspotation"];
-        }
-    }
-
-    static fromJS(data: any): PersonModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new PersonModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["personId"] = this.personId;
-        data["firstName"] = this.firstName;
-        data["middleName"] = this.middleName;
-        data["lastName"] = this.lastName;
-        data["additionalLastName"] = this.additionalLastName;
-        data["preferredName"] = this.preferredName;
-        data["governmentIDNumber"] = this.governmentIDNumber;
-        data["address"] = this.address;
-        data["addressLine2"] = this.addressLine2;
-        data["city"] = this.city;
-        data["state"] = this.state;
-        data["country"] = this.country;
-        data["homePhone"] = this.homePhone;
-        data["mobilePhone"] = this.mobilePhone;
-        data["nationality"] = this.nationality;
-        data["race"] = this.race;
-        data["gender"] = this.gender;
-        data["birthdate"] = this.birthdate ? this.birthdate.toISOString() : <any>undefined;
-        data["birthplace"] = this.birthplace;
-        data["familyStatus"] = this.familyStatus;
-        data["schoolLevel"] = this.schoolLevel;
-        data["methodOfTranspotation"] = this.methodOfTranspotation;
-        return data; 
-    }
-}
-
-export interface IPersonModel {
-    personId?: string | undefined;
-    firstName?: string | undefined;
-    middleName?: string | undefined;
-    lastName?: string | undefined;
-    additionalLastName?: string | undefined;
-    preferredName?: string | undefined;
-    governmentIDNumber?: string | undefined;
-    address?: string | undefined;
-    addressLine2?: string | undefined;
-    city?: string | undefined;
-    state?: string | undefined;
-    country?: string | undefined;
-    homePhone?: string | undefined;
-    mobilePhone?: string | undefined;
-    nationality?: string | undefined;
-    race?: string | undefined;
-    gender?: string | undefined;
-    birthdate?: Date | undefined;
-    birthplace?: string | undefined;
-    familyStatus?: string | undefined;
-    schoolLevel?: string | undefined;
-    methodOfTranspotation?: string | undefined;
 }
 
 export class WardsListModel implements IWardsListModel {

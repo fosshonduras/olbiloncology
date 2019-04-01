@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OLBIL.OncologyApplication\OLBIL.OncologyApplication.csproj" />
-    <ProjectReference Include="..\OLBIL.OncologyCore\OLBIL.OncologyCore.csproj" />
+    <ProjectReference Include="..\OLBIL.OncologyCore\OLBIL.OncologyDomain.csproj" />
     <ProjectReference Include="..\OLBIL.OncologyData\OLBIL.OncologyData.csproj" />
   </ItemGroup>
 

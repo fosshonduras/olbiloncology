@@ -6,3 +6,13 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.landing-title {
+  text-shadow: 1px 1px 0px rgb(255, 255, 255);
+  font-size: 3.5rem;
+}
+
+.landing-subtitle {
+  text-shadow: 1px 1px 0px rgb(255, 255, 255);
+  font-weight: unset;
+}

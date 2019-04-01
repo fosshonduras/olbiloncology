@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OLBIL.OncologyCore.Entities;
+using OLBIL.OncologyDomain.Entities;
 
 namespace OLBIL.OncologyData.Mappings
 {

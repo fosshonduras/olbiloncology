@@ -8,6 +8,8 @@ import { BedEditComponent } from "./bed-edit/bed-edit.component";
 import { AdminLandingComponent } from "./admin-landing/admin-landing.component";
 import { UnitsListComponent } from "./units-list/units-list.component";
 import { UnitEditComponent } from "./unit-edit/unit-edit.component";
+import { HealthProfessionalsListComponent } from "./health-professionals-list/health-professionals-list.component";
+import { HealthProfessionalEditComponent } from "./health-professional-edit/health-professional-edit.component";
 
 export const ADMINISTRATION_ROUTES: Routes = [
   { path: '', pathMatch: 'full', component: AdminLandingComponent },
@@ -23,4 +25,7 @@ export const ADMINISTRATION_ROUTES: Routes = [
   { path: 'wards', component: WardsListComponent },
   { path: 'wards/new', component: WardEditComponent },
   { path: 'wards/:wardId', component: WardEditComponent, pathMatch: 'full' },
+  { path: 'healthprofessionals', component: HealthProfessionalsListComponent },
+  { path: 'healthprofessionals/new', component: HealthProfessionalEditComponent },
+  { path: 'healthprofessionals/:healthProfessionalId', component: HealthProfessionalEditComponent, pathMatch: 'full' },
 ];

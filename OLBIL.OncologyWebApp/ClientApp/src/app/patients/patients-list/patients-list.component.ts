@@ -38,9 +38,9 @@ export class PatientsListComponent implements OnInit {
     this.client.getAll()
       .subscribe(result => {
         this.rowData = result.items.map(r => {
-          this.isLoading = false;
           return { ...r, ...r.person }
         });
+        this.isLoading = false;
       }, error => console.error(error));
   }
 

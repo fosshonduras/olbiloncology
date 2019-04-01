@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OLBIL.OncologyCore\OLBIL.OncologyCore.csproj" />
+    <ProjectReference Include="..\OLBIL.OncologyCore\OLBIL.OncologyDomain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
