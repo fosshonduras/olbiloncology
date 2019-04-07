@@ -10,9 +10,9 @@ instal:
   - npm install
 script:
   - dotnet build
-  - dotnet test test/OLBIL.OncologyTests/OLBIL.OncologyTests.csproj --filter TestCategory!=OPTIONAL-TEST
+  - dotnet test OLBIL.OncologyTests/OLBIL.OncologyTests.csproj --filter TestCategory!=OPTIONAL-TEST
 after_script:
-  - dotnet test test/OLBIL.OncologyTests/OLBIL.OncologyTests.csproj --filter TestCategory=OPTIONAL-TEST
+  - dotnet test OLBIL.OncologyTests/OLBIL.OncologyTests.csproj --filter TestCategory=OPTIONAL-TEST
   - export PATH=$PATH:$HOME/.local/bin
 after_success:
   - echo dotnet test and npm test succeeded

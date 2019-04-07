@@ -11,7 +11,7 @@ install:
   - choco install googlechrome  --ignore-checksums
 build_script:
   - dotnet build
-  - node ---version
+  - node --version
   - npm -g install npm@latest
   - cd OLBIL.OncologyWebApp\ClientApp
   - npm install
