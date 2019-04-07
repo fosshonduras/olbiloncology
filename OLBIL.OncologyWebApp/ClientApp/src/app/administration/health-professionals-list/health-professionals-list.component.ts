@@ -18,7 +18,7 @@ export class HealthProfessionalsListComponent implements OnInit {
       cellRendererFramework: LinkRendererComponent,
       cellRendererParams: ({ data }) => {
         return ({
-          inRouterLink: `../edit`,
+          inRouterLink: `./`,
           routeParam: data.healthProfessionalId,
           value: data.person.governmentIDNumber
         });
