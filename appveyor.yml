@@ -11,14 +11,13 @@ install:
   - choco install googlechrome  --ignore-checksums
 build_script:
   - dotnet build
+  - node ---version
   - npm -g install npm@latest
   - cd OLBIL.OncologyWebApp\ClientApp
   - npm install
-  - npm run build-production
-  - npm run build-dev
+  - npm run build -- --prod
 before_build:
   - appveyor-retry dotnet restore -v Minimal
 test_script:
-  - npm run test-ci
   - cd C:\projects\olbiloncology\tests\OlbilOncology_Tests
   - dotnet test
