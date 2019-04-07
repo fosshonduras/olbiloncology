@@ -9,6 +9,8 @@ instal:
   - nvm use 10
   - npm install
 script:
+  - node --version
+  - dotnet --vesion
   - dotnet build
   - dotnet test OLBIL.OncologyTests/OLBIL.OncologyTests.csproj --filter TestCategory!=OPTIONAL-TEST
 after_script:
