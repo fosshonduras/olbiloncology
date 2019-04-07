@@ -1,0 +1,24 @@
+language: csharp
+mono: none
+sudo: false
+dist: bionic
+dotnet: 2.2
+instal:
+  - dotnet restore
+  - nvm install 10.15.3
+  - nvm use 10.15.3
+  - npm install
+script:
+  - dotnet build
+  - dotnet test test/OLBIL.OncologyTests/OLBIL.OncologyTests.csproj --filter TestCategory!=OPTIONAL-TEST
+after_script:
+  - dotnet test test/OLBIL.OncologyTests/OLBIL.OncologyTests.csproj --filter TestCategory=OPTIONAL-TEST
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+after_success:
+  - echo dotnet test and npm test succeeded
+after_failure:
+  - echo dotnet test or npm test failed
+global:
+  - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+  - DOTNET_CLI_TELEMETRY_OPTOUT=1
