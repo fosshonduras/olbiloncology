@@ -1,22 +1,56 @@
+-- User: appclientuser
+-- DROP USER appclientuser;
+
+CREATE USER appclientuser WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;
+
+ALTER DEFAULT PRIVILEGES
+GRANT SELECT, INSERT
+ON TABLES
+TO PUBLIC;
+
 ALTER DEFAULT PRIVILEGES
 GRANT ALL
 ON TABLES
-TO PUBLIC
+TO appclientuser;
 
+ALTER DEFAULT PRIVILEGES
+GRANT SELECT
+ON SEQUENCES
+TO PUBLIC;
+
+ALTER DEFAULT PRIVILEGES
 GRANT ALL
 ON SEQUENCES
-TO PUBLIC
+TO appclientuser;
 
+ALTER DEFAULT PRIVILEGES
+GRANT EXECUTE
+ON FUNCTIONS
+TO PUBLIC;
+
+ALTER DEFAULT PRIVILEGES
 GRANT ALL
 ON FUNCTIONS
-TO PUBLIC
+TO appclientuser;
 
+ALTER DEFAULT PRIVILEGES
+GRANT USAGE
+ON TYPES
+TO PUBLIC;
+
+ALTER DEFAULT PRIVILEGES
 GRANT ALL
 ON TYPES
 TO PUBLIC;
 
 CREATE SCHEMA olbil;
-GRANT ALL ON SCHEMA olbil TO PUBLIC;
+GRANT ALL ON SCHEMA olbil TO appclientuser;
 
 CREATE TABLE olbil.BedStatus(
     BedStatusId SERIAL NOT NULL,
@@ -36,6 +70,33 @@ CREATE TABLE olbil.WardStatus(
 )
 TABLESPACE pg_default;
 
+CREATE TABLE olbil.WardGender(
+    WardGenderId SERIAL NOT NULL,
+    Name VARCHAR(50) COLLATE pg_catalog.default  NOT NULL UNIQUE,
+    CONSTRAINT WardGender_pkey PRIMARY KEY (WardGenderId)
+)WITH(
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE olbil.PersonGender(
+    PersonGenderId SERIAL NOT NULL,
+    Name VARCHAR(50) COLLATE pg_catalog.default  NOT NULL UNIQUE,
+    CONSTRAINT PersonGender_pkey PRIMARY KEY (PesonGenderId)
+)WITH(
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE olbil.Race(
+    RaceId SERIAL NOT NULL,
+    Name VARCHAR(50) COLLATE pg_catalog.default  NOT NULL UNIQUE,
+    CONSTRAINT Race_pkey PRIMARY KEY (RaceId)
+)WITH(
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
 CREATE TABLE olbil.Building(
     BuildingId SERIAL NOT NULL,
     Code VARCHAR(50) COLLATE pg_catalog.default NOT NULL UNIQUE,
@@ -47,20 +108,11 @@ WITH(
 )
 TABLESPACE pg_default;
 
-CREATE TABLE olbil.Unit(
-    UnitId SERIAL NOT NULL,
+CREATE TABLE olbil.HospitalUnit(
+    HospitalUnitId SERIAL NOT NULL,
     Code VARCHAR(50) COLLATE pg_catalog.default NOT NULL,
     Name VARCHAR(256) COLLATE pg_catalog.default NOT NULL,
-    CONSTRAINT Unit_pkey PRIMARY KEY (UnitId)
-)WITH(
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-CREATE TABLE olbil.WardGender(
-    WardGenderId SERIAL NOT NULL,
-    Name VARCHAR(50) COLLATE pg_catalog.default  NOT NULL UNIQUE,
-    CONSTRAINT WardGender_pkey PRIMARY KEY (WardGenderId)
+    CONSTRAINT HospitalUnit_pkey PRIMARY KEY (HospitalUnitId)
 )WITH(
     OIDS = FALSE
 )
@@ -71,15 +123,15 @@ CREATE TABLE olbil.Ward(
     Name VARCHAR(256) COLLATE pg_catalog.default NOT NULL,
     BuildingId INT NOT NULL,
     FloorNumber INT NOT NULL,
-    UnitId INT NOT NULL,
+    HospitalUnitId INT NOT NULL,
     WardGenderId INT NOT NULL,
     WardStatusId INT NOT NULL,
     CONSTRAINT Ward_pkey PRIMARY KEY (WardId),
     CONSTRAINT Ward_Building_buildingid_fkey FOREIGN KEY (BuildingId)
         REFERENCES olbil.Building(BuildingId)
         ON UPDATE RESTRICT ON DELETE RESTRICT,
-    CONSTRAINT Ward_Unit_unitid_fkey FOREIGN KEY (UnitId)
-        REFERENCES olbil.Unit(UnitId)
+    CONSTRAINT Ward_HospitalUnit_unitid_fkey FOREIGN KEY (HospitalUnitId)
+        REFERENCES olbil.HospitalUnit(HospitalUnitId)
         ON UPDATE RESTRICT ON DELETE RESTRICT,
     CONSTRAINT Ward_WardGender_genderid_fkey FOREIGN KEY (WardGenderId)
         REFERENCES olbil.WardGender(WardGenderId)
@@ -92,10 +144,18 @@ CREATE TABLE olbil.Ward(
 )
 TABLESPACE pg_default;
 
+ALTER TABLE olbil.ward
+    ADD COLUMN hospitalunitid integer NOT NULL;
+
+ALTER TABLE olbil.Ward
+ADD CONSTRAINT Ward_HospitalUnit_unitid_fkey
+FOREIGN KEY (HospitalUnitId)
+REFERENCES olbil.HospitalUnit (HospitalUnitId)
+ON UPDATE RESTRICT ON DELETE RESTRICT
 
 CREATE TABLE olbil.Bed
 (
-    BedId INT NOT NULL,
+    BedId SERIAL NOT NULL,
     Name VARCHAR(256) COLLATE pg_catalog.default NOT NULL,
     LongDescription VARCHAR(256) COLLATE pg_catalog.default NOT NULL,
     BedStatusId INT NOT NULL,
@@ -173,6 +233,54 @@ CREATE TABLE olbil.OncologyPatient
         ON UPDATE RESTRICT ON DELETE RESTRICT
 )
 WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+
+CREATE TABLE olbil.HealthProfessional
+(
+    HealthProfessionalId SERIAL NOT NULL,
+    RegistrationDate TIMESTAMP WITHOUT TIME ZONE,
+    PersonId UUID,
+    CONSTRAINT PK_HealthProfessional PRIMARY KEY (HealthProfessionalId),
+    CONSTRAINT HealthProfessional_Person_PersonId FOREIGN KEY (PersonId)
+        REFERENCES olbil.Person (PersonId) MATCH SIMPLE
+        ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE olbil.AdministrativeDivision
+(
+    AdministrativeDivisionId SERIAL NOT NULL,
+    Code VARCHAR(20) COLLATE pg_catalog.default NOT NULL,
+    Name VARCHAR(50) COLLATE pg_catalog.default NOT NULL,
+    Level INT NOT NULL,
+    ParentId INT,
+    CONSTRAINT PK_AdministrativeDivision PRIMARY KEY (AdministrativeDivisionId),
+    CONSTRAINT UK_AdministrativeDivision_Code UNIQUE (Code),
+    CONSTRAINT AdministrativeDivision_AdministrativeDivision_ParentId FOREIGN KEY (ParentId)
+        REFERENCES olbil.AdministrativeDivision (AdministrativeDivisionId) MATCH SIMPLE
+        ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE olbil.Country(
+    CountryId SERIAL NOT NULL,
+    NameEn VARCHAR(50) COLLATE pg_catalog.default NOT NULL,
+    NameEs VARCHAR(50) COLLATE pg_catalog.default NOT NULL,
+    ISOCode3 VARCHAR(3) COLLATE pg_catalog.default NOT NULL,
+    ISOCode2 VARCHAR(3) COLLATE pg_catalog.default NOT NULL,
+    CONSTRAINT PK_County PRIMARY KEY (CountryId),
+    CONSTRAINT UK_Country_ISOCode3 UNIQUE (ISOCode3),
+    CONSTRAINT UK_Country_ISOCode2 UNIQUE (ISOCode2)
+)WITH (
     OIDS = FALSE
 )
 TABLESPACE pg_default;

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HealthProfessionalsClient, HealthProfessionalModel, PersonModel } from '../../api-clients';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import moment = require('moment');
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-health-professional-edit',
@@ -39,7 +39,7 @@ export class HealthProfessionalEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let id = this.route.snapshot.paramMap.get("medicId");
+    let id = this.route.snapshot.paramMap.get("healthProfessionalId");
 
     if (id === "new" || id === null) {
       this.isNewRecord = true;
