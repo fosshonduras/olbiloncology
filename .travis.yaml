@@ -1,7 +1,6 @@
 language: csharp
 mono: none
-sudo: false
-dist: bionic
+sudo: required
 dotnet: 2.2
 instal:
   - dotnet restore
