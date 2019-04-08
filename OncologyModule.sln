@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyTests", "OLBI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyData", "OLBIL.OncologyData\OLBIL.OncologyData.csproj", "{694AE303-FCBD-4011-AA72-6AD0128D4B85}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.IdentityServerHost", "OLBIL.IdentityServerHost\OLBIL.IdentityServerHost.csproj", "{3F8930C1-4E86-4EF4-A916-BE942E491F59}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,10 +43,6 @@ Global
 		{694AE303-FCBD-4011-AA72-6AD0128D4B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{694AE303-FCBD-4011-AA72-6AD0128D4B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{694AE303-FCBD-4011-AA72-6AD0128D4B85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F8930C1-4E86-4EF4-A916-BE942E491F59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F8930C1-4E86-4EF4-A916-BE942E491F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F8930C1-4E86-4EF4-A916-BE942E491F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F8930C1-4E86-4EF4-A916-BE942E491F59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,7 +53,6 @@ Global
 		{5D1A8D31-391A-472F-91D4-4F210B6C4E7B} = {EA138A44-CD88-42F1-BAAA-F9ACD6BB48AD}
 		{9F4E55C0-92A5-43AC-971A-D9745B0E4291} = {4133AE9C-E045-45B3-92A5-8521AA186FE6}
 		{694AE303-FCBD-4011-AA72-6AD0128D4B85} = {EA138A44-CD88-42F1-BAAA-F9ACD6BB48AD}
-		{3F8930C1-4E86-4EF4-A916-BE942E491F59} = {EA138A44-CD88-42F1-BAAA-F9ACD6BB48AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C61A9772-8169-4FC6-B91A-D763D753C39B}
