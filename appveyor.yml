@@ -26,7 +26,7 @@ before_build:
 test_script:
   - cd C:\projects\olbiloncology
   - nuget install Appveyor.TestLogger -Version 2.0.0
-  - dotnet test --no-build --no-restore --test-adapter-path:. --logger:Appveyor Test
+  - dotnet test --no-build --no-restore --test-adapter-path:. --logger:Appveyor OLBIL.OncologyTests
 cache:
   - packages -> **\packages.config      # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
   - node_modules                        # local npm modules
