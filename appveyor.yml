@@ -3,12 +3,15 @@ init:
   - git config --global core.autocrlf true
 environment:
   nodejs_version: "10"
+build:
+  publish_wap_xcopy: true
+  verbosity: minimal
 install:
   - ECHO %APPVEYOR_BUILD_WORKER_IMAGE%
   - ps: Install-Product node $env:nodejs_version
   - ps: IF ($env:APPVEYOR_REPO_BRANCH -eq "master") {$env:APPVEYOR_CACHE_SKIP_SAVE = "true"}
   - dotnet --version
-  - dotnet restore
+  - dotnet restore --verbosity m
 #  - choco install googlechrome  --ignore-checksums
 build_script:
   - dotnet build
@@ -16,15 +19,21 @@ build_script:
   - npm -g install npm@latest
   - cd OLBIL.OncologyWebApp\ClientApp
   - npm install
-  - npm run build -- --prod
+  - cd ..
+  - dotnet publish -c Release
 before_build:
   - appveyor-retry dotnet restore -v Minimal
 test_script:
   - cd C:\projects\olbiloncology
-  - dotnet test
+  - nuget install Appveyor.TestLogger -Version 2.0.0
+  - dotnet test --no-build --no-restore --test-adapter-path:. --logger:Appveyor Test
 cache:
   - packages -> **\packages.config      # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
   - node_modules                        # local npm modules
   - '%APPDATA%\npm-cache'               # npm cache
   - '%USERPROFILE%\.nuget\packages -> **\*.csproj'  # project.json cache
   - '%LocalAppData%\NuGet\v3-cache'
+artifacts:
+ - path: '\OLBIL.OncologyWebApp\bin\Release\netcoreapp2.2\publish'
+   name: website
+   type: WebDeployPackage
