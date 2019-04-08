@@ -3,14 +3,15 @@ language: csharp
 mono: none
 sudo: required
 dotnet: 2.2
-instal:
+cache: npm
+install:
   - dotnet restore
   - nvm install 10
   - nvm use 10
   - npm install
 script:
   - node --version
-  - dotnet --vesion
+  - dotnet --version
   - dotnet build
   - dotnet test OLBIL.OncologyTests/OLBIL.OncologyTests.csproj --filter TestCategory!=OPTIONAL-TEST
 after_script:
