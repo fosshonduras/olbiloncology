@@ -24,8 +24,9 @@ build_script:
 before_build:
   - appveyor-retry dotnet restore -v Minimal
 test_script:
-  - cd C:\projects\olbiloncology
+  - cd C:\projects\olbiloncology\OLBIL.OncologyTests
   - nuget install Appveyor.TestLogger -Version 2.0.0
+  - cd C:\projects\olbiloncology
   - dotnet test --no-build --no-restore --test-adapter-path:. --logger:Appveyor OLBIL.OncologyTests
 cache:
   - packages -> **\packages.config      # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
