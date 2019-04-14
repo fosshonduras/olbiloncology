@@ -9,7 +9,6 @@ build:
 install:
   - ECHO %APPVEYOR_BUILD_WORKER_IMAGE%
   - ps: Install-Product node $env:nodejs_version
-  - ps: IF ($env:APPVEYOR_REPO_BRANCH -eq "master") {$env:APPVEYOR_CACHE_SKIP_SAVE = "true"}
   - dotnet --version
   - dotnet restore --verbosity m
 #  - choco install googlechrome  --ignore-checksums
