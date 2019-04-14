@@ -3,12 +3,14 @@ language: csharp
 mono: none
 sudo: required
 dotnet: 2.2
-cache: npm
+cache:
+  directories:
+  - "$HOME/.npm"
 install:
   - dotnet restore
   - nvm install 10
   - nvm use 10
-  - npm install
+  - npm ci
 script:
   - node --version
   - dotnet --version

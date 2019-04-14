@@ -17,7 +17,7 @@ build_script:
   - node --version
   - npm -g install npm@latest
   - cd OLBIL.OncologyWebApp\ClientApp
-  - npm install
+  - npm ci
   - cd ..
   - dotnet publish -c Release
 before_build:
