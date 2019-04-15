@@ -1,10 +1,4 @@
 <section id="edit-container">
-
-  <ng-template #tart_codename let-r="result" let-t="term">
-    <ngb-highlight [result]="r.code" [term]="t"></ngb-highlight> - 
-    <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
-  </ng-template>
-
   <h3>{{ pageTitle }}</h3>
   <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
     <div class="form-row">
@@ -22,9 +16,9 @@
 
         <input name="ta-buildingInput" id="ta-buildingInput" type="text" class="form-control"
                [inputFormatter]="buildingTAFormatter" [class.is-invalid]="buildingSearchFailed"
-               [(ngModel)]="buildingModel"  [resultTemplate]="tart_codename" [ngbTypeahead]="searchBuilding" placeholder="Ej. 2" />
+               [(ngModel)]="buildingModel" [editable]="false" [resultFormatter]="buildingSearchResultFormatter" [ngbTypeahead]="searchBuilding" placeholder="Buscar Edificio" />
 
-        <small class="text-muted" *ngIf="isSearchingBuilding">buscando...</small>
+        <small class="text-muted" *ngIf="isSearchingBuilding">Buscando...</small>
         <div class="invalid-feedback" *ngIf="buildingSearchFailed">Sorry, suggestions could not be loaded.</div>
       </div>
       <div class="form-group col col-auto">
@@ -33,8 +27,13 @@
       </div>
       <div class="form-group col col-auto">
         <label for="unitIdInput">Unidad</label>
-        <input [(ngModel)]="ward.hospitalUnitId" type="text" class="form-control" name="unitId" id="uniIdInput" placeholder="Ej. 3" aria-describedby="help-unit">
-        <small id="help-unit" class="text-muted">Este es el ID en el sistema.</small>
+
+        <input name="ta-unitInput" id="ta-unitInput" type="text" class="form-control"
+               [inputFormatter]="unitTAFormatter" [class.is-invalid]="unitSearchFailed"
+               [(ngModel)]="unitModel" [editable]="false" [resultFormatter]="unitSearchResultFormatter" [ngbTypeahead]="searchUnit" placeholder="Buscar Unidad" />
+
+        <small class="text-muted" *ngIf="isSearchingUnit">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="unitSearchFailed">Sorry, suggestions could not be loaded.</div>
       </div>
       <div class="form-group col col-auto">
         <label for="statusIdInput">Status</label>

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { WardModel, WardsClient, BuildingsClient, BuildingModel } from '../../api-clients';
+import { WardModel, WardsClient, BuildingsClient, BuildingModel, HospitalUnitsClient, HospitalUnitModel } from '../../api-clients';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
-import { pluck, catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ward-edit',
@@ -16,9 +16,14 @@ export class WardEditComponent implements OnInit {
   wardId: number = -1;
   ward: WardModel;
   isSaving: boolean = false;
+
   buildingModel: BuildingModel;
   isSearchingBuilding: boolean = false;
   buildingSearchFailed: boolean = false;
+
+  unitModel: HospitalUnitModel;
+  isSearchingUnit: boolean = false;
+  unitSearchFailed: boolean = false;
 
   wardStatuses: any[] = [
     { wardStatusId: 1, name: "Habilitada" },
@@ -36,7 +41,8 @@ export class WardEditComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private client: WardsClient,
-    private buildingsClient: BuildingsClient
+    private buildingsClient: BuildingsClient,
+    private unitsClient: HospitalUnitsClient
   ) {
     this.ward = new WardModel();
   }
@@ -54,6 +60,10 @@ export class WardEditComponent implements OnInit {
 
     this.setupTargetRecord();
   }
+
+  buildingTAFormatter = (x) => x.name;
+
+  buildingSearchResultFormatter = (x: BuildingModel) => `${x.code} - ${x.name}`
 
   searchBuilding = (text$: Observable<string>) =>
     text$.pipe(
@@ -73,9 +83,27 @@ export class WardEditComponent implements OnInit {
       tap(() => this.isSearchingBuilding = false)
     )
 
-  buildingTAFormatter(x) {
-    return x.name;
-  }
+  unitTAFormatter = (x) => x.name;
+
+  unitSearchResultFormatter = (x: HospitalUnitModel) => `${x.code} - ${x.name}`
+
+  searchUnit = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.isSearchingUnit = true),
+      switchMap(term =>
+        this.unitsClient.search(term)
+          .pipe(
+            map((bm, bmi) => bm.items),
+            tap(() => this.unitSearchFailed = false),
+            catchError(() => {
+              this.unitSearchFailed = true;
+              return of([]);
+            }))
+      ),
+      tap(() => this.isSearchingUnit = false)
+    )
 
   setupTargetRecord(): any {
     if (!this.isNewRecord) {
@@ -83,8 +111,14 @@ export class WardEditComponent implements OnInit {
         .subscribe(result => {
           this.ward = result;
           this.buildingsClient.getBuilding(this.ward.buildingId)
+              .subscribe(result => {
+                this.buildingModel = result;
+              }, err => {
+                this.toastr.warning(err);
+                });
+          this.unitsClient.getHospitalUnit(this.ward.hospitalUnitId)
             .subscribe(result => {
-              this.buildingModel = result;
+              this.unitModel = result;
             }, err => {
               this.toastr.warning(err);
             });
@@ -98,6 +132,9 @@ export class WardEditComponent implements OnInit {
     this.isSaving = true;
     if (this.buildingModel && this.buildingModel.buildingId > 0) {
       this.ward.buildingId = this.buildingModel.buildingId;
+    }
+    if (this.unitModel && this.unitModel.hospitalUnitId > 0) {
+      this.ward.hospitalUnitId = this.unitModel.hospitalUnitId;
     }
     
     if (this.isNewRecord) {

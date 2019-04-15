@@ -17,8 +17,13 @@
     <div class="form-row">
       <div class="form-group col col-auto">
         <label for="wardIdInput">Sala</label>
-        <input [(ngModel)]="bed.wardId" type="text" class="form-control" name="wardId" id="wardInput" placeholder="Ej. 1" aria-describedby="help-ward">
-        <small id="help-ward" class="text-muted">Este es el ID en el sistema.</small>
+
+        <input name="ta-wardInput" id="ta-wardInput" type="text" class="form-control"
+               [inputFormatter]="wardTAFormatter" [class.is-invalid]="wardSearchFailed"
+               [(ngModel)]="wardModel" [editable]="false" [resultFormatter]="wardSearchResultFormatter" [ngbTypeahead]="searchWard" placeholder="Buscar Sala" />
+
+        <small class="text-muted" *ngIf="isSearchingWard">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="wardSearchFailed">No se pudieron cargar las sugerencias.</div>
       </div>
       <div class="form-group col col-auto">
         <label for="statusIdInput">Status</label>
