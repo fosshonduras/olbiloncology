@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using OLBIL.OncologyApplication.Models;
 
-namespace OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatient
+namespace OLBIL.OncologyApplication.OncologyPatients.Queries
 {
     public class GetOncologyPatientQuery: IRequest<OncologyPatientModel>
     {

@@ -12,11 +12,15 @@ section {
   opacity: 1;
 }
 
+ag-grid-angular{
+  height: 100%;
+}
 
 .olbil-datagrid-container {
   overflow: hidden;
   margin-top: 10px;
   margin-bottom: 10px;
+  height: 50vh;
 }
 
 .footer{

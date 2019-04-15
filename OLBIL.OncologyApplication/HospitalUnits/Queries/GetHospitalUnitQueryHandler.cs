@@ -25,7 +25,7 @@ namespace OLBIL.OncologyApplication.HospitalUnits.Queries
         public async Task<HospitalUnitModel> Handle(GetHospitalUnitQuery request, CancellationToken cancellationToken)
         {
             var item = _mapper.Map<HospitalUnitModel>(await _context
-                .Units.Where(o => o.HospitalUnitId == request.Id)
+                .HospitalUnits.Where(o => o.HospitalUnitId == request.Id)
                 .SingleOrDefaultAsync(cancellationToken));
 
             if(item == null)

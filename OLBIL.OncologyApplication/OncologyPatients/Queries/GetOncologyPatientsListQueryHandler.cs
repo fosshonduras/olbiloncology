@@ -7,7 +7,7 @@ using OLBIL.OncologyData;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList
+namespace OLBIL.OncologyApplication.OncologyPatients.Queries
 {
     public class GetOncologyPatientsListQueryHandler : IRequestHandler<GetOncologyPatientsListQuery, OncologyPatientsListModel>
     {

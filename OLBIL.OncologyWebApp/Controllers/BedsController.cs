@@ -14,6 +14,12 @@ namespace OLBIL.OncologyWebApp.Controllers
             return Ok(await Mediator.Send(new GetBedsListQuery()));
         }
 
+        [HttpGet("search")]
+        public async Task<ActionResult<BedsListModel>> Search(string searchTerm)
+        {
+            return Ok(await Mediator.Send(new SearchBedsQuery { SearchTerm = searchTerm }));
+        }
+
         [HttpGet("{id}", Name = "GetBed")]
         public async Task<ActionResult<BedModel>> GetBed(int id)
         {

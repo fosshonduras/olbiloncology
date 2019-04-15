@@ -10,10 +10,10 @@ using System.Reflection;
 using AutoMapper;
 using MediatR;
 using MediatR.Pipeline;
-using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList;
 using OLBIL.OncologyApplication.Infrastructure.AutoMapper;
 using System;
 using OLBIL.OncologyWebApp.Filters;
+using OLBIL.OncologyApplication.OncologyPatients.Queries;
 
 namespace OLBIL.OncologyWebApp
 {

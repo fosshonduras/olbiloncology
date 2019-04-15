@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.OncologyPatients.Commands.UpdatePatient
+namespace OLBIL.OncologyApplication.OncologyPatients.Commands
 {
     public class UpdateOncologyPatientCommandHandler : IRequestHandler<UpdateOncologyPatientCommand>
     {

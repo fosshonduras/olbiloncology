@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { WardModel, WardsClient } from '../../api-clients';
+import { WardModel, WardsClient, BuildingsClient, BuildingModel } from '../../api-clients';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Observable, of } from 'rxjs';
+import { pluck, catchError, debounceTime, distinctUntilChanged, map, tap, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ward-edit',
@@ -14,6 +16,9 @@ export class WardEditComponent implements OnInit {
   wardId: number = -1;
   ward: WardModel;
   isSaving: boolean = false;
+  buildingModel: BuildingModel;
+  isSearchingBuilding: boolean = false;
+  buildingSearchFailed: boolean = false;
 
   wardStatuses: any[] = [
     { wardStatusId: 1, name: "Habilitada" },
@@ -30,7 +35,8 @@ export class WardEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
-    private client: WardsClient
+    private client: WardsClient,
+    private buildingsClient: BuildingsClient
   ) {
     this.ward = new WardModel();
   }
@@ -49,19 +55,51 @@ export class WardEditComponent implements OnInit {
     this.setupTargetRecord();
   }
 
+  searchBuilding = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.isSearchingBuilding = true),
+      switchMap(term =>
+        this.buildingsClient.search(term)
+          .pipe(
+            map((bm, bmi) => bm.items),
+          tap(() => this.buildingSearchFailed = false),
+          catchError(() => {
+            this.buildingSearchFailed = true;
+            return of([]);
+          }))
+      ),
+      tap(() => this.isSearchingBuilding = false)
+    )
+
+  buildingTAFormatter(x) {
+    return x.name;
+  }
+
   setupTargetRecord(): any {
     if (!this.isNewRecord) {
       this.client.getWard(this.wardId)
         .subscribe(result => {
           this.ward = result;
+          this.buildingsClient.getBuilding(this.ward.buildingId)
+            .subscribe(result => {
+              this.buildingModel = result;
+            }, err => {
+              this.toastr.warning(err);
+            });
         }, err => {
           this.toastr.warning(err);
-        });
+          });
     }
   }
 
   submitRegistration(regForm) {
     this.isSaving = true;
+    if (this.buildingModel && this.buildingModel.buildingId > 0) {
+      this.ward.buildingId = this.buildingModel.buildingId;
+    }
+    
     if (this.isNewRecord) {
       this.client.createWard(this.ward)
         .subscribe(r => this.handleSuccess(r), e => this.handleFailure(e));

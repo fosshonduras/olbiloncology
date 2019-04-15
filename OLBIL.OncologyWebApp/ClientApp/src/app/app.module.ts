@@ -32,7 +32,7 @@ import { AdministrationModule } from './administration/administration.module';
     PatientsModule,
     AdministrationModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   providers: [OncologyPatientsClient],
   bootstrap: [AppComponent]

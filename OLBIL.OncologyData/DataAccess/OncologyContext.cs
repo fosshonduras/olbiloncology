@@ -19,7 +19,7 @@ namespace OLBIL.OncologyData
         public DbSet<HealthProfessional> HealthProfessionals { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Building> Buildings { get; set; }
-        public DbSet<HospitalUnit> Units { get; set; }
+        public DbSet<HospitalUnit> HospitalUnits { get; set; }
         public DbSet<Ward> Wards { get; set; }
         public DbSet<Bed> Beds { get; set; }
 

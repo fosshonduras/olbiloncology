@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.OncologyPatients.Commands.AttemptCreation
+namespace OLBIL.OncologyApplication.OncologyPatients.Commands
 {
     public class AttemptOncologyPatientCreationCommandHandler : IRequestHandler<AttemptOncologyPatientCreationCommand, OncologyPatientsListModel>
     {

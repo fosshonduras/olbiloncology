@@ -1,4 +1,10 @@
 <section id="edit-container">
+
+  <ng-template #tart_codename let-r="result" let-t="term">
+    <ngb-highlight [result]="r.code" [term]="t"></ngb-highlight> - 
+    <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+  </ng-template>
+
   <h3>{{ pageTitle }}</h3>
   <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
     <div class="form-row">
@@ -12,9 +18,14 @@
     </div>
     <div class="form-row">
       <div class="form-group col col-auto">
-        <label for="buildingIdInput">Edificio</label>
-        <input [(ngModel)]="ward.buildingId" type="text" class="form-control" name="buildingId" id="buildingInput" placeholder="Ej. 2" aria-describedby="help-building">
-        <small id="help-building" class="text-muted">Este es el ID en el sistema.</small>
+        <label for="ta-buildingInput">Edificio</label>
+
+        <input name="ta-buildingInput" id="ta-buildingInput" type="text" class="form-control"
+               [inputFormatter]="buildingTAFormatter" [class.is-invalid]="buildingSearchFailed"
+               [(ngModel)]="buildingModel"  [resultTemplate]="tart_codename" [ngbTypeahead]="searchBuilding" placeholder="Ej. 2" />
+
+        <small class="text-muted" *ngIf="isSearchingBuilding">buscando...</small>
+        <div class="invalid-feedback" *ngIf="buildingSearchFailed">Sorry, suggestions could not be loaded.</div>
       </div>
       <div class="form-group col col-auto">
         <label for="floorNumberInput">Nivel</label>

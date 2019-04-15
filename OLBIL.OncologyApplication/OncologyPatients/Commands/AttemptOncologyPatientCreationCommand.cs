@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using OLBIL.OncologyApplication.Models;
 
-namespace OLBIL.OncologyApplication.OncologyPatients.Commands.AttemptCreation
+namespace OLBIL.OncologyApplication.OncologyPatients.Commands
 {
     public class AttemptOncologyPatientCreationCommand: IRequest<OncologyPatientsListModel>
     {

@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from "@angular/router";
 
 import { AgGridModule } from 'ag-grid-angular';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AgGridComponentsModule } from '../helper-components/ag-grid-components.module';
 import { BuildingsListComponent } from './buildings-list/buildings-list.component';
@@ -28,6 +29,7 @@ import { HealthProfessionalEditComponent } from './health-professional-edit/heal
     RouterModule,
     AgGridComponentsModule,
     AgGridModule.withComponents([]),
+    NgbTypeaheadModule
   ]
 })
 export class AdministrationModule { }

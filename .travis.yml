@@ -10,7 +10,6 @@ install:
   - dotnet restore
   - nvm install 10
   - nvm use 10
-  - npm ci
 script:
   - node --version
   - dotnet --version

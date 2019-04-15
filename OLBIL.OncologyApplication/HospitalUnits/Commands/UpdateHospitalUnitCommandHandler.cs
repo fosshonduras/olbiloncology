@@ -24,7 +24,7 @@ namespace OLBIL.OncologyApplication.HospitalUnits.Commands
         public async Task<Unit> Handle(UpdateHospitalUnitCommand request, CancellationToken cancellationToken)
         {
             var model = request.Model;
-            var item = await _context.Units
+            var item = await _context.HospitalUnits
                 .Where(p => p.HospitalUnitId == model.HospitalUnitId)
                 .FirstOrDefaultAsync(cancellationToken);
             if (item == null)

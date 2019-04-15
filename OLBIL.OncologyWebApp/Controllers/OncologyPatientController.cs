@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OLBIL.OncologyApplication.Models;
 using System.Threading.Tasks;
-using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatientsList;
-using OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatient;
-using OLBIL.OncologyApplication.OncologyPatients.Commands.CreateOncologyPatient;
-using OLBIL.OncologyApplication.OncologyPatients.Commands.AttemptCreation;
-using OLBIL.OncologyApplication.OncologyPatients.Commands.UpdatePatient;
+using OLBIL.OncologyApplication.OncologyPatients.Queries;
+using OLBIL.OncologyApplication.OncologyPatients.Commands;
 
 namespace OLBIL.OncologyWebApp.Controllers
 {
@@ -15,6 +12,12 @@ namespace OLBIL.OncologyWebApp.Controllers
         public async Task<ActionResult<OncologyPatientsListModel>> GetAll()
         {
             return Ok(await Mediator.Send(new GetOncologyPatientsListQuery()));
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<OncologyPatientsListModel>> Search(string searchTerm)
+        {
+            return Ok(await Mediator.Send(new SearchOncologyPatientsQuery { SearchTerm = searchTerm }));
         }
 
         [HttpGet("{id}", Name = "GetPatient")]

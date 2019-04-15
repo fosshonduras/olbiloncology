@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.OncologyPatients.Queries.GetOncologyPatient
+namespace OLBIL.OncologyApplication.OncologyPatients.Queries
 {
     public class GetOncologyPatientQueryHandler : IRequestHandler<GetOncologyPatientQuery, OncologyPatientModel>
     {

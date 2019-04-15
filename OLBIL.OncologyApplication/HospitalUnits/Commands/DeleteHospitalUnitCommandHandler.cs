@@ -23,7 +23,7 @@ namespace OLBIL.OncologyApplication.HospitalUnits.Commands
 
         public async Task<Unit> Handle(DeleteHospitalUnitCommand request, CancellationToken cancellationToken)
         {
-            var item = await _context.Units
+            var item = await _context.HospitalUnits
                 .Where(p => p.HospitalUnitId == request.Id)
                 .FirstOrDefaultAsync(cancellationToken);
             if (item == null)
@@ -31,7 +31,7 @@ namespace OLBIL.OncologyApplication.HospitalUnits.Commands
                 throw new NotFoundException(nameof(HospitalUnit), nameof(item.HospitalUnitId), request.Id);
             }
 
-            _context.Units.Remove(item);
+            _context.HospitalUnits.Remove(item);
 
             await _context.SaveChangesAsync(cancellationToken);
             return new Unit();
