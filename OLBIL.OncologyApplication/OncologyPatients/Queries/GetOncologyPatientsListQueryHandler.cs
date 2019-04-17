@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.OncologyPatients.Queries
 {
-    public class GetOncologyPatientsListQueryHandler : IRequestHandler<GetOncologyPatientsListQuery, OncologyPatientsListModel>
+    public class GetOncologyPatientsListQueryHandler : IRequestHandler<GetOncologyPatientsListQuery, ListModel<OncologyPatientModel>>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
@@ -20,9 +20,9 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Queries
             _mapper = mapper;
         }
 
-        public async Task<OncologyPatientsListModel> Handle(GetOncologyPatientsListQuery request, CancellationToken cancellationToken)
+        public async Task<ListModel<OncologyPatientModel>> Handle(GetOncologyPatientsListQuery request, CancellationToken cancellationToken)
         {
-            return new OncologyPatientsListModel
+            return new ListModel<OncologyPatientModel>
             {
                 Items = await _context.OncologyPatients.Include(o => o.Person)
                                     .ProjectTo<OncologyPatientModel>(_mapper.ConfigurationProvider)

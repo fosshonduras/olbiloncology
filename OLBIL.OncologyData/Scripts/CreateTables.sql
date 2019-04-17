@@ -284,3 +284,113 @@ CREATE TABLE olbil.Country(
     OIDS = FALSE
 )
 TABLESPACE pg_default;
+
+CREATE TABLE olbil.BloodType(
+    BloodTypeId SERIAL NOT NULL,
+    NameEn VARCHAR(20) COLLATE pg_catalog.default NOT NULL,
+    NameEs VARCHAR(20) COLLATE pg_catalog.default NOT NULL,
+    Display VARCHAR(10) COLLATE pg_catalog.default NOT NULL,
+    CONSTRAINT PK_BloodType PRIMARY KEY (BloodTypeId),
+    CONSTRAINT UK_BloodType_NameEn UNIQUE (NameEn),
+    CONSTRAINT UK_BloodType_NameEs UNIQUE (NameEs),
+    CONSTRAINT UK_BloodType_Display UNIQUE (Display)
+)WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+
+CREATE TABLE olbil.AppointmentReason(
+    AppointmentReasonId SERIAL NOT NULL,
+    Description VARCHAR(100) COLLATE pg_catalog.default NOT NULL,
+    
+    CONSTRAINT PK_AppointmentReason PRIMARY KEY (AppointmentReasonId),
+    CONSTRAINT UK_AppointmentReason_Description UNIQUE (Description)
+)WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE olbil.MedicalSpecialty(
+    MedicalSpecialtyId SERIAL NOT NULL,
+    Description VARCHAR(100) COLLATE pg_catalog.default NOT NULL,
+    
+    CONSTRAINT PK_MedicalSpecialty PRIMARY KEY (MedicalSpecialtyId),
+    CONSTRAINT UK_MedicalSpecialty_Description UNIQUE (Description)
+)WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE olbil.Diagnosis(
+    DiagnosisId SERIAL NOT NULL,
+    ICDCode VARCHAR(20) COLLATE pg_catalog.default NOT NULL,
+    CompleteDescriptor VARCHAR(512) COLLATE pg_catalog.default NOT NULL,
+    ShortDescriptor VARCHAR(512) COLLATE pg_catalog.default NOT NULL,
+    CONSTRAINT PK_Diagnosis PRIMARY KEY (DiagnosisId),
+    CONSTRAINT UK_Diagnosis_ICDCode UNIQUE (ICDCode)
+)WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE olbil.Appointment(
+    AppointmentId SERIAL NOT NULL,
+    Date TIMESTAMP NOT NULL,
+    AppointmentReasonId INT,
+    OncologyPatientId INT NOT NULL,
+    HealthProfessionalId INT,
+    PattientAttended BIT,
+    AttentionBlocks VARCHAR(256) COLLATE pg_catalog.default,
+    Notes VARCHAR(4092) COLLATE pg_catalog.default,
+    SpecialNotes VARCHAR(4092) COLLATE pg_catalog.default,
+    RescheduledAppointmentId INT,
+    CONSTRAINT PK_Appointment PRIMARY KEY (AppointmentId),
+    CONSTRAINT Appointment_AppointmentReason_AppointmentReasonId FOREIGN KEY (AppointmentReasonId)
+        REFERENCES olbil.AppointmentReason (AppointmentReasonId) MATCH SIMPLE
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT Appointment_Appointment_RescheduledAppointmentId FOREIGN KEY (RescheduledAppointmentId)
+        REFERENCES olbil.Appointment (AppointmentId) MATCH SIMPLE
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT Appointment_OncologyPatient_OncologyPatientId FOREIGN KEY (OncologyPatientId)
+        REFERENCES olbil.OncologyPatient (OncologyPatientId) MATCH SIMPLE
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT Appointment_HealthProfessional_HealthProfessionalId FOREIGN KEY (HealthProfessionalId)
+        REFERENCES olbil.HealthProfessional(HealthProfessionalId) MATCH SIMPLE
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT UK_Appointment_PatientDateReason UNIQUE (OncologyPatientId, Date, AppointmentReasonId)
+)WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+
+CREATE TABLE olbil.EvolutionCard(
+    EvolutionCardId SERIAL NOT NULL,
+	OncologyPatientId INT NOT NULL,
+	AppointmentId INT,
+    DiagnosisId INT,
+	HeightCm DECIMAL(5,2),
+	WeightKg DECIMAL(6,2),
+	TemperatureC DECIMAL(5,2),
+	HeartBeatRateBpm INT,
+    Observations VARCHAR(4092) COLLATE pg_catalog.default,
+	Directions VARCHAR(4092) COLLATE pg_catalog.default,
+	NextAppointmentDate TIMESTAMP,
+	ReferredTo VARCHAR(256) COLLATE pg_catalog.default,
+
+    CONSTRAINT PK_EvolutionCard PRIMARY KEY (EvolutionCardId),
+	CONSTRAINT EvolutionCard_OncologyPatient_OncologyPatientId FOREIGN KEY (OncologyPatientId)
+        REFERENCES olbil.OncologyPatient (OncologyPatientId) MATCH SIMPLE
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT EvolutionCard_Diagnosis_ADiagnosisId FOREIGN KEY (DiagnosisId)
+        REFERENCES olbil.Diagnosis (DiagnosisId) MATCH SIMPLE
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT EvolutionCard_Appointment_AppointmentId FOREIGN KEY (AppointmentId)
+        REFERENCES olbil.Appointment (AppointmentId) MATCH SIMPLE
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT UK_EvolutionCard_OncologyPatientAppointment UNIQUE (OncologyPatientId, AppointmentId)
+)WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;

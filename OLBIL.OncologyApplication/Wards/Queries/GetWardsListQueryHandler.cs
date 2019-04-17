@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Wards.Queries
 {
-       public class GetWardsListQueryHandler : IRequestHandler<GetWardsListQuery, WardsListModel>
+       public class GetWardsListQueryHandler : IRequestHandler<GetWardsListQuery, ListModel<WardModel>>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
@@ -20,9 +20,9 @@ namespace OLBIL.OncologyApplication.Wards.Queries
             _mapper = mapper;
         }
 
-        public async Task<WardsListModel> Handle(GetWardsListQuery request, CancellationToken cancellationToken)
+        public async Task<ListModel<WardModel>> Handle(GetWardsListQuery request, CancellationToken cancellationToken)
         {
-            return new WardsListModel
+            return new ListModel<WardModel>
             {
                 Items = await _context.Wards
                                    .ProjectTo<WardModel>(_mapper.ConfigurationProvider)

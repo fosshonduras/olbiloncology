@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using OLBIL.OncologyDomain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OLBIL.OncologyDomain.Entities
 {

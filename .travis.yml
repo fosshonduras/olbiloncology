@@ -1,0 +1,27 @@
+dist: bionic
+language: csharp
+mono: none
+sudo: required
+dotnet: 2.2
+cache:
+  directories:
+  - "$HOME/.npm"
+install:
+  - dotnet restore
+  - nvm install 10
+  - nvm use 10
+script:
+  - node --version
+  - dotnet --version
+  - dotnet build
+  - dotnet test OLBIL.OncologyTests/OLBIL.OncologyTests.csproj --filter TestCategory!=OPTIONAL-TEST
+after_script:
+  - dotnet test OLBIL.OncologyTests/OLBIL.OncologyTests.csproj --filter TestCategory=OPTIONAL-TEST
+  - export PATH=$PATH:$HOME/.local/bin
+after_success:
+  - echo dotnet test and npm test succeeded
+after_failure:
+  - echo dotnet test or npm test failed
+global:
+  - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+  - DOTNET_CLI_TELEMETRY_OPTOUT=1

@@ -3,7 +3,7 @@ using OLBIL.OncologyApplication.Models;
 
 namespace OLBIL.OncologyApplication.Buildings.Queries
 {
-    public class GetBuildingsListQuery: IRequest<BuildingsListModel>
+    public class GetBuildingsListQuery: IRequest<ListModel<BuildingModel>>
     {
     }
 }

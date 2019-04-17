@@ -13,7 +13,12 @@ namespace OLBIL.OncologyData
             
         }
 
+        public DbSet<MedicalSpecialty> MedicalSpecialties { get; set; }
+        public DbSet<Diagnosis> Diagnoses { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<AdministrativeDivision> AdministrativeDivisions { get; set; }
         public DbSet<OncologyPatient> OncologyPatients { get; set; }
+        public DbSet<EvolutionCard> EvolutionCards { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Person> People { get; set; }
         public DbSet<HealthProfessional> HealthProfessionals { get; set; }

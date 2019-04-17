@@ -93,13 +93,14 @@ export class WardEditComponent implements OnInit {
       distinctUntilChanged(),
       tap(() => this.isSearchingUnit = true),
       switchMap(term =>
+        term.length < 2 ? of(Array<HospitalUnitModel>()) :
         this.unitsClient.search(term)
           .pipe(
-            map((bm, bmi) => bm.items),
+            map((bm, bmi) =>  bm.items),
             tap(() => this.unitSearchFailed = false),
             catchError(() => {
               this.unitSearchFailed = true;
-              return of([]);
+              return of(Array<HospitalUnitModel>());
             }))
       ),
       tap(() => this.isSearchingUnit = false)

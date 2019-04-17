@@ -3,7 +3,7 @@ using OLBIL.OncologyApplication.Models;
 
 namespace OLBIL.OncologyApplication.HealthProfesssionals.Queries
 {
-    public class GetHealthProfessionalsListQuery: IRequest<HealthProfessionalsListModel>
+    public class GetHealthProfessionalsListQuery: IRequest<ListModel<HealthProfessionalModel>>
     {
     }
 }

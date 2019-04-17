@@ -9,13 +9,13 @@ namespace OLBIL.OncologyWebApp.Controllers
     public class OncologyPatientsController: OlbilController
     {
         [HttpGet]
-        public async Task<ActionResult<OncologyPatientsListModel>> GetAll()
+        public async Task<ActionResult<ListModel<OncologyPatientModel>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetOncologyPatientsListQuery()));
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<OncologyPatientsListModel>> Search(string searchTerm)
+        public async Task<ActionResult<ListModel<OncologyPatientModel>>> Search(string searchTerm)
         {
             return Ok(await Mediator.Send(new SearchOncologyPatientsQuery { SearchTerm = searchTerm }));
         }
@@ -27,7 +27,7 @@ namespace OLBIL.OncologyWebApp.Controllers
         }
 
         [HttpPost("attempt",Name = "AttemptCreation")]
-        public async Task<ActionResult<OncologyPatientsListModel>> AttemptCreatePatient([FromBody]OncologyPatientModel model)
+        public async Task<ActionResult<ListModel<OncologyPatientModel>>> AttemptCreatePatient([FromBody]OncologyPatientModel model)
         {
             return Ok(await Mediator.Send(new AttemptOncologyPatientCreationCommand { Model = model}));
         }

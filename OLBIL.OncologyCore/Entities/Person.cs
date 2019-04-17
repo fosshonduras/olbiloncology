@@ -11,6 +11,7 @@ namespace OLBIL.OncologyDomain.Entities
         public string LastName { get; set; }
         public string AdditionalLastName { get; set; }
         public string PreferredName { get; set; }
+        public string TemporaryIdNumber { get; set; }
         public string GovernmentIDNumber { get; set; }
         public string Address { get; set; }
         public string AddressLine2 { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OLBIL.OncologyDomain.Enums;
+using System.Collections.Generic;
 
 namespace OLBIL.OncologyDomain.Entities
 {

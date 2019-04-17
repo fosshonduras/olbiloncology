@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Buildings.Queries
 {
-    public class GetBuildingsListQueryHandler : IRequestHandler<GetBuildingsListQuery, BuildingsListModel>
+    public class GetBuildingsListQueryHandler : IRequestHandler<GetBuildingsListQuery, ListModel<BuildingModel>>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
@@ -20,9 +20,9 @@ namespace OLBIL.OncologyApplication.Buildings.Queries
             _mapper = mapper;
         }
 
-        public async Task<BuildingsListModel> Handle(GetBuildingsListQuery request, CancellationToken cancellationToken)
+        public async Task<ListModel<BuildingModel>> Handle(GetBuildingsListQuery request, CancellationToken cancellationToken)
         {
-            return new BuildingsListModel
+            return new ListModel<BuildingModel>
             {
                 Items = await _context.Buildings
                                    .ProjectTo<BuildingModel>(_mapper.ConfigurationProvider)

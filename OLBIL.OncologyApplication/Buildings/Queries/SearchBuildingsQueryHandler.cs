@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Buildings.Queries
 {
-    public class SearchBuildingsListQueryHandler : IRequestHandler<SearchBuildingsQuery, BuildingsListModel>
+    public class SearchBuildingsListQueryHandler : IRequestHandler<SearchBuildingsQuery, ListModel<BuildingModel>>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
@@ -21,9 +21,9 @@ namespace OLBIL.OncologyApplication.Buildings.Queries
             _mapper = mapper;
         }
 
-        public async Task<BuildingsListModel> Handle(SearchBuildingsQuery request, CancellationToken cancellationToken)
+        public async Task<ListModel<BuildingModel>> Handle(SearchBuildingsQuery request, CancellationToken cancellationToken)
         {
-            return new BuildingsListModel
+            return new ListModel<BuildingModel>
             {
                 Items = await _context.Buildings
                                    .Where(i =>

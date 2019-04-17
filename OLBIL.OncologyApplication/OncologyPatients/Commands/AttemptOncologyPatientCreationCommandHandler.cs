@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.OncologyPatients.Commands
 {
-    public class AttemptOncologyPatientCreationCommandHandler : IRequestHandler<AttemptOncologyPatientCreationCommand, OncologyPatientsListModel>
+    public class AttemptOncologyPatientCreationCommandHandler : IRequestHandler<AttemptOncologyPatientCreationCommand, ListModel<OncologyPatientModel>>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands
             _mapper = mapper;
         }
 
-        public async Task<OncologyPatientsListModel> Handle(AttemptOncologyPatientCreationCommand request, CancellationToken cancellationToken)
+        public async Task<ListModel<OncologyPatientModel>> Handle(AttemptOncologyPatientCreationCommand request, CancellationToken cancellationToken)
         {
             var model = request.Model;
             var matches = _context.OncologyPatients.Include(o => o.Person)
@@ -36,7 +36,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands
                         (o.Person.GovernmentIDNumber != null && o.Person.GovernmentIDNumber == model.Person.GovernmentIDNumber)
                     )
                 );
-            return new OncologyPatientsListModel
+            return new ListModel<OncologyPatientModel>
             {
                 Items = await matches.ProjectTo<OncologyPatientModel>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken)

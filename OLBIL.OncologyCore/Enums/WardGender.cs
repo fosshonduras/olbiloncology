@@ -1,4 +1,4 @@
-﻿namespace OLBIL.OncologyDomain.Entities
+﻿namespace OLBIL.OncologyDomain.Enums
 {
     public enum WardGender
     {

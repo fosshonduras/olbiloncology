@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyDomain.Entities;
+using OLBIL.OncologyDomain.Enums;
 
 namespace OLBIL.OncologyApplication.Models
 {

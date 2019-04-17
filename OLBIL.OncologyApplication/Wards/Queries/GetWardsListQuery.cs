@@ -3,7 +3,7 @@ using OLBIL.OncologyApplication.Models;
 
 namespace OLBIL.OncologyApplication.Wards.Queries
 {
-    public class GetWardsListQuery: IRequest<WardsListModel>
+    public class GetWardsListQuery: IRequest<ListModel<WardModel>>
     {
     }
 }

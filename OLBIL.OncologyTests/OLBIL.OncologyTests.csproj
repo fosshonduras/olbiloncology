@@ -21,8 +21,4 @@
     <ProjectReference Include="..\OLBIL.OncologyData\OLBIL.OncologyData.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UnitTests\" />
-  </ItemGroup>
-
 </Project>

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Beds.Queries
 {
-    public class SearchBedsListQueryHandler : IRequestHandler<SearchBedsQuery, BedsListModel>
+    public class SearchBedsListQueryHandler : IRequestHandler<SearchBedsQuery, ListModel<BedModel>>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
@@ -21,9 +21,9 @@ namespace OLBIL.OncologyApplication.Beds.Queries
             _mapper = mapper;
         }
 
-        public async Task<BedsListModel> Handle(SearchBedsQuery request, CancellationToken cancellationToken)
+        public async Task<ListModel<BedModel>> Handle(SearchBedsQuery request, CancellationToken cancellationToken)
         {
-            return new BedsListModel
+            return new ListModel<BedModel>
             {
                 Items = await _context.Beds
                                    .Where(i =>

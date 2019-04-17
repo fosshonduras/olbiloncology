@@ -4,13 +4,14 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyData;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Wards.Queries
 {
-    public class SearchWardsListQueryHandler : IRequestHandler<SearchWardsQuery, WardsListModel>
+    public class SearchWardsListQueryHandler : IRequestHandler<SearchWardsQuery, ListModel<WardModel>>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
@@ -21,17 +22,22 @@ namespace OLBIL.OncologyApplication.Wards.Queries
             _mapper = mapper;
         }
 
-        public async Task<WardsListModel> Handle(SearchWardsQuery request, CancellationToken cancellationToken)
+        public async Task<ListModel<WardModel>> Handle(SearchWardsQuery request, CancellationToken cancellationToken)
         {
-            return new WardsListModel
+            return new ListModel<WardModel>
             {
-                Items = await _context.Wards
-                                   .Where(i =>
-                                        EF.Functions.ILike(i.Name, $"%{request.SearchTerm}%")
-                                    )
-                                   .ProjectTo<WardModel>(_mapper.ConfigurationProvider)
-                                   .ToListAsync(cancellationToken)
+                Items = await ApplyFilter(request, cancellationToken)
             };
+        }
+
+        private async Task<List<WardModel>> ApplyFilter(SearchWardsQuery request, CancellationToken cancellationToken)
+        {
+            return await _context.Wards
+                                .Where(i =>
+                                    EF.Functions.ILike(i.Name, $"%{request.SearchTerm}%")
+                                )
+                                .ProjectTo<WardModel>(_mapper.ConfigurationProvider)
+                                .ToListAsync(cancellationToken);
         }
     }
 }

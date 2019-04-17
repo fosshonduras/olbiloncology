@@ -9,7 +9,7 @@ using OLBIL.OncologyData;
 
 namespace OLBIL.OncologyApplication.Beds.Queries
 {
-       public class GetBedsListQueryHandler : IRequestHandler<GetBedsListQuery, BedsListModel>
+       public class GetBedsListQueryHandler : IRequestHandler<GetBedsListQuery, ListModel<BedModel>>
     {
         private readonly OncologyContext _context;
         private readonly IMapper _mapper;
@@ -20,9 +20,9 @@ namespace OLBIL.OncologyApplication.Beds.Queries
             _mapper = mapper;
         }
 
-        public async Task<BedsListModel> Handle(GetBedsListQuery request, CancellationToken cancellationToken)
+        public async Task<ListModel<BedModel>> Handle(GetBedsListQuery request, CancellationToken cancellationToken)
         {
-            return new BedsListModel
+            return new ListModel<BedModel>
             {
                 Items = await _context.Beds
                                    .ProjectTo<BedModel>(_mapper.ConfigurationProvider)
