@@ -1,5 +1,6 @@
 .masterhead {
-  height: 100vh;
+  margin-top: -15px;
+  height: 90vh;
   min-height: 500px;
   background-image: url('https://source.unsplash.com/Pd4lRfKo16U/1920x1080');
   background-size: cover;
