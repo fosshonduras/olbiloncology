@@ -22,7 +22,7 @@ build_script:
   - dotnet publish -c Release
 before_build:
   - appveyor-retry dotnet restore -v Minimal
-  - ps: ((Get-Content -path C:\projects\olbiloncology\OLBIL.OncologyWebApp\ClientApp\src\app\app.component.html -Raw) -replace '==BuildNumber==','$(APPVEYOR_BUILD_VERSION)')| Set-Content -Path C:\projects\olbiloncology\OLBIL.OncologyWebApp\ClientApp\src\app\app.component.html
+  - ps: ((Get-Content -path C:\projects\olbiloncology\OLBIL.OncologyWebApp\ClientApp\src\app\app.component.html -Raw) -replace '{{BuildNumber}}',$env:APPVEYOR_BUILD_VERSION)| Set-Content -Path C:\projects\olbiloncology\OLBIL.OncologyWebApp\ClientApp\src\app\app.component.html
 test_script:
   - cd C:\projects\olbiloncology\OLBIL.OncologyTests
   - nuget install Appveyor.TestLogger -Version 2.0.0

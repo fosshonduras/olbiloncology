@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit{
   year: number;
+  BuildNumber: string = "0.0.0";
+
   ngOnInit(): void {
     this.year = new Date().getFullYear();
   }
