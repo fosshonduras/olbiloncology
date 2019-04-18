@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyWebApp", "OLBIL.OncologyWebApp\OLBIL.OncologyWebApp.csproj", "{A6437B19-3BC5-4819-8D9C-993C71F52EE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyDomain", "OLBIL.OncologyCore\OLBIL.OncologyDomain.csproj", "{4A1C8916-3779-4BC9-9E8C-21D267110912}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyDomain", "OLBIL.OncologyDomain\OLBIL.OncologyDomain.csproj", "{4A1C8916-3779-4BC9-9E8C-21D267110912}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyApplication", "OLBIL.OncologyApplication\OLBIL.OncologyApplication.csproj", "{5D1A8D31-391A-472F-91D4-4F210B6C4E7B}"
 EndProject
@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyTests", "OLBI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyData", "OLBIL.OncologyData\OLBIL.OncologyData.csproj", "{694AE303-FCBD-4011-AA72-6AD0128D4B85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OLBIL.Core", "OLBIL.Core\OLBIL.Core.csproj", "{BD241DF5-CCFF-4D67-9ACF-2716B6F88B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.Common", "OLBIL.Common\OLBIL.Common.csproj", "{BD241DF5-CCFF-4D67-9ACF-2716B6F88B96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OLBIL.OncologyCrossCutting", "OLBIL.OncologyCrossCutting\OLBIL.OncologyCrossCutting.csproj", "{B6BFBEAD-7460-4F24-BE23-F836E330C38F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyInfrastructure", "OLBIL.OncologyCrossCutting\OLBIL.OncologyInfrastructure.csproj", "{B6BFBEAD-7460-4F24-BE23-F836E330C38F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

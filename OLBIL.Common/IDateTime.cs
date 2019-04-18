@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OLBIL.Core
+namespace OLBIL.Common
 {
     public interface IDateTime
     {

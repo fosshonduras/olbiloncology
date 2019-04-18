@@ -1,7 +1,7 @@
-﻿using OLBIL.Core;
+﻿using OLBIL.Common;
 using System;
 
-namespace OLBIL.OncologyCrossCutting
+namespace OLBIL.OncologyInfrastructure
 {
     public class SystemDateTime : IDateTime
     {
