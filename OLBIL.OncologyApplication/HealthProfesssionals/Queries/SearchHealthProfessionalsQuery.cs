@@ -1,10 +1,47 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Models;
+using OLBIL.OncologyData;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.HealthProfesssionals.Queries
 {
     public class SearchHealthProfessionalsQuery: IRequest<ListModel<HealthProfessionalModel>>
     {
         public string SearchTerm { get; set; }
+
+        public class Handler : IRequestHandler<SearchHealthProfessionalsQuery, ListModel<HealthProfessionalModel>>
+        {
+            private readonly OncologyContext _context;
+            private readonly IMapper _mapper;
+
+            public Handler(OncologyContext context, IMapper mapper)
+            {
+                _context = context;
+                _mapper = mapper;
+            }
+
+            public async Task<ListModel<HealthProfessionalModel>> Handle(SearchHealthProfessionalsQuery request, CancellationToken cancellationToken)
+            {
+                return new ListModel<HealthProfessionalModel>
+                {
+                    Items = await _context.HealthProfessionals
+                                       .Where(i =>
+                                            EF.Functions.ILike(i.Person.FirstName, $"%{request.SearchTerm}%")
+                                            || EF.Functions.ILike(i.Person.LastName, $"%{request.SearchTerm}%")
+                                            || EF.Functions.ILike(i.Person.MiddleName, $"%{request.SearchTerm}%")
+                                            || EF.Functions.ILike(i.Person.AdditionalLastName, $"%{request.SearchTerm}%")
+                                            || EF.Functions.ILike(i.Person.PreferredName, $"%{request.SearchTerm}%")
+                                            || EF.Functions.ILike(i.Person.GovernmentIDNumber, $"%{request.SearchTerm}%")
+                                        )
+                                       .ProjectTo<HealthProfessionalModel>(_mapper.ConfigurationProvider)
+                                       .ToListAsync(cancellationToken)
+                };
+            }
+        }
     }
 }

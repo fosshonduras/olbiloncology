@@ -34,7 +34,7 @@ namespace OLBIL.OncologyWebApp
 
             // Add MediatR
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
-            services.AddMediatR(typeof(GetOncologyPatientsListQueryHandler).GetTypeInfo().Assembly);    
+            services.AddMediatR(typeof(GetOncologyPatientsListQuery).GetTypeInfo().Assembly);    
 
             services.AddDbContext<OncologyContext>(
                 options => options.UseNpgsql(Configuration.GetConnectionString("ElephantDB"))

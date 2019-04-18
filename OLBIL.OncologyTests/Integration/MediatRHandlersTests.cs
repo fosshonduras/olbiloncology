@@ -1,6 +1,6 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OLBIL.OncologyApplication.Buildings.Commands;
+using OLBIL.OncologyApplication.Wards.Queries;
 using OLBIL.OncologyTests.Utils;
 
 namespace OLBIL.OncologyTests.Integration
@@ -12,7 +12,7 @@ namespace OLBIL.OncologyTests.Integration
         [TestCategory("Integration")]
         public void EnsureAllRequestsHaveHandler()
         {
-            var requestsWithoutHandlers = MediatorPair.FindUnmatchedRequests(typeof(CreateBuildingCommand).Assembly);
+            var requestsWithoutHandlers = MediatorPair.FindUnmatchedRequests(typeof(GetWardsListQuery).Assembly);
 
             requestsWithoutHandlers.Should().BeEmpty();
         }
