@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyData;
 using OLBIL.OncologyDomain.Entities;
 using System.Linq;
@@ -14,20 +15,13 @@ namespace OLBIL.OncologyApplication.Beds.Commands
     {
         public int Id { get; set; }
 
-        public class Handler : IRequestHandler<DeleteBedCommand>
+        public class Handler : HandlerBase, IRequestHandler<DeleteBedCommand>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<Unit> Handle(DeleteBedCommand request, CancellationToken cancellationToken)
             {
-                var building = await _context.Beds
+                var building = await Context.Beds
                     .Where(p => p.BedId == request.Id)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (building == null)
@@ -35,9 +29,9 @@ namespace OLBIL.OncologyApplication.Beds.Commands
                     throw new NotFoundException(nameof(Bed), nameof(building.BedId), request.Id);
                 }
 
-                _context.Beds.Remove(building);
+                Context.Beds.Remove(building);
 
-                await _context.SaveChangesAsync(cancellationToken);
+                await Context.SaveChangesAsync(cancellationToken);
                 return new Unit();
             }
         }

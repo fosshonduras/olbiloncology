@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OLBIL.OncologyApplication.HealthProfesssionals.Commands;
-using OLBIL.OncologyApplication.HealthProfesssionals.Queries;
+using OLBIL.OncologyApplication.HealthProfessionals.Commands;
+using OLBIL.OncologyApplication.HealthProfessionals.Queries;
 using OLBIL.OncologyApplication.Models;
 using System.Threading.Tasks;
 

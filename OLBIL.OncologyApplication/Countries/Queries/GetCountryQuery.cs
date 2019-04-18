@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyData;
 using OLBIL.OncologyDomain.Entities;
@@ -15,20 +16,13 @@ namespace OLBIL.OncologyApplication.Countries.Queries
     {
         public int Id { get; set; }
 
-        public class Handler : IRequestHandler<GetCountryQuery, CountryModel>
+        public class Handler : HandlerBase, IRequestHandler<GetCountryQuery, CountryModel>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<CountryModel> Handle(GetCountryQuery request, CancellationToken cancellationToken)
             {
-                var item = _mapper.Map<CountryModel>(await _context
+                var item = Mapper.Map<CountryModel>(await Context
                     .Countries.Where(o => o.CountryId == request.Id)
                     .SingleOrDefaultAsync(cancellationToken));
 

@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyData;
 using OLBIL.OncologyDomain.Entities;
@@ -15,21 +16,14 @@ namespace OLBIL.OncologyApplication.Beds.Commands
     {
         public BedModel Model { get; set; }
 
-        public class Handler : IRequestHandler<CreateBedCommand, int>
+        public class Handler : HandlerBase, IRequestHandler<CreateBedCommand, int>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<int> Handle(CreateBedCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var item = await _context.Beds
+                var item = await Context.Beds
                     .Where(p => p.BedId == model.BedId)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (item != null)
@@ -45,8 +39,8 @@ namespace OLBIL.OncologyApplication.Beds.Commands
                     BedStatusId = model.BedStatusId.Value
                 };
 
-                _context.Beds.Add(newRecord);
-                await _context.SaveChangesAsync(cancellationToken);
+                Context.Beds.Add(newRecord);
+                await Context.SaveChangesAsync(cancellationToken);
 
                 return newRecord.BedId;
             }

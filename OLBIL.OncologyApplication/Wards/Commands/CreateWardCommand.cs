@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using OLBIL.OncologyApplication.Models;
+using OLBIL.OncologyApplication.Infrastructure;
 
 namespace OLBIL.OncologyApplication.Wards.Commands
 {
@@ -15,21 +16,14 @@ namespace OLBIL.OncologyApplication.Wards.Commands
     {
         public WardModel Model { get; set; }
 
-        public class Handler : IRequestHandler<CreateWardCommand, int>
+        public class Handler : HandlerBase, IRequestHandler<CreateWardCommand, int>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<int> Handle(CreateWardCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var ward = await _context.Wards
+                var ward = await Context.Wards
                     .Where(p => p.WardId == model.WardId)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (ward != null)
@@ -47,8 +41,8 @@ namespace OLBIL.OncologyApplication.Wards.Commands
                     WardStatusId = model.WardStatusId.Value
                 };
 
-                _context.Wards.Add(newRecord);
-                await _context.SaveChangesAsync(cancellationToken);
+                Context.Wards.Add(newRecord);
+                await Context.SaveChangesAsync(cancellationToken);
 
                 return newRecord.WardId;
             }

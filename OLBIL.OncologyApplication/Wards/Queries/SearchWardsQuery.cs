@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyData;
 using System.Collections.Generic;
@@ -15,16 +16,9 @@ namespace OLBIL.OncologyApplication.Wards.Queries
     {
         public string SearchTerm { get; set; }
 
-        public class Handler : IRequestHandler<SearchWardsQuery, ListModel<WardModel>>
+        public class Handler : HandlerBase, IRequestHandler<SearchWardsQuery, ListModel<WardModel>>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<ListModel<WardModel>> Handle(SearchWardsQuery request, CancellationToken cancellationToken)
             {
@@ -36,11 +30,11 @@ namespace OLBIL.OncologyApplication.Wards.Queries
 
             private async Task<List<WardModel>> ApplyFilter(SearchWardsQuery request, CancellationToken cancellationToken)
             {
-                return await _context.Wards
+                return await Context.Wards
                                     .Where(i =>
                                         EF.Functions.ILike(i.Name, $"%{request.SearchTerm}%")
                                     )
-                                    .ProjectTo<WardModel>(_mapper.ConfigurationProvider)
+                                    .ProjectTo<WardModel>(Mapper.ConfigurationProvider)
                                     .ToListAsync(cancellationToken);
             }
         }

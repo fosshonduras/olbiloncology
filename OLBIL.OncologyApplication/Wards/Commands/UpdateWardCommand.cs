@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyData;
 using OLBIL.OncologyDomain.Entities;
@@ -15,21 +16,13 @@ namespace OLBIL.OncologyApplication.Wards.Commands
     {
         public WardModel Model { get; set; }
 
-        public class Handler : IRequestHandler<UpdateWardCommand>
+        public class Handler : HandlerBase, IRequestHandler<UpdateWardCommand>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
-
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
             public async Task<Unit> Handle(UpdateWardCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var item = await _context.Wards
+                var item = await Context.Wards
                     .Where(p => p.WardId == model.WardId)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (item == null)
@@ -44,7 +37,7 @@ namespace OLBIL.OncologyApplication.Wards.Commands
                 item.WardGenderId = model.WardGenderId.Value;
                 item.WardStatusId = model.WardStatusId.Value;
 
-                await _context.SaveChangesAsync(cancellationToken);
+                await Context.SaveChangesAsync(cancellationToken);
                 return new Unit();
             }
         }

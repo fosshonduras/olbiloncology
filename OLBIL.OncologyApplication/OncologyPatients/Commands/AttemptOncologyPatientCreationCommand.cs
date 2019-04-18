@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyData;
 using System.Linq;
@@ -14,21 +15,14 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands
     {
         public OncologyPatientModel Model { get; set; }
 
-        public class Handler : IRequestHandler<AttemptOncologyPatientCreationCommand, ListModel<OncologyPatientModel>>
+        public class Handler : HandlerBase, IRequestHandler<AttemptOncologyPatientCreationCommand, ListModel<OncologyPatientModel>>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<ListModel<OncologyPatientModel>> Handle(AttemptOncologyPatientCreationCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var matches = _context.OncologyPatients.Include(o => o.Person)
+                var matches = Context.OncologyPatients.Include(o => o.Person)
                     .Where(o =>
                         o.Person != null &&
                         (
@@ -42,7 +36,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands
                     );
                 return new ListModel<OncologyPatientModel>
                 {
-                    Items = await matches.ProjectTo<OncologyPatientModel>(_mapper.ConfigurationProvider)
+                    Items = await matches.ProjectTo<OncologyPatientModel>(Mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken)
                 };
             }

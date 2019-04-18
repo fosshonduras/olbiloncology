@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyData;
 using OLBIL.OncologyDomain.Entities;
@@ -15,20 +16,13 @@ namespace OLBIL.OncologyApplication.HospitalUnits.Queries
     {
         public int Id { get; set; }
 
-        public class Handler : IRequestHandler<GetHospitalUnitQuery, HospitalUnitModel>
+        public class Handler : HandlerBase, IRequestHandler<GetHospitalUnitQuery, HospitalUnitModel>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
-            public Handler(OncologyContext context, IMapper mapper)
+        public async Task<HospitalUnitModel> Handle(GetHospitalUnitQuery request, CancellationToken cancellationToken)
             {
-                _context = context;
-                _mapper = mapper;
-            }
-
-            public async Task<HospitalUnitModel> Handle(GetHospitalUnitQuery request, CancellationToken cancellationToken)
-            {
-                var item = _mapper.Map<HospitalUnitModel>(await _context
+                var item = Mapper.Map<HospitalUnitModel>(await Context
                     .HospitalUnits.Where(o => o.HospitalUnitId == request.Id)
                     .SingleOrDefaultAsync(cancellationToken));
 

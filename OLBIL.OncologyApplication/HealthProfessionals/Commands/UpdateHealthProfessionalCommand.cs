@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyData;
 using OLBIL.OncologyDomain.Entities;
@@ -9,26 +10,19 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.HealthProfesssionals.Commands
+namespace OLBIL.OncologyApplication.HealthProfessionals.Commands
 {
     public class UpdateHealthProfessionalCommand: IRequest
     {
         public HealthProfessionalModel Model { get; set; }
 
-        public class Handler : IRequestHandler<UpdateHealthProfessionalCommand>
+        public class Handler : HandlerBase, IRequestHandler<UpdateHealthProfessionalCommand>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<Unit> Handle(UpdateHealthProfessionalCommand request, CancellationToken cancellationToken)
             {
-                var item = await _context.HealthProfessionals
+                var item = await Context.HealthProfessionals
                     .Where(p => p.HealthProfessionalId == request.Model.HealthProfessionalId)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (item == null)
@@ -37,7 +31,7 @@ namespace OLBIL.OncologyApplication.HealthProfesssionals.Commands
                 }
                 var pModel = request.Model.Person;
                 var personId = pModel?.PersonId;
-                var person = await _context.People
+                var person = await Context.People
                                 .Where(p => p.PersonId == personId)
                                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -49,7 +43,7 @@ namespace OLBIL.OncologyApplication.HealthProfesssionals.Commands
                 MapPersonDetails(pModel, person);
                 MapHealthProfessionalDetails(request, item);
 
-                await _context.SaveChangesAsync(cancellationToken);
+                await Context.SaveChangesAsync(cancellationToken);
                 return new Unit();
             }
 

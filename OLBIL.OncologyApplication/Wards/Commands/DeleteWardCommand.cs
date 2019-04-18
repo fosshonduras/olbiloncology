@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyData;
 using OLBIL.OncologyDomain.Entities;
 using System.Linq;
@@ -14,20 +15,12 @@ namespace OLBIL.OncologyApplication.Wards.Commands
     {
         public int Id { get; set; }
 
-        public class Handler : IRequestHandler<DeleteWardCommand>
+        public class Handler : HandlerBase, IRequestHandler<DeleteWardCommand>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
-
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
             public async Task<Unit> Handle(DeleteWardCommand request, CancellationToken cancellationToken)
             {
-                var item = await _context.Wards
+                var item = await Context.Wards
                     .Where(p => p.WardId == request.Id)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (item == null)
@@ -35,9 +28,9 @@ namespace OLBIL.OncologyApplication.Wards.Commands
                     throw new NotFoundException(nameof(Ward), nameof(item.WardId), request.Id);
                 }
 
-                _context.Wards.Remove(item);
+                Context.Wards.Remove(item);
 
-                await _context.SaveChangesAsync(cancellationToken);
+                await Context.SaveChangesAsync(cancellationToken);
                 return new Unit();
             }
         }

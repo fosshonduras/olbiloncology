@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyData;
 using OLBIL.OncologyDomain.Entities;
@@ -15,20 +16,13 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands
     {
         public OncologyPatientModel Model { get; set; }
 
-        public class Handler : IRequestHandler<UpdateOncologyPatientCommand>
+        public class Handler : HandlerBase, IRequestHandler<UpdateOncologyPatientCommand>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<Unit> Handle(UpdateOncologyPatientCommand request, CancellationToken cancellationToken)
             {
-                var patient = await _context.OncologyPatients
+                var patient = await Context.OncologyPatients
                     .Where(p => p.OncologyPatientId == request.Model.OncologyPatientId)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (patient == null)
@@ -37,7 +31,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands
                 }
                 var pModel = request.Model.Person;
                 var personId = pModel?.PersonId;
-                var person = await _context.People
+                var person = await Context.People
                                 .Where(p => p.PersonId == personId)
                                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -50,7 +44,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands
                 MapPersonDetails(pModel, person);
                 MapPatientDetails(request, patient);
 
-                await _context.SaveChangesAsync(cancellationToken);
+                await Context.SaveChangesAsync(cancellationToken);
                 return new Unit();
             }
 

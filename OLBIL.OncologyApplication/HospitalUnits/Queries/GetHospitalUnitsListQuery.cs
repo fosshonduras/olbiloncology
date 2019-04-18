@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyData;
 using System.Threading;
@@ -11,23 +12,16 @@ namespace OLBIL.OncologyApplication.HospitalUnits.Queries
 {
     public class GetHospitalUnitsListQuery: IRequest<ListModel<HospitalUnitModel>>
     {
-        public class Handler : IRequestHandler<GetHospitalUnitsListQuery, ListModel<HospitalUnitModel>>
+        public class Handler : HandlerBase, IRequestHandler<GetHospitalUnitsListQuery, ListModel<HospitalUnitModel>>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<ListModel<HospitalUnitModel>> Handle(GetHospitalUnitsListQuery request, CancellationToken cancellationToken)
             {
                 return new ListModel<HospitalUnitModel>
                 {
-                    Items = await _context.HospitalUnits
-                                       .ProjectTo<HospitalUnitModel>(_mapper.ConfigurationProvider)
+                    Items = await Context.HospitalUnits
+                                       .ProjectTo<HospitalUnitModel>(Mapper.ConfigurationProvider)
                                        .ToListAsync(cancellationToken)
                 };
             }

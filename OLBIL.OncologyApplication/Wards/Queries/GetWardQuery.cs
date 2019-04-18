@@ -8,6 +8,7 @@ using OLBIL.OncologyData;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using OLBIL.OncologyApplication.Infrastructure;
 
 namespace OLBIL.OncologyApplication.Wards.Queries
 {
@@ -15,20 +16,13 @@ namespace OLBIL.OncologyApplication.Wards.Queries
     {
         public int Id { get; set; }
 
-        public class Handler : IRequestHandler<GetWardQuery, WardModel>
+        public class Handler : HandlerBase, IRequestHandler<GetWardQuery, WardModel>
         {
-            private readonly OncologyContext _context;
-            private readonly IMapper _mapper;
-
-            public Handler(OncologyContext context, IMapper mapper)
-            {
-                _context = context;
-                _mapper = mapper;
-            }
+            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<WardModel> Handle(GetWardQuery request, CancellationToken cancellationToken)
             {
-                var item = _mapper.Map<WardModel>(await _context
+                var item = Mapper.Map<WardModel>(await Context
                     .Wards.Where(o => o.WardId == request.Id)
                     .SingleOrDefaultAsync(cancellationToken));
 

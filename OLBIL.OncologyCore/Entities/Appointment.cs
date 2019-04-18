@@ -1,4 +1,5 @@
 ﻿using OLBIL.OncologyDomain.Enums;
+using System;
 
 namespace OLBIL.OncologyDomain.Entities
 {
@@ -8,7 +9,7 @@ namespace OLBIL.OncologyDomain.Entities
         public int OncologyPatientId { get; set; }
         public int? HealthProfessionalId { get; set; }
         public AppointmentStatus AppointmentStatusId { get; set; }
-        public Diagnosis Date { get; set; }
+        public DateTime Date { get; set; }
         public string AttentionBlocks { get; set; }
         public bool PatientAttended { get; set; }
         public int? RescheduledAppointmentId { get; set; }
@@ -20,5 +21,6 @@ namespace OLBIL.OncologyDomain.Entities
         public virtual HealthProfessional HealthProfessional { get; set; }
         public virtual Appointment RescheduledAppointment { get; set; }
         public virtual AppointmentReason AppointmentReason { get; set; }
+
     }
 }
