@@ -3,8 +3,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
 using OLBIL.OncologyApplication.Infrastructure;
+using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
-using OLBIL.OncologyData;
 using OLBIL.OncologyDomain.Entities;
 using System.Linq;
 using System.Threading;
@@ -18,7 +18,7 @@ namespace OLBIL.OncologyApplication.AdministrativeDivisions.Commands
 
         public class Handler : HandlerBase, IRequestHandler<CreateAdministrativeDivisionCommand, int>
         {
-            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
+            public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<int> Handle(CreateAdministrativeDivisionCommand request, CancellationToken cancellationToken)
             {

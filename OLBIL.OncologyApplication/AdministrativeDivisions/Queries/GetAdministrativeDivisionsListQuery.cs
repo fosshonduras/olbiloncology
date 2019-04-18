@@ -3,8 +3,8 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Infrastructure;
+using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
-using OLBIL.OncologyData;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +14,7 @@ namespace OLBIL.OncologyApplication.AdministrativeDivisions.Queries
     {
         public class Handler : HandlerBase, IRequestHandler<GetAdministrativeDivisionsListQuery, ListModel<AdministrativeDivisionModel>>
         {
-            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
+            public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<ListModel<AdministrativeDivisionModel>> Handle(GetAdministrativeDivisionsListQuery request, CancellationToken cancellationToken)
             {

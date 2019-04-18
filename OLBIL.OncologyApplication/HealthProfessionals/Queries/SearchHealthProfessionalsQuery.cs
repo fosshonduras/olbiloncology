@@ -3,8 +3,8 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Infrastructure;
+using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
-using OLBIL.OncologyData;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ namespace OLBIL.OncologyApplication.HealthProfessionals.Queries
 
         public class Handler : HandlerBase, IRequestHandler<SearchHealthProfessionalsQuery, ListModel<HealthProfessionalModel>>
         {
-            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
+            public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<ListModel<HealthProfessionalModel>> Handle(SearchHealthProfessionalsQuery request, CancellationToken cancellationToken)
             {

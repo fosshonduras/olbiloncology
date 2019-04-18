@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Interfaces
 {
-    public interface IOlbilContext
+    public interface IOncologyContext
     {
         DbSet<MedicalSpecialty> MedicalSpecialties { get; set; }
         DbSet<Diagnosis> Diagnoses { get; set; }

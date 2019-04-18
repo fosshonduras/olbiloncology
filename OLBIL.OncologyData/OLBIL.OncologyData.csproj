@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OLBIL.OncologyApplication\OLBIL.OncologyApplication.csproj" />
     <ProjectReference Include="..\OLBIL.OncologyDomain\OLBIL.OncologyDomain.csproj" />
   </ItemGroup>
 

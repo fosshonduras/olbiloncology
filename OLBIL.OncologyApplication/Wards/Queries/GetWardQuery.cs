@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyDomain.Entities;
-using OLBIL.OncologyData;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using OLBIL.OncologyApplication.Infrastructure;
+using OLBIL.OncologyApplication.Interfaces;
 
 namespace OLBIL.OncologyApplication.Wards.Queries
 {
@@ -18,7 +18,7 @@ namespace OLBIL.OncologyApplication.Wards.Queries
 
         public class Handler : HandlerBase, IRequestHandler<GetWardQuery, WardModel>
         {
-            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
+            public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<WardModel> Handle(GetWardQuery request, CancellationToken cancellationToken)
             {

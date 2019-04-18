@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
 using OLBIL.OncologyApplication.Infrastructure;
-using OLBIL.OncologyData;
+using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyDomain.Entities;
 using System.Linq;
 using System.Threading;
@@ -17,7 +17,7 @@ namespace OLBIL.OncologyApplication.Diagnosiss.Commands
 
         public class Handler : HandlerBase, IRequestHandler<DeleteDiagnosisCommand>
         {
-            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
+            public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<Unit> Handle(DeleteDiagnosisCommand request, CancellationToken cancellationToken)
             {

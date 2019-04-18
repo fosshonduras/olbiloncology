@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using OLBIL.OncologyDomain.Entities;
 using OLBIL.OncologyData.Mappings;
+using OLBIL.OncologyApplication.Interfaces;
 
 namespace OLBIL.OncologyData
 {
-    public class OncologyContext : DbContext
+    public class OncologyContext : DbContext, IOncologyContext
     {
         public OncologyContext(DbContextOptions<OncologyContext> options)
             : base(options)

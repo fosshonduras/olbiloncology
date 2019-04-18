@@ -3,8 +3,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
 using OLBIL.OncologyApplication.Infrastructure;
+using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
-using OLBIL.OncologyData;
 using OLBIL.OncologyDomain.Entities;
 using System;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Commands
 
         public class Handler : HandlerBase, IRequestHandler<CreateOncologyPatientCommand, int>
         {
-            public Handler(OncologyContext context, IMapper mapper) : base(context, mapper) { }
+            public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<int> Handle(CreateOncologyPatientCommand request, CancellationToken cancellationToken)
             {

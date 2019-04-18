@@ -14,6 +14,7 @@ using OLBIL.OncologyApplication.Infrastructure.AutoMapper;
 using System;
 using OLBIL.OncologyWebApp.Filters;
 using OLBIL.OncologyApplication.OncologyPatients.Queries;
+using OLBIL.OncologyApplication.Interfaces;
 
 namespace OLBIL.OncologyWebApp
 {
@@ -36,8 +37,8 @@ namespace OLBIL.OncologyWebApp
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
             services.AddMediatR(typeof(GetOncologyPatientsListQuery).GetTypeInfo().Assembly);    
 
-            services.AddDbContext<OncologyContext>(
-                options => options.UseNpgsql(Configuration.GetConnectionString("ElephantDB"))
+            services.AddDbContext<IOncologyContext, OncologyContext>(
+                    options => options.UseNpgsql(Configuration.GetConnectionString("ElephantDB"))
                 );
 
             services
