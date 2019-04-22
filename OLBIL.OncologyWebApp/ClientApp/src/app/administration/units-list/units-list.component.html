@@ -4,6 +4,7 @@
     <ag-grid-angular *ngIf="rowData.length > 0"
                      class="ag-theme-blue"
                      [rowData]="rowData"
+                     [defaultColDef]="defaultColDef"
                      [columnDefs]="columnDefs">
     </ag-grid-angular>
     <div class="text-center" *ngIf="!isLoading && rowData.length == 0">

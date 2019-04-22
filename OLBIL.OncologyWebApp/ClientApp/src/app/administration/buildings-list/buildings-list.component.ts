@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from 'src/app/helper-components/LinkRendererComponent';
 import { BuildingModel, BuildingsClient } from 'src/app/api-clients';
+import { GridOptions, ColDef } from 'ag-grid-community';
 
 @Component({
   selector: 'app-buildings-list',
@@ -11,8 +12,12 @@ export class BuildingsListComponent implements OnInit {
   isLoading: boolean = false;
   rowData: BuildingModel[] = [];
 
-  columnDefs = [
-    { headerName: 'Edificio ID', field: 'buildingId' },
+  defaultColDef: ColDef = {
+    resizable: true
+  };
+
+  gridOptions: GridOptions = {};
+  columnDefs: ColDef[] = [    { headerName: 'Edificio ID', field: 'buildingId' },
     {
       headerName: 'Código', field: 'code',
       cellRendererFramework: LinkRendererComponent,

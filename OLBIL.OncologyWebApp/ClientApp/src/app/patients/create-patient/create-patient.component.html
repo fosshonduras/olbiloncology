@@ -52,6 +52,7 @@
             <ag-grid-angular *ngIf="matchingRecords.length > 0"
                              class="ag-theme-blue"
                              [rowData]="matchingRecords"
+                             [defaultColDef]="defaultColDef"
                              [columnDefs]="columnDefs">
             </ag-grid-angular>
             <div class="text-center" *ngIf="matchingRecords.length == 0">

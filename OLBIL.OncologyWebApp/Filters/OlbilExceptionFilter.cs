@@ -26,6 +26,7 @@ namespace OLBIL.OncologyWebApp.Filters
             context.Result = new JsonResult(new
             {
                 error = context.Exception.Message,
+                subError = context.Exception?.InnerException?.Message,
                 stackTrace = context.Exception.StackTrace
             });
         }

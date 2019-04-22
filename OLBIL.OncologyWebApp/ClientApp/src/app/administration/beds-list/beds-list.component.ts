@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BedModel, BedsClient } from '../../api-clients';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
+import { AgGridNg2 } from 'ag-grid-angular';
+import { GridOptions, ColDef } from 'ag-grid-community';
 
 @Component({
   selector: 'app-beds-list',
@@ -12,7 +14,12 @@ export class BedsListComponent implements OnInit {
 
   rowData: BedModel[] = [];
 
-  columnDefs = [
+  defaultColDef: ColDef = {
+    resizable: true
+  };
+
+  gridOptions: GridOptions = { };
+  columnDefs: ColDef[] = [
     { headerName: 'Cama ID', field: 'bedId' },
     {
       headerName: 'Nombre', field: 'name',

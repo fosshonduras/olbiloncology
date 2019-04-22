@@ -31,8 +31,10 @@ namespace OLBIL.OncologyApplication.AdministrativeDivisions.Commands
                     throw new NotFoundException(nameof(AdministrativeDivision), nameof(model.AdministrativeDivisionId), model.AdministrativeDivisionId);
                 }
 
+                item.ParentId = model.ParentId;
                 item.Code = model.Code;
                 item.Name = model.Name;
+                item.Level = model.Level;
 
                 await Context.SaveChangesAsync(cancellationToken);
                 return new Unit();

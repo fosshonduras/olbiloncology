@@ -10,25 +10,25 @@ using System.Threading.Tasks;
 using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Interfaces;
 
-namespace OLBIL.OncologyApplication.AppointmentReasons.Queries
+namespace OLBIL.OncologyApplication.Wards.Queries
 {
-    public class GetAppointmentReasonQuery : IRequest<AppointmentReasonModel>
+    public class GetWardQuery : IRequest<WardModel>
     {
         public int Id { get; set; }
 
-        public class Handler : HandlerBase, IRequestHandler<GetAppointmentReasonQuery, AppointmentReasonModel>
+        public class Handler : HandlerBase, IRequestHandler<GetWardQuery, WardModel>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
-            public async Task<AppointmentReasonModel> Handle(GetAppointmentReasonQuery request, CancellationToken cancellationToken)
+            public async Task<WardModel> Handle(GetWardQuery request, CancellationToken cancellationToken)
             {
-                var item = Mapper.Map<AppointmentReasonModel>(await Context
-                    .AppointmentReasons.Where(o => o.AppointmentReasonId == request.Id)
+                var item = Mapper.Map<WardModel>(await Context
+                    .Wards.Where(o => o.WardId == request.Id)
                     .SingleOrDefaultAsync(cancellationToken));
 
                 if (item == null)
                 {
-                    throw new NotFoundException(nameof(AppointmentReason), nameof(item.AppointmentReasonId), request.Id);
+                    throw new NotFoundException(nameof(Ward), nameof(item.WardId), request.Id);
                 }
 
                 return item;

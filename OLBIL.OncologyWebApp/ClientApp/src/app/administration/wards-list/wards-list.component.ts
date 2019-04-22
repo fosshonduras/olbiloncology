@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { WardsClient, WardModel } from '../../api-clients';
+import { ColDef, GridOptions } from 'ag-grid-community';
 
 @Component({
   selector: 'app-wards-list',
@@ -11,7 +12,12 @@ export class WardsListComponent implements OnInit {
   isLoading: boolean = false;
   rowData: WardModel[] = [];
 
-  columnDefs = [
+  defaultColDef: ColDef = {
+    resizable: true
+  };
+
+  gridOptions: GridOptions = {};
+  columnDefs: ColDef[] = [
     { headerName: 'Sala ID', field: 'wardId' },
     {
       headerName: 'Nombre', field: 'name',

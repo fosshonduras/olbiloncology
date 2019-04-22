@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyDomain.Entities;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace OLBIL.OncologyApplication.Interfaces
         DbSet<HospitalUnit> HospitalUnits { get; set; }
         DbSet<Ward> Wards { get; set; }
         DbSet<Bed> Beds { get; set; }
+        DbSet<AppointmentReason> AppointmentReasons { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

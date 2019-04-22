@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { OncologyPatientsClient } from '../../api-clients';
+import { ColDef, GridOptions } from 'ag-grid-community';
 
 @Component({
   selector: 'app-patients-list',
@@ -9,7 +10,12 @@ import { OncologyPatientsClient } from '../../api-clients';
 })
 export class PatientsListComponent implements OnInit {
   isLoading: boolean = true;
-  columnDefs = [
+  defaultColDef: ColDef = {
+    resizable: true
+  };
+
+  gridOptions: GridOptions = {};
+  columnDefs: ColDef[] = [
     {
       headerName: 'Identidad Nacional', field: 'governmentIDNumber',
       cellRendererFramework: LinkRendererComponent,

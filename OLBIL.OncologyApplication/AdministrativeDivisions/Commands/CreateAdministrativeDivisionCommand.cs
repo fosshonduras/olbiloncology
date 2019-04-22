@@ -33,8 +33,10 @@ namespace OLBIL.OncologyApplication.AdministrativeDivisions.Commands
 
                 var newRecord = new AdministrativeDivision
                 {
+                    ParentId = model.ParentId,
                     Name = model.Name,
-                    Code = model.Code
+                    Code = model.Code,
+                    Level = model.Level
                 };
 
                 Context.AdministrativeDivisions.Add(newRecord);

@@ -10,41 +10,36 @@ using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Interfaces;
 
-namespace OLBIL.OncologyApplication.Wards.Commands
+namespace OLBIL.OncologyApplication.AppointmentReasons.Commands
 {
-    public class CreateWardCommand : IRequest<int>
+    public class CreateAppointmentReasonCommand : IRequest<int>
     {
-        public WardModel Model { get; set; }
+        public AppointmentReasonModel Model { get; set; }
 
-        public class Handler : HandlerBase, IRequestHandler<CreateWardCommand, int>
+        public class Handler : HandlerBase, IRequestHandler<CreateAppointmentReasonCommand, int>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
-            public async Task<int> Handle(CreateWardCommand request, CancellationToken cancellationToken)
+            public async Task<int> Handle(CreateAppointmentReasonCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var ward = await Context.Wards
-                    .Where(p => p.WardId == model.WardId)
+                var ward = await Context.AppointmentReasons
+                    .Where(p => p.AppointmentReasonId == model.AppointmentReasonId)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (ward != null)
                 {
-                    throw new AlreadyExistsException(nameof(Ward), nameof(model.WardId), model.WardId);
+                    throw new AlreadyExistsException(nameof(AppointmentReason), nameof(model.AppointmentReasonId), model.AppointmentReasonId);
                 }
 
-                var newRecord = new Ward
+                var newRecord = new AppointmentReason
                 {
-                    Name = model.Name,
-                    BuildingId = model.BuildingId.Value,
-                    FloorNumber = model.FloorNumber.Value,
-                    HospitalUnitId = model.HospitalUnitId.Value,
-                    WardGenderId = model.WardGenderId.Value,
-                    WardStatusId = model.WardStatusId.Value
+                    Description = model.Description
                 };
 
-                Context.Wards.Add(newRecord);
+                Context.AppointmentReasons.Add(newRecord);
                 await Context.SaveChangesAsync(cancellationToken);
 
-                return newRecord.WardId;
+                return newRecord.AppointmentReasonId;
             }
         }
     }

@@ -9,26 +9,26 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.AppointmentReasons.Commands
+namespace OLBIL.OncologyApplication.Wards.Commands
 {
-    public class DeleteAppointmentReasonCommand: IRequest
+    public class DeleteWardCommand: IRequest
     {
         public int Id { get; set; }
 
-        public class Handler : HandlerBase, IRequestHandler<DeleteAppointmentReasonCommand>
+        public class Handler : HandlerBase, IRequestHandler<DeleteWardCommand>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
-            public async Task<Unit> Handle(DeleteAppointmentReasonCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(DeleteWardCommand request, CancellationToken cancellationToken)
             {
-                var item = await Context.AppointmentReasons
-                    .Where(p => p.AppointmentReasonId == request.Id)
+                var item = await Context.Wards
+                    .Where(p => p.WardId == request.Id)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (item == null)
                 {
-                    throw new NotFoundException(nameof(AppointmentReason), nameof(item.AppointmentReasonId), request.Id);
+                    throw new NotFoundException(nameof(Ward), nameof(item.WardId), request.Id);
                 }
 
-                Context.AppointmentReasons.Remove(item);
+                Context.Wards.Remove(item);
 
                 await Context.SaveChangesAsync(cancellationToken);
                 return new Unit();

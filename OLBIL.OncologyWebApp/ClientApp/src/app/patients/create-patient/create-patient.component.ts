@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { OncologyPatientModel, PersonModel, OncologyPatientsClient } from '../../api-clients';
 import * as moment from 'moment';
+import { ColDef, GridOptions } from 'ag-grid-community';
 
 @Component({
   selector: 'app-create-patient',
@@ -17,7 +18,12 @@ export class CreatePatientComponent implements OnInit {
   showEditForm: boolean = false;
   matchingRecords: any[] = [];
 
-  columnDefs = [
+  defaultColDef: ColDef = {
+    resizable: true
+  };
+
+  gridOptions: GridOptions = {};
+  columnDefs: ColDef[] = [
     {
       headerName: 'Identidad Nacional', field: 'governmentIDNumber', cellRendererFramework: LinkRendererComponent,
       cellRendererParams: ({ data }) => {
