@@ -1,3 +1,44 @@
+CREATE TABLE olbil.BedStatus(
+    BedStatusId SERIAL NOT NULL,
+    Name VARCHAR(50) COLLATE pg_catalog.default  NOT NULL UNIQUE,
+    CONSTRAINT BedStatus_pkey PRIMARY KEY (BedStatusId)
+)WITH(
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE olbil.WardStatus(
+    WardStatusId SERIAL NOT NULL,
+    Name VARCHAR(50) COLLATE pg_catalog.default  NOT NULL UNIQUE,
+    CONSTRAINT WardStatus_pkey PRIMARY KEY (WardStatusId)
+)WITH(
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE olbil.WardGender(
+    WardGenderId SERIAL NOT NULL,
+    Name VARCHAR(50) COLLATE pg_catalog.default  NOT NULL UNIQUE,
+    CONSTRAINT WardGender_pkey PRIMARY KEY (WardGenderId)
+)WITH(
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE olbil.BloodType(
+    BloodTypeId SERIAL NOT NULL,
+    NameEn VARCHAR(20) COLLATE pg_catalog.default NOT NULL,
+    NameEs VARCHAR(20) COLLATE pg_catalog.default NOT NULL,
+    Display VARCHAR(10) COLLATE pg_catalog.default NOT NULL,
+    CONSTRAINT PK_BloodType PRIMARY KEY (BloodTypeId),
+    CONSTRAINT UK_BloodType_NameEn UNIQUE (NameEn),
+    CONSTRAINT UK_BloodType_NameEs UNIQUE (NameEs),
+    CONSTRAINT UK_BloodType_Display UNIQUE (Display)
+)WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
 INSERT INTO olbil.WardGender(WardGenderId, Name)
 VALUES
 (1, 'Unisex'),

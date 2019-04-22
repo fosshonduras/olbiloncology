@@ -8,17 +8,16 @@ namespace OLBIL.OncologyWebApp
 {
     public class Program
     {
-         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return
             WebHost.CreateDefaultBuilder(args)
                 .UseKestrel()
                 .UseConfiguration(new ConfigurationBuilder()
-                                .SetBasePath(Directory.GetCurrentDirectory())
-                                .AddJsonFile("appsettings.json", optional: true)
-                                .AddJsonFile("hosting.json", optional: true)
                                 .Build())
                 .UseContentRoot(Directory.GetCurrentDirectory())
                                 .UseStartup<Startup>();
-
+        }
         public static void Main(string[] args)
         {
             try

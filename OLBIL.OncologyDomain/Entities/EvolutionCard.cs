@@ -7,8 +7,10 @@ namespace OLBIL.OncologyDomain.Entities
         public int EvolutionCardId { get; set; }
         public int OncologyPatientId { get; set; }
         public int? AppointmentId { get; set; }
+        public int? HealthProfessionalId { get; set; }
         public decimal? HeightCm { get; set; }
         public decimal? WeightKg { get; set; }
+        public decimal? BodyMassIndex { get; set; }
         public decimal? TemperatureC { get; set; }
         public int? HeartBeatRateBpm { get; set; }
         public int? DiagnosisId { get; set; }
@@ -18,6 +20,7 @@ namespace OLBIL.OncologyDomain.Entities
         public string ReferredTo { get; set; }
 
         public virtual OncologyPatient OncologyPatient { get; set; }
+        public virtual HealthProfessional HealthProfessional { get; set; }
         public virtual Appointment Appointment { get; set; }
         public virtual Diagnosis Diagnosis { get; set; }
     }

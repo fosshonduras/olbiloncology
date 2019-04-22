@@ -5,7 +5,7 @@ CREATE USER appclientuser WITH
   LOGIN
   NOSUPERUSER
   INHERIT
-  NOCREATEDB
+  CREATEDB
   NOCREATEROLE
   NOREPLICATION;
 
@@ -52,32 +52,6 @@ TO PUBLIC;
 CREATE SCHEMA olbil;
 GRANT ALL ON SCHEMA olbil TO appclientuser;
 
-CREATE TABLE olbil.BedStatus(
-    BedStatusId SERIAL NOT NULL,
-    Name VARCHAR(50) COLLATE pg_catalog.default  NOT NULL UNIQUE,
-    CONSTRAINT BedStatus_pkey PRIMARY KEY (BedStatusId)
-)WITH(
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-CREATE TABLE olbil.WardStatus(
-    WardStatusId SERIAL NOT NULL,
-    Name VARCHAR(50) COLLATE pg_catalog.default  NOT NULL UNIQUE,
-    CONSTRAINT WardStatus_pkey PRIMARY KEY (WardStatusId)
-)WITH(
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-CREATE TABLE olbil.WardGender(
-    WardGenderId SERIAL NOT NULL,
-    Name VARCHAR(50) COLLATE pg_catalog.default  NOT NULL UNIQUE,
-    CONSTRAINT WardGender_pkey PRIMARY KEY (WardGenderId)
-)WITH(
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
 
 CREATE TABLE olbil.PersonGender(
     PersonGenderId SERIAL NOT NULL,
@@ -285,42 +259,6 @@ CREATE TABLE olbil.Country(
 )
 TABLESPACE pg_default;
 
-CREATE TABLE olbil.BloodType(
-    BloodTypeId SERIAL NOT NULL,
-    NameEn VARCHAR(20) COLLATE pg_catalog.default NOT NULL,
-    NameEs VARCHAR(20) COLLATE pg_catalog.default NOT NULL,
-    Display VARCHAR(10) COLLATE pg_catalog.default NOT NULL,
-    CONSTRAINT PK_BloodType PRIMARY KEY (BloodTypeId),
-    CONSTRAINT UK_BloodType_NameEn UNIQUE (NameEn),
-    CONSTRAINT UK_BloodType_NameEs UNIQUE (NameEs),
-    CONSTRAINT UK_BloodType_Display UNIQUE (Display)
-)WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-
-CREATE TABLE olbil.AppointmentReason(
-    AppointmentReasonId SERIAL NOT NULL,
-    Description VARCHAR(100) COLLATE pg_catalog.default NOT NULL,
-    
-    CONSTRAINT PK_AppointmentReason PRIMARY KEY (AppointmentReasonId),
-    CONSTRAINT UK_AppointmentReason_Description UNIQUE (Description)
-)WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-CREATE TABLE olbil.MedicalSpecialty(
-    MedicalSpecialtyId SERIAL NOT NULL,
-    Description VARCHAR(100) COLLATE pg_catalog.default NOT NULL,
-    
-    CONSTRAINT PK_MedicalSpecialty PRIMARY KEY (MedicalSpecialtyId),
-    CONSTRAINT UK_MedicalSpecialty_Description UNIQUE (Description)
-)WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
 
 CREATE TABLE olbil.Diagnosis(
     DiagnosisId SERIAL NOT NULL,
@@ -368,6 +306,7 @@ TABLESPACE pg_default;
 CREATE TABLE olbil.EvolutionCard(
     EvolutionCardId SERIAL NOT NULL,
 	OncologyPatientId INT NOT NULL,
+	HealthProfessionalId INT,
 	AppointmentId INT,
     DiagnosisId INT,
 	HeightCm DECIMAL(5,2),
@@ -382,6 +321,9 @@ CREATE TABLE olbil.EvolutionCard(
     CONSTRAINT PK_EvolutionCard PRIMARY KEY (EvolutionCardId),
 	CONSTRAINT EvolutionCard_OncologyPatient_OncologyPatientId FOREIGN KEY (OncologyPatientId)
         REFERENCES olbil.OncologyPatient (OncologyPatientId) MATCH SIMPLE
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+	CONSTRAINT EvolutionCard_HealthProfessional_HealthProfessionalId FOREIGN KEY (HealthProfessionalId)
+        REFERENCES olbil.HealthProfessional(HealthProfessionalId) MATCH SIMPLE
         ON UPDATE RESTRICT ON DELETE RESTRICT,
     CONSTRAINT EvolutionCard_Diagnosis_ADiagnosisId FOREIGN KEY (DiagnosisId)
         REFERENCES olbil.Diagnosis (DiagnosisId) MATCH SIMPLE

@@ -6,10 +6,10 @@ using OLBIL.OncologyTests.Utils;
 namespace OLBIL.OncologyTests.Integration
 {
     [TestClass]
+    [TestCategory("Integration")]
     public class MediatRHandlersTests
     {
         [TestMethod]
-        [TestCategory("Integration")]
         public void EnsureAllRequestsHaveHandler()
         {
             var requestsWithoutHandlers = MediatorPair.FindUnmatchedRequests(typeof(GetWardsListQuery).Assembly);

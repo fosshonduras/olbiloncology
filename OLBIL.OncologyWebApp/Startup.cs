@@ -15,12 +15,13 @@ using System;
 using OLBIL.OncologyWebApp.Filters;
 using OLBIL.OncologyApplication.OncologyPatients.Queries;
 using OLBIL.OncologyApplication.Interfaces;
+using System.IO;
 
 namespace OLBIL.OncologyWebApp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
         }

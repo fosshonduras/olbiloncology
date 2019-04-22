@@ -20,5 +20,6 @@ namespace OLBIL.OncologyDomain.Entities
         public Guid? PersonId { get; set; }
         public Person Person { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; }
+        public virtual ICollection<EvolutionCard> EvolutionCards { get; set; }
     }
 }

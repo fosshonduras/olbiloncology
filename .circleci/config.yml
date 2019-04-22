@@ -20,6 +20,9 @@ jobs:
           name: Restore solution
           command: dotnet restore
       - run:
+          name: Check versions
+          command: dotnet --version && node --version && npm --version
+      - run:
           name: Build solution
           command: dotnet build
       - run:
