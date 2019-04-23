@@ -29,6 +29,7 @@ namespace OLBIL.OncologyData
         public DbSet<Ward> Wards { get; set; }
         public DbSet<Bed> Beds { get; set; }
         public DbSet<AppointmentReason> AppointmentReasons { get; set; }
+        public DbSet<AmbulatoryAttentionRecord> AmbulatoryAttentionRecords { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

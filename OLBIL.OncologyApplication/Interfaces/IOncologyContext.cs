@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyDomain.Entities;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,6 +22,7 @@ namespace OLBIL.OncologyApplication.Interfaces
         DbSet<Ward> Wards { get; set; }
         DbSet<Bed> Beds { get; set; }
         DbSet<AppointmentReason> AppointmentReasons { get; set; }
+        DbSet<AmbulatoryAttentionRecord> AmbulatoryAttentionRecords { get; set; }
 
         DbSet<T> Set<T>() where T: class;
 

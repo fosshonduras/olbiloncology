@@ -12,7 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OLBIL.Common\OLBIL.Common.csproj" />
     <ProjectReference Include="..\OLBIL.OncologyDomain\OLBIL.OncologyDomain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Reports\" />
   </ItemGroup>
 
 </Project>

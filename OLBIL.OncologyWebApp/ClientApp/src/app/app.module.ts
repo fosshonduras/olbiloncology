@@ -15,6 +15,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { OncologyPatientsClient } from './api-clients';
 import { AdminRootComponent } from './administration/admin-root/admin-root.component';
 import { AdministrationModule } from './administration/administration.module';
+import { AmbulatoryAttentionModule } from './ambulatory-attention/ambulatory-attention.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { AdministrationModule } from './administration/administration.module';
     PatientsModule,
     AdministrationModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot(), AmbulatoryAttentionModule,
   ],
   providers: [OncologyPatientsClient],
   bootstrap: [AppComponent]

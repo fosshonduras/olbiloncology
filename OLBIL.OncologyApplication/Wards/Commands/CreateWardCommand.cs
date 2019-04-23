@@ -23,10 +23,10 @@ namespace OLBIL.OncologyApplication.Wards.Commands
             public async Task<int> Handle(CreateWardCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var ward = await Context.Wards
+                var item = await Context.Wards
                     .Where(p => p.WardId == model.WardId)
                     .FirstOrDefaultAsync(cancellationToken);
-                if (ward != null)
+                if (item != null)
                 {
                     throw new AlreadyExistsException(nameof(Ward), nameof(model.WardId), model.WardId);
                 }
