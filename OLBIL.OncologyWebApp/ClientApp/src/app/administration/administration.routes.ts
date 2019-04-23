@@ -10,6 +10,16 @@ import { UnitsListComponent } from "./units-list/units-list.component";
 import { UnitEditComponent } from "./unit-edit/unit-edit.component";
 import { HealthProfessionalsListComponent } from "./health-professionals-list/health-professionals-list.component";
 import { HealthProfessionalEditComponent } from "./health-professional-edit/health-professional-edit.component";
+import { AdministrativeDivisionEditComponent } from './administrative-division-edit/administrative-division-edit.component';
+import { AdministrativeDivisionsListComponent } from './administrative-divisions-list/administrative-divisions-list.component';
+import { AppointmentReasonEditComponent } from './appointment-reason-edit/appointment-reason-edit.component';
+import { AppointmentReasonsListComponent } from './appointment-reasons-list/appointment-reasons-list.component';
+import { CountryEditComponent } from './country-edit/country-edit.component';
+import { CountriesListComponent } from './countries-list/countries-list.component';
+import { MedicalSpecialtiesListComponent } from './medical-specialties-list/medical-specialties-list.component';
+import { MedicalSpecialtyEditComponent } from './medical-specialty-edit/medical-specialty-edit.component';
+import { DiagnosisEditComponent } from './diagnosis-edit/diagnosis-edit.component';
+import { DiagnosesListComponent } from './diagnoses-list/diagnoses-list.component';
 
 export const ADMINISTRATION_ROUTES: Routes = [
   { path: '', pathMatch: 'full', component: AdminLandingComponent },
@@ -28,4 +38,21 @@ export const ADMINISTRATION_ROUTES: Routes = [
   { path: 'healthprofessionals', component: HealthProfessionalsListComponent },
   { path: 'healthprofessionals/new', component: HealthProfessionalEditComponent },
   { path: 'healthprofessionals/:healthProfessionalId', component: HealthProfessionalEditComponent, pathMatch: 'full' },
+
+  { path: 'appointmentreasons', component: AppointmentReasonsListComponent },
+  { path: 'appointmentreasons/new', component: AppointmentReasonEditComponent },
+  { path: 'appointmentreasons/:appointmentReasonId', component: AppointmentReasonEditComponent, pathMatch: 'full' },
+  { path: 'medicalspecialties', component: MedicalSpecialtiesListComponent },
+  { path: 'medicalspecialties/new', component: MedicalSpecialtyEditComponent },
+  { path: 'medicalspecialties/:medicalSpecialtyId', component: MedicalSpecialtyEditComponent, pathMatch: 'full' },
+  { path: 'diagnoses', component: DiagnosesListComponent },
+  { path: 'diagnoses/new', component: DiagnosisEditComponent },
+  { path: 'diagnoses/:diagnosisId', component: DiagnosisEditComponent, pathMatch: 'full' },
+
+  { path: 'administrativedivisions', component: AdministrativeDivisionsListComponent },
+  { path: 'administrativedivisions/new', component: AdministrativeDivisionEditComponent },
+  { path: 'administrativedivisions/:administrativeDivisionId', component: AdministrativeDivisionEditComponent, pathMatch: 'full' },
+  { path: 'countries', component: CountriesListComponent },
+  { path: 'countries/new', component: CountryEditComponent },
+  { path: 'countries/:countryId', component: CountryEditComponent, pathMatch: 'full' },
 ];

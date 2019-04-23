@@ -1,7 +1,7 @@
 <section id="administration_section">
-  <div class="card-deck">
-    <div class="card mb-2" style="max-width: 15rem;">
-      <div class="card-header">
+  <div class="admin-grid card-deck">
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
         <h4><a [routerLink]="['./buildings']">Edificios</a></h4>
       </div>
       <div class="card-body text-primary">
@@ -11,8 +11,8 @@
       </div>
     </div>
 
-    <div class="card mb-2" style="max-width: 15rem;">
-      <div class="card-header">
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
         <h4><a [routerLink]="['./units']">Unidades</a></h4>
       </div>
       <div class="card-body text-primary">
@@ -22,8 +22,8 @@
       </div>
     </div>
 
-    <div class="card mb-2" style="max-width: 15rem;">
-      <div class="card-header">
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
         <h4><a [routerLink]="['./wards']">Salas</a></h4>
       </div>
 
@@ -34,8 +34,8 @@
       </div>
     </div>
 
-    <div class="card mb-2" style="max-width: 15rem;">
-      <div class="card-header">
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
         <h4><a [routerLink]="['./beds']">Camas</a></h4>
       </div>
 
@@ -46,17 +46,76 @@
       </div>
     </div>
 
-    <div class="card mb-2" style="max-width: 15rem;">
-      <div class="card-header">
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
         <h4><a [routerLink]="['./healthprofessionals']">Médicos</a></h4>
       </div>
 
       <div class="card-body text-primary">
         <a [routerLink]="['./healthprofessionals']">
-          <img class="card-img" src="../../../assets/img/hospital-stethoscope-icon.svg" width="150" height="150" alt="Icon of hospital bed">
+          <img class="card-img" src="../../../assets/img/hospital-stethoscope-icon.svg" width="150" height="150" alt="Icon of stethoscope">
         </a>
       </div>
     </div>
 
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['./appointmentreasons']">Razones para citas</a></h4>
+      </div>
+
+      <div class="card-body text-primary">
+        <a [routerLink]="['./appointmentreasons']">
+          <img class="card-img" src="../../../assets/img/appointment-icon.svg" width="150" height="150" alt="Icon of an appointment">
+        </a>
+      </div>
+    </div>
+
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['./medicalspecialties']">Especialidades médicas</a></h4>
+      </div>
+
+      <div class="card-body text-primary">
+        <a [routerLink]="['./medicalspecialties']">
+          <img class="card-img" src="../../../assets/img/doctor-icon.svg" width="150" height="150" alt="Icon of a doctor">
+        </a>
+      </div>
+    </div>
+
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['./diagnoses']">Diagnósticos</a></h4>
+      </div>
+
+      <div class="card-body text-primary">
+        <a [routerLink]="['./diagnoses']">
+          <img class="card-img" src="../../../assets/img/diagnosis-icon.svg" width="150" height="150" alt="Icon of a diagnosis">
+        </a>
+      </div>
+    </div>
+
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['./countries']">Países</a></h4>
+      </div>
+
+      <div class="card-body text-primary">
+        <a [routerLink]="['./countries']">
+          <img class="card-img" src="../../../assets/img/flag1-icon.svg" width="150" height="150" alt="Icon of a flag">
+        </a>
+      </div>
+    </div>
+
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['./administrativedivisions']">Divisiones Administrativas</a></h4>
+      </div>
+
+      <div class="card-body text-primary">
+        <a [routerLink]="['./administrativedivisions']">
+          <img class="card-img" src="../../../assets/img/map1-icon.svg" width="150" height="150" alt="Icon of a map">
+        </a>
+      </div>
+    </div>
   </div>
 </section>
