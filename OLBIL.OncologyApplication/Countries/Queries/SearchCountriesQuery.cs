@@ -12,10 +12,8 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Countries.Queries
 {
-    public class SearchCountriesQuery : IRequest<ListModel<CountryModel>>
+    public class SearchCountriesQuery : SearchBase, IRequest<ListModel<CountryModel>>
     {
-        public string SearchTerm { get; set; }
-
         public class Handler : HandlerBase, IRequestHandler<SearchCountriesQuery, ListModel<CountryModel>>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }

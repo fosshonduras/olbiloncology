@@ -1,3 +1,41 @@
-<p>
-  administrative-division-edit works!
-</p>
+<section id="edit-container">
+  <h3>{{ pageTitle }}</h3>
+  <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
+    <div class="form-row">
+      <p>Id en Sistema: {{administrativeDivision.administrativeDivisionId || '(nuevo)'}}</p>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="codeInput">Código</label>
+        <input [(ngModel)]="administrativeDivision.code" type="text" class="form-control" required name="code" id="codeInput" placeholder="Ej. HND0101">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="nameInput">Nombre</label>
+        <input [(ngModel)]="administrativeDivision.name" type="text" class="form-control" required name="name" id="nameInput" placeholder="Ej. Tegucigalpa">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="levelInput">Nivel</label>
+        <input [(ngModel)]="administrativeDivision.level" type="text" class="form-control" required name="level" id="levelInput" placeholder="Ej. 3">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="ta-administrativeDivisionInput">División Administrativa Padre</label>
+        <input name="ta-parentInput" id="ta-administrativeDivisionInput" type="text" class="form-control"
+               [inputFormatter]="administrativeDivisionTAFormatter" [class.is-invalid]="administrativeDivisionSearchFailed"
+               [(ngModel)]="parentAdministrativeDivisionModel" [editable]="false" [resultFormatter]="administrativeDivisionSearchResultFormatter"
+               [ngbTypeahead]="searchAdministrativeDivision" placeholder="Buscar División Administrativa" />
+
+        <small class="text-muted" *ngIf="isSearchingAdministrativeDivision">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="administrativeDivisionSearchFailed">No se pudieron cargar las sugerencias.</div>
+      </div>
+    </div>
+
+    <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
+    <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Guardando...</span>
+    </div>
+  </form>
+</section>

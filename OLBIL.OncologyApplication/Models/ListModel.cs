@@ -12,5 +12,13 @@ namespace OLBIL.OncologyApplication.Models
         }
 
         public int ItemCount => Items.Count;
+
+        public int PageIndex { get; set; } = 1;
+        public int TotalCount { get; set; }
+        public int TotalPages => PageSize > 0 ? (TotalCount / PageSize) : 1;
+        public int PageSize { get; set; } = 10;
+
+        public bool HasPreviousPage => PageIndex > 1;
+        public bool HasNextPage => PageIndex < TotalPages;
     }
 }

@@ -1,43 +1,30 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
-using System.Collections.Generic;
-using System.Linq;
+using OLBIL.OncologyDomain.Entities;
+using System;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Diagnosiss.Queries
 {
-    public class SearchDiagnosesQuery : IRequest<ListModel<DiagnosisModel>>
+    public class SearchDiagnosesQuery : SearchBase, IRequest<ListModel<DiagnosisModel>>
     {
-        public string SearchTerm { get; set; }
-
-        public class Handler : HandlerBase, IRequestHandler<SearchDiagnosesQuery, ListModel<DiagnosisModel>>
+        public class Handler : SearchHandlerBase, IRequestHandler<SearchDiagnosesQuery, ListModel<DiagnosisModel>>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<ListModel<DiagnosisModel>> Handle(SearchDiagnosesQuery request, CancellationToken cancellationToken)
             {
-                return new ListModel<DiagnosisModel>
-                {
-                    Items = await ApplyFilter(request, cancellationToken)
-                };
-            }
-
-            private async Task<List<DiagnosisModel>> ApplyFilter(SearchDiagnosesQuery request, CancellationToken cancellationToken)
-            {
-                return await Context.Diagnoses
-                                    .Where(i =>
-                                        EF.Functions.ILike(i.ICDCode, $"%{request.SearchTerm}%")
-                                        || EF.Functions.ILike(i.CompleteDescriptor, $"%{request.SearchTerm}%")
-                                        || EF.Functions.ILike(i.ShortDescriptor, $"%{request.SearchTerm}%")
-                                    )
-                                    .ProjectTo<DiagnosisModel>(Mapper.ConfigurationProvider)
-                                    .ToListAsync(cancellationToken);
+                Expression<Func<Diagnosis, bool>> predicate = i =>
+                                         EF.Functions.ILike(i.ICDCode, $"%{request.SearchTerm}%")
+                                         || EF.Functions.ILike(i.CompleteDescriptor, $"%{request.SearchTerm}%")
+                                         || EF.Functions.ILike(i.ShortDescriptor, $"%{request.SearchTerm}%");
+                return await RetrieveSearchResults<Diagnosis, DiagnosisModel>(predicate, request, cancellationToken);
             }
         }
     }

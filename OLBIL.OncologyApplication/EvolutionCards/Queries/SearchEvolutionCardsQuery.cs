@@ -12,10 +12,8 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.EvolutionCards.Queries
 {
-    public class SearchEvolutionCardsQuery : IRequest<ListModel<EvolutionCardModel>>
+    public class SearchEvolutionCardsQuery : SearchBase, IRequest<ListModel<EvolutionCardModel>>
     {
-        public string SearchTerm { get; set; }
-
         public class Handler : HandlerBase, IRequestHandler<SearchEvolutionCardsQuery, ListModel<EvolutionCardModel>>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }

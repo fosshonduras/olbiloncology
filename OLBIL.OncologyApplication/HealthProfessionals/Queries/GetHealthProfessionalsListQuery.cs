@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.HealthProfessionals.Queries
 {
-    public class GetHealthProfessionalsListQuery: IRequest<ListModel<HealthProfessionalModel>>
+    public class GetHealthProfessionalsListQuery: GetListBase, IRequest<ListModel<HealthProfessionalModel>>
     {
         public class Handler : HandlerBase, IRequestHandler<GetHealthProfessionalsListQuery, ListModel<HealthProfessionalModel>>
         {

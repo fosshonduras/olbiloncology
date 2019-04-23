@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.EvolutionCards.Queries
 {
-    public class GetEvolutionCardsListQuery : IRequest<ListModel<EvolutionCardModel>>
+    public class GetEvolutionCardsListQuery : GetListBase, IRequest<ListModel<EvolutionCardModel>>
     {
         public class Handler : HandlerBase, IRequestHandler<GetEvolutionCardsListQuery, ListModel<EvolutionCardModel>>
         {

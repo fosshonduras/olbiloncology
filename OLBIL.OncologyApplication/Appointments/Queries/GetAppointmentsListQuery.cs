@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Appointments.Queries
 {
-    public class GetAppointmentsListQuery : IRequest<ListModel<AppointmentModel>>
+    public class GetAppointmentsListQuery : GetListBase, IRequest<ListModel<AppointmentModel>>
     {
         public class Handler : HandlerBase, IRequestHandler<GetAppointmentsListQuery, ListModel<AppointmentModel>>
         {

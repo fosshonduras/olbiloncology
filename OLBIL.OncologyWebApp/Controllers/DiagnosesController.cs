@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyWebApp.Controllers
 {
-    public class DiagnosissController: OlbilController
+    public class DiagnosesController: OlbilController
     {
         [HttpGet]
         public async Task<ActionResult<ListModel<DiagnosisModel>>> GetAll()

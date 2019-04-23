@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Beds.Queries
 {
-    public class GetBedsListQuery: IRequest<ListModel<BedModel>>
+    public class GetBedsListQuery: GetListBase, IRequest<ListModel<BedModel>>
     {
         public class Handler : HandlerBase, IRequestHandler<GetBedsListQuery, ListModel<BedModel>>
         {

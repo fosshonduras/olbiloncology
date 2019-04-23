@@ -1,3 +1,19 @@
-<p>
-  medical-specialties-list works!
-</p>
+<section id="registered">
+  <h3>Especialidades médicas</h3>
+  <div class="olbil-datagrid-container">
+    <ag-grid-angular *ngIf="rowData.length > 0"
+                     class="ag-theme-blue"
+                     [rowData]="rowData"
+                     [defaultColDef]="defaultColDef"
+                     [columnDefs]="columnDefs">
+    </ag-grid-angular>
+    <div class="text-center" *ngIf="!isLoading && rowData.length == 0">
+      <p>No hay espcialidades registradas.</p>
+    </div>
+    <div *ngIf="isLoading" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Cargando...</span>
+    </div>
+  </div>
+
+  <a [routerLink]="['new']" class="btn btn-outline-secondary btn-link">Registrar Nueva</a>
+</section>

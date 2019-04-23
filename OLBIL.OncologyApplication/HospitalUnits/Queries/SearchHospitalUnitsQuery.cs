@@ -11,10 +11,8 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.HospitalUnits.Queries
 {
-    public class SearchHospitalUnitsQuery: IRequest<ListModel<HospitalUnitModel>>
+    public class SearchHospitalUnitsQuery: SearchBase, IRequest<ListModel<HospitalUnitModel>>
     {
-        public string SearchTerm { get; set; }
-
         public class Handler : HandlerBase, IRequestHandler<SearchHospitalUnitsQuery, ListModel<HospitalUnitModel>>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }

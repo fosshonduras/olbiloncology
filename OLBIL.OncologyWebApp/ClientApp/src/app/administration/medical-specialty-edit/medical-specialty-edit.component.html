@@ -1,3 +1,20 @@
-<p>
-  medical-specialty-edit works!
-</p>
+<section id="edit-container">
+  <h3>{{ pageTitle }}</h3>
+  <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
+    <div class="form-row">
+      <p>Id en Sistema: {{medicalSpecialty.medicalSpecialtyId || '(nuevo)'}}</p>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="descriptionInput">Descripción</label>
+        <input [(ngModel)]="medicalSpecialty.description" type="text" class="form-control" required name="description" id="descriptionInput" placeholder="Ej. Hematología">
+      </div>
+    </div>
+
+    <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
+    <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Guardando...</span>
+    </div>
+  </form>
+</section>

@@ -1,29 +1,23 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
+using OLBIL.OncologyDomain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Diagnosiss.Queries
 {
-    public class GetDiagnosesListQuery: IRequest<ListModel<DiagnosisModel>>
+    public class GetDiagnosesListQuery: GetListBase, IRequest<ListModel<DiagnosisModel>>
     {
-        public class Handler : HandlerBase, IRequestHandler<GetDiagnosesListQuery, ListModel<DiagnosisModel>>
+        public class Handler : GetListHandlerBase, IRequestHandler<GetDiagnosesListQuery, ListModel<DiagnosisModel>>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
             public async Task<ListModel<DiagnosisModel>> Handle(GetDiagnosesListQuery request, CancellationToken cancellationToken)
             {
-                return new ListModel<DiagnosisModel>
-                {
-                    Items = await Context.Diagnoses
-                                       .ProjectTo<DiagnosisModel>(Mapper.ConfigurationProvider)
-                                       .ToListAsync(cancellationToken)
-                };
+                return await RetrieveListResults<Diagnosis, DiagnosisModel>(null, request, cancellationToken);
             }
         }
     }

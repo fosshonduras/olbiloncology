@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Countries.Queries
 {
-    public class GetCountriesListQuery : IRequest<ListModel<CountryModel>>
+    public class GetCountriesListQuery : GetListBase, IRequest<ListModel<CountryModel>>
     {
         public class Handler : HandlerBase, IRequestHandler<GetCountriesListQuery, ListModel<CountryModel>>
         {

@@ -12,10 +12,8 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.Appointments.Queries
 {
-    public class SearchAppointmentsQuery : IRequest<ListModel<AppointmentModel>>
+    public class SearchAppointmentsQuery : SearchBase, IRequest<ListModel<AppointmentModel>>
     {
-        public string SearchTerm { get; set; }
-
         public class Handler : HandlerBase, IRequestHandler<SearchAppointmentsQuery, ListModel<AppointmentModel>>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }

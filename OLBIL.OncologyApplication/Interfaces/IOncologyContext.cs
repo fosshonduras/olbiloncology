@@ -24,6 +24,8 @@ namespace OLBIL.OncologyApplication.Interfaces
         DbSet<Bed> Beds { get; set; }
         DbSet<AppointmentReason> AppointmentReasons { get; set; }
 
+        DbSet<T> Set<T>() where T: class;
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
