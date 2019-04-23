@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Exceptions;
@@ -11,25 +10,25 @@ using System.Threading.Tasks;
 using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Interfaces;
 
-namespace OLBIL.OncologyApplication.Wards.Queries
+namespace OLBIL.OncologyApplication.MedicalSpecialties.Queries
 {
-    public class GetWardQuery : IRequest<WardModel>
+    public class GetMedicalSpecialtyQuery : IRequest<MedicalSpecialtyModel>
     {
         public int Id { get; set; }
 
-        public class Handler : HandlerBase, IRequestHandler<GetWardQuery, WardModel>
+        public class Handler : HandlerBase, IRequestHandler<GetMedicalSpecialtyQuery, MedicalSpecialtyModel>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
-            public async Task<WardModel> Handle(GetWardQuery request, CancellationToken cancellationToken)
+            public async Task<MedicalSpecialtyModel> Handle(GetMedicalSpecialtyQuery request, CancellationToken cancellationToken)
             {
-                var item = Mapper.Map<WardModel>(await Context
-                    .Wards.Where(o => o.WardId == request.Id)
+                var item = Mapper.Map<MedicalSpecialtyModel>(await Context
+                    .MedicalSpecialties.Where(o => o.MedicalSpecialtyId == request.Id)
                     .SingleOrDefaultAsync(cancellationToken));
 
                 if (item == null)
                 {
-                    throw new NotFoundException(nameof(Ward), nameof(item.WardId), request.Id);
+                    throw new NotFoundException(nameof(MedicalSpecialty), nameof(item.MedicalSpecialtyId), request.Id);
                 }
 
                 return item;

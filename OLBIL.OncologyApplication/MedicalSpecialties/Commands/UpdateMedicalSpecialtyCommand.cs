@@ -10,24 +10,24 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.AppointmentReasons.Commands
+namespace OLBIL.OncologyApplication.MedicalSpecialties.Commands
 {
-    public class UpdateAppointmentReasonCommand : IRequest
+    public class UpdateMedicalSpecialtyCommand: IRequest
     {
-        public AppointmentReasonModel Model { get; set; }
+        public MedicalSpecialtyModel Model { get; set; }
 
-        public class Handler : HandlerBase, IRequestHandler<UpdateAppointmentReasonCommand>
+        public class Handler : HandlerBase, IRequestHandler<UpdateMedicalSpecialtyCommand>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
-            public async Task<Unit> Handle(UpdateAppointmentReasonCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateMedicalSpecialtyCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var item = await Context.AppointmentReasons
-                    .Where(p => p.AppointmentReasonId == model.AppointmentReasonId)
+                var item = await Context.MedicalSpecialties
+                    .Where(p => p.MedicalSpecialtyId == model.MedicalSpecialtyId)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (item == null)
                 {
-                    throw new NotFoundException(nameof(AppointmentReason), nameof(model.AppointmentReasonId), model.AppointmentReasonId);
+                    throw new NotFoundException(nameof(MedicalSpecialty), nameof(model.MedicalSpecialtyId), model.MedicalSpecialtyId);
                 }
 
                 item.Description = model.Description;

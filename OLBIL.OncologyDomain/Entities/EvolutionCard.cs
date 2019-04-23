@@ -10,7 +10,7 @@ namespace OLBIL.OncologyDomain.Entities
         public int? HealthProfessionalId { get; set; }
         public decimal? HeightCm { get; set; }
         public decimal? WeightKg { get; set; }
-        public decimal? BodyMassIndex { get; set; }
+        public decimal? BodyMassIndex => HeightCm == null || HeightCm == 0 ? 0 : ( (WeightKg ?? 0) / (HeightCm*HeightCm) ) * 10000;
         public decimal? TemperatureC { get; set; }
         public int? HeartBeatRateBpm { get; set; }
         public int? DiagnosisId { get; set; }

@@ -10,27 +10,32 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.AppointmentReasons.Commands
+namespace OLBIL.OncologyApplication.Wards.Commands
 {
-    public class UpdateAppointmentReasonCommand: IRequest
+    public class UpdateWardCommand : IRequest
     {
-        public AppointmentReasonModel Model { get; set; }
+        public WardModel Model { get; set; }
 
-        public class Handler : HandlerBase, IRequestHandler<UpdateAppointmentReasonCommand>
+        public class Handler : HandlerBase, IRequestHandler<UpdateWardCommand>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
-            public async Task<Unit> Handle(UpdateAppointmentReasonCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateWardCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var item = await Context.AppointmentReasons
-                    .Where(p => p.AppointmentReasonId == model.AppointmentReasonId)
+                var item = await Context.Wards
+                    .Where(p => p.WardId == model.WardId)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (item == null)
                 {
-                    throw new NotFoundException(nameof(AppointmentReason), nameof(model.AppointmentReasonId), model.AppointmentReasonId);
+                    throw new NotFoundException(nameof(Ward), nameof(model.WardId), model.WardId);
                 }
 
-                item.Description = model.Description;
+                item.BuildingId = model.BuildingId.Value;
+                item.FloorNumber = model.FloorNumber.Value;
+                item.Name = model.Name;
+                item.HospitalUnitId = model.HospitalUnitId.Value;
+                item.WardGenderId = model.WardGenderId.Value;
+                item.WardStatusId = model.WardStatusId.Value;
 
                 await Context.SaveChangesAsync(cancellationToken);
                 return new Unit();

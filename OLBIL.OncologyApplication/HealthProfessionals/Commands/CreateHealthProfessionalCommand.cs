@@ -49,6 +49,7 @@ namespace OLBIL.OncologyApplication.HealthProfessionals.Commands
 
                 var newHealthProfessional = new HealthProfessional
                 {
+                    MainSpecialtyId = request.Model.MainSpecialtyId,
                     Person = person
                 };
 

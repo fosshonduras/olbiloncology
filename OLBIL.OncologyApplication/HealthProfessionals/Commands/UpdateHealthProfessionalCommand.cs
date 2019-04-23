@@ -49,7 +49,7 @@ namespace OLBIL.OncologyApplication.HealthProfessionals.Commands
 
             private void MapHealthProfessionalDetails(UpdateHealthProfessionalCommand request, HealthProfessional healthProfessional)
             {
-
+                healthProfessional.MainSpecialtyId = request.Model.MainSpecialtyId;
             }
 
             private void MapPersonDetails(PersonModel pModel, Person person)

@@ -11,10 +11,13 @@ namespace OLBIL.OncologyApplication.Models
         public decimal? WeightKg { get; set; }
         public decimal? TemperatureC { get; set; }
         public int? HeartBeatRateBpm { get; set; }
+        
         public int? DiagnosisId { get; set; }
         public string Directions { get; set; }
         public string Observations { get; set; }
         public DateTime? NextAppointmentDate { get; set; }
         public string ReferredTo { get; set; }
+        public int? HealthProfessionalId { get; set; }
+        public decimal? BodyMassIndex { get; set; }
     }
 }

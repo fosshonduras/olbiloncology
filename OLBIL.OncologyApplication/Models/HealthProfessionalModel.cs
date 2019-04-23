@@ -7,5 +7,6 @@ namespace OLBIL.OncologyApplication.Models
         public int? HealthProfessionalId { get; set; }
         public Guid? PersonId { get; set; }
         public PersonModel Person { get; set; }
+        public int? MainSpecialtyId { get; set; }
     }
 }

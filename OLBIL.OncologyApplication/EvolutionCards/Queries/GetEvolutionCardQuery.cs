@@ -11,25 +11,25 @@ using System.Threading.Tasks;
 using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Interfaces;
 
-namespace OLBIL.OncologyApplication.Wards.Queries
+namespace OLBIL.OncologyApplication.EvolutionCards.Queries
 {
-    public class GetWardQuery : IRequest<WardModel>
+    public class GetEvolutionCardQuery : IRequest<EvolutionCardModel>
     {
         public int Id { get; set; }
 
-        public class Handler : HandlerBase, IRequestHandler<GetWardQuery, WardModel>
+        public class Handler : HandlerBase, IRequestHandler<GetEvolutionCardQuery, EvolutionCardModel>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
-            public async Task<WardModel> Handle(GetWardQuery request, CancellationToken cancellationToken)
+            public async Task<EvolutionCardModel> Handle(GetEvolutionCardQuery request, CancellationToken cancellationToken)
             {
-                var item = Mapper.Map<WardModel>(await Context
-                    .Wards.Where(o => o.WardId == request.Id)
+                var item = Mapper.Map<EvolutionCardModel>(await Context
+                    .EvolutionCards.Where(o => o.EvolutionCardId == request.Id)
                     .SingleOrDefaultAsync(cancellationToken));
 
                 if (item == null)
                 {
-                    throw new NotFoundException(nameof(Ward), nameof(item.WardId), request.Id);
+                    throw new NotFoundException(nameof(EvolutionCard), nameof(item.EvolutionCardId), request.Id);
                 }
 
                 return item;

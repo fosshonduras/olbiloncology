@@ -9,26 +9,26 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.Wards.Commands
+namespace OLBIL.OncologyApplication.EvolutionCards.Commands
 {
-    public class DeleteWardCommand : IRequest
+    public class DeleteEvolutionCardCommand : IRequest
     {
         public int Id { get; set; }
 
-        public class Handler : HandlerBase, IRequestHandler<DeleteWardCommand>
+        public class Handler : HandlerBase, IRequestHandler<DeleteEvolutionCardCommand>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
-            public async Task<Unit> Handle(DeleteWardCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(DeleteEvolutionCardCommand request, CancellationToken cancellationToken)
             {
-                var item = await Context.Wards
-                    .Where(p => p.WardId == request.Id)
+                var item = await Context.EvolutionCards
+                    .Where(p => p.EvolutionCardId == request.Id)
                     .FirstOrDefaultAsync(cancellationToken);
                 if (item == null)
                 {
-                    throw new NotFoundException(nameof(Ward), nameof(item.WardId), request.Id);
+                    throw new NotFoundException(nameof(EvolutionCard), nameof(item.EvolutionCardId), request.Id);
                 }
 
-                Context.Wards.Remove(item);
+                Context.EvolutionCards.Remove(item);
 
                 await Context.SaveChangesAsync(cancellationToken);
                 return new Unit();

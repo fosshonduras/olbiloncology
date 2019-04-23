@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20190422213645_AddingParentLevelFieldsAdmDivs.Designer.cs" />
     <Compile Remove="Migrations\20190422213739_AddingParentLevelFieldsAdmDivs.cs" />
     <Compile Remove="Migrations\20190422213739_AddingParentLevelFieldsAdmDivs.Designer.cs" />
+    <Compile Remove="Migrations\20190422234244_AddingAppointmentReason.cs" />
+    <Compile Remove="Migrations\20190422234244_AddingAppointmentReason.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

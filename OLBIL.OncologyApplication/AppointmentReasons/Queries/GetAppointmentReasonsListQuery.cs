@@ -8,20 +8,20 @@ using OLBIL.OncologyApplication.Models;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OLBIL.OncologyApplication.Wards.Queries
+namespace OLBIL.OncologyApplication.AppointmentReasons.Queries
 {
-    public class GetWardsListQuery: IRequest<ListModel<WardModel>>
+    public class GetAppointmentReasonsListQuery : IRequest<ListModel<AppointmentReasonModel>>
     {
-        public class Handler : HandlerBase, IRequestHandler<GetWardsListQuery, ListModel<WardModel>>
+        public class Handler : HandlerBase, IRequestHandler<GetAppointmentReasonsListQuery, ListModel<AppointmentReasonModel>>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
 
-            public async Task<ListModel<WardModel>> Handle(GetWardsListQuery request, CancellationToken cancellationToken)
+            public async Task<ListModel<AppointmentReasonModel>> Handle(GetAppointmentReasonsListQuery request, CancellationToken cancellationToken)
             {
-                return new ListModel<WardModel>
+                return new ListModel<AppointmentReasonModel>
                 {
-                    Items = await Context.Wards
-                                       .ProjectTo<WardModel>(Mapper.ConfigurationProvider)
+                    Items = await Context.AppointmentReasons
+                                       .ProjectTo<AppointmentReasonModel>(Mapper.ConfigurationProvider)
                                        .ToListAsync(cancellationToken)
                 };
             }
