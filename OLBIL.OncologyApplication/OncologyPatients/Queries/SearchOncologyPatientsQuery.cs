@@ -20,16 +20,15 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Queries
 
             public async Task<ListModel<OncologyPatientModel>> Handle(SearchOncologyPatientsQuery request, CancellationToken cancellationToken)
             {
-                {
-                    Expression<Func<OncologyPatient, bool>> predicate = i =>
-                                              EF.Functions.ILike(i.Person.FirstName, $"%{request.SearchTerm}%")
-                                              || EF.Functions.ILike(i.Person.LastName, $"%{request.SearchTerm}%")
-                                              || EF.Functions.ILike(i.Person.MiddleName, $"%{request.SearchTerm}%")
-                                              || EF.Functions.ILike(i.Person.AdditionalLastName, $"%{request.SearchTerm}%")
-                                              || EF.Functions.ILike(i.Person.PreferredName, $"%{request.SearchTerm}%")
-                                              || EF.Functions.ILike(i.Person.GovernmentIDNumber, $"%{request.SearchTerm}%");
-                    return await RetrieveSearchResults<OncologyPatient, OncologyPatientModel>(predicate, request, cancellationToken);
-                };
+                Expression<Func<OncologyPatient, bool>> predicate = i =>
+                                          EF.Functions.ILike(i.Person.FirstName, $"%{request.SearchTerm}%")
+                                          || EF.Functions.ILike(i.Person.LastName, $"%{request.SearchTerm}%")
+                                          || EF.Functions.ILike(i.Person.MiddleName, $"%{request.SearchTerm}%")
+                                          || EF.Functions.ILike(i.Person.AdditionalLastName, $"%{request.SearchTerm}%")
+                                          || EF.Functions.ILike(i.Person.PreferredName, $"%{request.SearchTerm}%")
+                                          || EF.Functions.ILike(i.Person.GovernmentIDNumber, $"%{request.SearchTerm}%");
+
+                return await RetrieveSearchResults<OncologyPatient, OncologyPatientModel>(predicate, request, cancellationToken);
             }
         }
     }

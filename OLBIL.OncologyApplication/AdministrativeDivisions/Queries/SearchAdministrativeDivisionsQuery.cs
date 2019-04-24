@@ -22,6 +22,7 @@ namespace OLBIL.OncologyApplication.AdministrativeDivisions.Queries
             {
                 Expression<Func<AdministrativeDivision, bool>> predicate = i =>
                                         EF.Functions.ILike(i.Name, $"%{request.SearchTerm}%");
+
                 return await RetrieveSearchResults<AdministrativeDivision, AdministrativeDivisionModel>(predicate, request, cancellationToken);
             }
         }

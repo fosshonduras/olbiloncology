@@ -24,6 +24,7 @@ namespace OLBIL.OncologyApplication.Diagnosiss.Queries
                                          EF.Functions.ILike(i.ICDCode, $"%{request.SearchTerm}%")
                                          || EF.Functions.ILike(i.CompleteDescriptor, $"%{request.SearchTerm}%")
                                          || EF.Functions.ILike(i.ShortDescriptor, $"%{request.SearchTerm}%");
+
                 return await RetrieveSearchResults<Diagnosis, DiagnosisModel>(predicate, request, cancellationToken);
             }
         }
