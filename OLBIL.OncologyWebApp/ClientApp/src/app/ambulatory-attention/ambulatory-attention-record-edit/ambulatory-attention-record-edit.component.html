@@ -1,3 +1,53 @@
-<p>
-  ambulatory-attention-record-edit works!
-</p>
+<section id="edit-container">
+  <h3>{{ pageTitle }}</h3>
+  <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
+    <div class="form-row">
+      <p>Id en Sistema: {{ambulatoryAttentionRecord.ambulatoryAttentionRecordId || '(nuevo)'}}</p>
+    </div>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="ta-healthProInput">Sala</label>
+
+        <input name="ta-healthProInput" id="ta-healthProInput" type="text" class="form-control"
+               [inputFormatter]="healthProfessionalTAFormatter" [class.is-invalid]="healthProfessionalSearchFailed"
+               [(ngModel)]="healthProfessionalModel" [editable]="false" [resultFormatter]="healthProfessionalSearchResultFormatter" [ngbTypeahead]="searchHealthProfessional" placeholder="Buscar profesional de salud" />
+
+        <small class="text-muted" *ngIf="isSearchingHealthProfessional">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="healthProfessionalSearchFailed">No se pudieron cargar las sugerencias.</div>
+      </div>
+      <div class="form-group col col-auto">
+        <label for="dateInput">Fecha de atención</label>
+        <input [(ngModel)]="ambulatoryAttentionRecord.date" type="date" class="form-control" required name="date" id="dateInput" placeholder="Ej. 15 Abril 2019">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="ta-patientIdInput">Paciente</label>
+
+        <input name="ta-patientInput" id="ta-patientInput" type="text" class="form-control"
+               [inputFormatter]="patientTAFormatter" [class.is-invalid]="patientSearchFailed"
+               [(ngModel)]="patientModel" [editable]="false" [resultFormatter]="patientSearchResultFormatter" [ngbTypeahead]="searchPatient" placeholder="Buscar Paciente" />
+
+        <small class="text-muted" *ngIf="isSearchingPatient">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="patientSearchFailed">No se pudieron cargar las sugerencias.</div>
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="isNewInput">Es nuevo paciente?</label>
+        <input [(ngModel)]="ambulatoryAttentionRecord.isnewpatient" type="checkbox" class="form-control" required name="isNewPatient" id="isNewInput" placeholder="Ej. Yes">
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="statusIdInput">Status</label>
+        <select [(ngModel)]="ambulatoryAttentionRecord.ambulatoryAttentionRecordStatusId" name="status" id="statusIdInput" class="form-control">
+          <option *ngFor="let status of ambulatoryAttentionRecordStatuses" [value]="status.ambulatoryAttentionRecordStatusId">{{status.name}}</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
+    <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Guardando...</span>
+    </div>
+  </form>
+</section>
