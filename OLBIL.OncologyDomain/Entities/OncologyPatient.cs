@@ -16,10 +16,12 @@ namespace OLBIL.OncologyDomain.Entities
         public string InformantsRelationship { get; set; }
         // Oncology
         public string ReasonForReferral { get; set; }
+        public int? MainDiagnosisId { get; set; }
 
         public Guid? PersonId { get; set; }
         public Person Person { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual ICollection<EvolutionCard> EvolutionCards { get; set; }
+        public virtual Diagnosis MainDiagnosis { get; set; }
     }
 }

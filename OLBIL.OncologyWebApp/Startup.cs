@@ -61,7 +61,7 @@ namespace OLBIL.OncologyWebApp
                     };
                     document.Info.License = new NSwag.SwaggerLicense
                     {
-                        Name = $"Copyright © {DateTime.Now.Year} OLBIL"
+                        Name = $"Copyright © {DateTime.Now.Year} FOSS Honduras"
                     };
                 }
             );
@@ -89,9 +89,7 @@ namespace OLBIL.OncologyWebApp
             }
             else
             {
-                //app.UseExceptionHandler("/Error");
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
