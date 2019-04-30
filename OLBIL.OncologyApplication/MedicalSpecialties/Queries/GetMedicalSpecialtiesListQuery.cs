@@ -3,6 +3,7 @@ using MediatR;
 using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
+using OLBIL.OncologyDomain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace OLBIL.OncologyApplication.MedicalSpecialties.Queries
 
             public async Task<ListModel<MedicalSpecialtyModel>> Handle(GetMedicalSpecialtiesListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<MedicalSpecialtyModel,MedicalSpecialtyModel>(null, request, cancellationToken);
+                return await RetrieveListResults<MedicalSpecialty,MedicalSpecialtyModel>(null, request, cancellationToken);
             }
         }
     }

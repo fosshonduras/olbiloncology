@@ -23,27 +23,27 @@
 
     <div class="form-row">
       <div class="form-group col col-auto">
-        <label for="ta-patientIdInput">Paciente</label>
+        <label for="ta-oncologyPatientIdInput">Paciente</label>
 
-        <input name="ta-patientInput" id="ta-patientInput" type="text" class="form-control"
-               [inputFormatter]="patientTAFormatter" [class.is-invalid]="patientSearchFailed"
-               [(ngModel)]="patientModel" [editable]="false" [resultFormatter]="patientSearchResultFormatter" [ngbTypeahead]="searchPatient" placeholder="Buscar Paciente" />
+        <input name="ta-oncologyPatientInput" id="ta-oncologyPatientInput" type="text" class="form-control"
+               [inputFormatter]="oncologyPatientTAFormatter" [class.is-invalid]="oncologyPatientSearchFailed"
+               [(ngModel)]="oncologyPatientModel" [editable]="false" [resultFormatter]="oncologyPatientSearchResultFormatter" [ngbTypeahead]="searchOncologyPatient" placeholder="Buscar Paciente" />
 
-        <small class="text-muted" *ngIf="isSearchingPatient">Buscando...</small>
-        <div class="invalid-feedback" *ngIf="patientSearchFailed">No se pudieron cargar las sugerencias.</div>
+        <small class="text-muted" *ngIf="isSearchingOncologyPatient">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="oncologyPatientSearchFailed">No se pudieron cargar las sugerencias.</div>
       </div>
 
       <div class="form-group col col-auto">
         <label for="isNewInput">Es nuevo paciente?</label>
-        <input [(ngModel)]="ambulatoryAttentionRecord.isnewpatient" type="checkbox" class="form-control" required name="isNewPatient" id="isNewInput" placeholder="Ej. Yes">
+        <input [(ngModel)]="ambulatoryAttentionRecord.isNewPatient" type="checkbox" class="form-control" required name="isNewPatient" id="isNewInput" placeholder="Ej. Yes">
       </div>
 
-      <div class="form-group col col-auto">
+      <!--<div class="form-group col col-auto">
         <label for="statusIdInput">Status</label>
         <select [(ngModel)]="ambulatoryAttentionRecord.ambulatoryAttentionRecordStatusId" name="status" id="statusIdInput" class="form-control">
           <option *ngFor="let status of ambulatoryAttentionRecordStatuses" [value]="status.ambulatoryAttentionRecordStatusId">{{status.name}}</option>
         </select>
-      </div>
+      </div>-->
     </div>
     <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
     <div *ngIf="isSaving" class="spinner-border text-primary" role="status">

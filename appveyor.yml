@@ -43,3 +43,7 @@ deploy:
     name: Olbil Oncology Beta 3
     on:
       branch: master
+  - provider: Environment
+    name: Oncology Axure Beta
+    on:
+      branch: master

@@ -12,10 +12,8 @@ using System.Threading.Tasks;
 
 namespace OLBIL.OncologyApplication.AdministrativeDivisions.Commands
 {
-    public class CreateAdministrativeDivisionCommand : IRequest<int>
+    public class CreateAdministrativeDivisionCommand : CreateBase<AdministrativeDivisionModel>, IRequest<int>
     {
-        public AdministrativeDivisionModel Model { get; set; }
-
         public class Handler : HandlerBase, IRequestHandler<CreateAdministrativeDivisionCommand, int>
         {
             public Handler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
@@ -26,10 +24,8 @@ namespace OLBIL.OncologyApplication.AdministrativeDivisions.Commands
                 var ward = await Context.AdministrativeDivisions
                     .Where(p => p.AdministrativeDivisionId == model.AdministrativeDivisionId)
                     .FirstOrDefaultAsync(cancellationToken);
-                if (ward != null)
-                {
-                    throw new AlreadyExistsException(nameof(AdministrativeDivision), nameof(model.AdministrativeDivisionId), model.AdministrativeDivisionId);
-                }
+
+                ThrowAlreadyExistsExceptionIfNull(model, ward);
 
                 var newRecord = new AdministrativeDivision
                 {
@@ -43,6 +39,18 @@ namespace OLBIL.OncologyApplication.AdministrativeDivisions.Commands
                 await Context.SaveChangesAsync(cancellationToken);
 
                 return newRecord.AdministrativeDivisionId;
+            }
+
+            protected void ThrowAlreadyExistsExceptionIfNull(AdministrativeDivisionModel model, AdministrativeDivision entity)
+            {
+                if (entity != null)
+                {
+                    throw new AlreadyExistsException(
+                        entity.GetType().Name, 
+                        nameof(model.AdministrativeDivisionId), 
+                        model.AdministrativeDivisionId
+                    );
+                }
             }
         }
     }
