@@ -44,6 +44,6 @@ deploy:
     on:
       branch: master
   - provider: Environment
-    name: Oncology Axure Beta
+    name: Oncology Azure Beta
     on:
       branch: master
