@@ -152,7 +152,7 @@ export class AmbulatoryAttentionReportComponent implements OnInit {
       .subscribe(result => {
         this.rowData = result.items;
         this.isLoadingReport = false;
-        this.getParams.totalCount = result.totalCount;
+        this.searchParams.totalCount = result.totalCount;
       }, err => {
         console.log(err);
       })
