@@ -25,7 +25,7 @@ export class AmbulatoryAttentionRecordsListComponent implements OnInit {
         return ({
           inRouterLink: `./`,
           routeParam: data.ambulatoryAttentionRecordId,
-          value: data.ambulatoryAttentionrecordId
+          value: data.ambulatoryAttentionRecordId
         });
       }
     },
@@ -53,7 +53,7 @@ export class AmbulatoryAttentionRecordsListComponent implements OnInit {
       .subscribe(result => {
         this.rowData = result.items;
         this.isLoading = false;
-        this.gridOptions.columnApi.autoSizeAllColumns();
+        //this.gridOptions.columnApi.autoSizeAllColumns();
       }, err => {
         console.log(err);
       })

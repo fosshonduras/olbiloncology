@@ -248,7 +248,9 @@ INSERT INTO olbil.Diagnosis(ICDCode, CompleteDescriptor, ShortDescriptor) VALUES
     ('8213/0','Adenoma dentado','Adenoma dentado'),
     ('8213/3','Adenocarcinoma dentado','AdenoCa. dentado'),
     ('8213/6','Adenocarcinoma dentado, metástasis','AdenoCa. dentado, metástasis'),
-    ('8214/3','Carcinoma de células parietales','Carcinoma, cél. parietales') ON CONFLICT DO NOTHING;
+    ('8214/3','Carcinoma de células parietales','Carcinoma, cél. parietales')
+	ON CONFLICT DO NOTHING;
+
 INSERT INTO olbil.Diagnosis(ICDCode, CompleteDescriptor, ShortDescriptor) VALUES
     ('8214/6','Carcinoma de células parietales, metástasis','Carcinoma, cél. parietales, metástasis'),
     ('8215/3','Adenocarcinoma de glándulas anales','Adenocarcinoma, glándulas anales'),
@@ -1450,18 +1452,18 @@ INSERT INTO olbil.Diagnosis(ICDCode, CompleteDescriptor, ShortDescriptor) VALUES
     ('9800/3','Leucemia, SAI','Leucemia, SAI'),
     ('9801/3','Leucemia aguda, SAI','Leucemia aguda, SAI'),
     ('9805/3','Leucemia aguda bifenotípica','Leucemia aguda bifenotípica'),
-    ('9806/3','Leucemia aguda de fenotipo mixto con t(9; 22) (q34; q11.2) ON CONFLICT DO NOTHING; BCR-ABL1','Leucemia aguda, fenotipo mixto con t(9; 22) (q34; q11.2) ON CONFLICT DO NOTHING; BCR-ABL1'),
-    ('9807/3','Leucemia aguda de fenotipo mixto con t(v; 11q23) ON CONFLICT DO NOTHING; MLL reordenado','Leucemia aguda, fenotipo mixto con t(v; 11q23) ON CONFLICT DO NOTHING; MLL reordenado'),
+    ('9806/3','Leucemia aguda de fenotipo mixto con t(9; 22) (q34; q11.2) BCR-ABL1','Leucemia aguda, fenotipo mixto con t(9; 22) (q34; q11.2) BCR-ABL1'),
+    ('9807/3','Leucemia aguda de fenotipo mixto con t(v; 11q23) MLL reordenado','Leucemia aguda, fenotipo mixto con t(v; 11q23) MLL reordenado'),
     ('9808/3','Leucemia aguda de fenotipo mixto con células B/mieloides, SAI','Leucemia aguda, fenotipo mixto con cél. B/mieloides, SAI'),
     ('9809/3','Leucemia aguda de fenotipo mixto con células T/mieloides, SAI','Leucemia aguda, fenotipo mixto con cél. T/mieloides, SAI'),
     ('9811/3','Leucemia/linfoma linfoblástica tipo B, SAI','Leucemia/linfoma linfoblástica tipo B, SAI'),
-    ('9812/3','Leucemia/linfoma linfoblástica tipo B con t(9; 22) (q34; q11.2) ON CONFLICT DO NOTHING; BCR-ABL1','Leucemia/linfoma linfoblástica B con t(9; 22) (q34; q11.2) ON CONFLICT DO NOTHING; BCR-ABL1'),
-    ('9813/3','Leucemia/linfoma linfoblástica tipo B con t(v; 11q23) ON CONFLICT DO NOTHING; MLL reordenado','Leucemia/linfoma linfoblástica tipo B con t(v; 11q23) ON CONFLICT DO NOTHING; MLL reordenado'),
-    ('9814/3','Leucemia/linfoma linfoblástico tipo B con t(12; 21) (p13; q22) ON CONFLICT DO NOTHING; TEL-AML1(ETV6-RUNX1)','Leucemia/linfoma linfobl. B, t(12; 21)(p13; q22) ON CONFLICT DO NOTHING;TEL-AML1(ETV6-RUNX1)'),
+    ('9812/3','Leucemia/linfoma linfoblástica tipo B con t(9; 22) (q34; q11.2) BCR-ABL1','Leucemia/linfoma linfoblástica B con t(9; 22) (q34; q11.2) BCR-ABL1'),
+    ('9813/3','Leucemia/linfoma linfoblástica tipo B con t(v; 11q23) MLL reordenado','Leucemia/linfoma linfoblástica tipo B con t(v; 11q23) MLL reordenado'),
+    ('9814/3','Leucemia/linfoma linfoblástico tipo B con t(12; 21) (p13; q22) TEL-AML1(ETV6-RUNX1)','Leucemia/linfoma linfobl. B, t(12; 21)(p13; q22) TEL-AML1(ETV6-RUNX1)'),
     ('9815/3','Leucemia/linfoma linfoblástica tipo B con hiperdiploidia','Leucemia/linfoma linfoblástica tipo B con hiperdiploidia'),
     ('9816/3','Leucemia/linfoma linfoblástica tipo B con hipodiploidia (LLA hipodiploide)','Leucemia/linfoma linfoblástica B, hipodiploidia'),
-    ('9817/3','Leucemia/linfoma linfoblástica tipo B con t(5; 14) (q31; q32) ON CONFLICT DO NOTHING; IL3-IGH','Leucemia/linfoma linfoblástica tipo B con t(5; 14) (q31; q32) ON CONFLICT DO NOTHING; IL3-IGH'),
-    ('9818/3','Leucemia/linfoma linfoblástica tipo B con t(1; 19) (q23; p13.3) ON CONFLICT DO NOTHING; E2A-PBX1 (TCF3-PBX1)','Leucemia/linfoma linfobl. B, t(1; 19)(q23; p13.3) ON CONFLICT DO NOTHING;E2A-PBX1(TCF3-PBX1)'),
+    ('9817/3','Leucemia/linfoma linfoblástica tipo B con t(5; 14) (q31; q32) IL3-IGH','Leucemia/linfoma linfoblástica tipo B con t(5; 14) (q31; q32) IL3-IGH'),
+    ('9818/3','Leucemia/linfoma linfoblástica tipo B con t(1; 19) (q23; p13.3) E2A-PBX1 (TCF3-PBX1)','Leucemia/linfoma linfobl. B, t(1; 19)(q23; p13.3) E2A-PBX1(TCF3-PBX1)'),
     ('9820/3','Leucemia linfoide, SAI','Leucemia linfoide, SAI'),
     ('9823/3','Leucemia linfocítica crónica de células B / linfoma linfocítico de células pequeñas','Leucemia linfocítica crón. B / linfoma linfocítico, cél. pequeñas'),
     ('9826/3','Leucemia de células de Burkitt','Leucemia, cél., Burkitt'),
@@ -1477,10 +1479,10 @@ INSERT INTO olbil.Diagnosis(ICDCode, CompleteDescriptor, ShortDescriptor) VALUES
     ('9860/3','Leucemia mieloide, SAI','Leucemia mieloide, SAI'),
     ('9861/3','Leucemia mieloide aguda, SAI','Leucemia mieloide aguda, SAI'),
     ('9863/3','Leucemia mieloide crónica, SAI','Leucemia mieloide crónica, SAI'),
-    ('9865/3','Leucemia mieloide aguda con t(6; 9) (p23; q34) ON CONFLICT DO NOTHING; DEK-NUP214','Leucemia mieloide aguda con t(6; 9) (p23; q34) ON CONFLICT DO NOTHING; DEK-NUP214'),
+    ('9865/3','Leucemia mieloide aguda con t(6; 9) (p23; q34) DEK-NUP214','Leucemia mieloide aguda con t(6; 9) (p23; q34) DEK-NUP214'),
     ('9866/3','Leucemia promielocítica aguda t(15;17)(q22;q11-12)','Leucemia promielocítica aguda t(15;17)(q22;q11-12)'),
     ('9867/3','Leucemia mielomonocítica aguda','Leucemia mielomonocítica aguda'),
-    ('9869/3','Leucemia mieloide aguda con inv(3) (q21;q26.2) o con t(13.3) (q21;q26.2) ON CONFLICT DO NOTHING; RPN1-EVI1','Leuc. mieloide ag., inv(3)(q21;q26.2) o t(13.3)(q21;q26.2) ON CONFLICT DO NOTHING; RPN1-EVI1'),
+    ('9869/3','Leucemia mieloide aguda con inv(3) (q21;q26.2) o con t(13.3) (q21;q26.2) RPN1-EVI1','Leuc. mieloide ag., inv(3)(q21;q26.2) o t(13.3)(q21;q26.2) RPN1-EVI1'),
     ('9870/3','Leucemia basófila aguda','Leucemia basófila aguda'),
     ('9871/3','Leucemia mieloide aguda con eosinófilos anormales en médula ósea','Leucemia mieloide aguda con eosinófilos anormales en médula ósea'),
     ('9872/3','Leucemia mieloide aguda con diferenciación mínima','Leucemia mieloide aguda con diferenciación mínima'),
@@ -1495,7 +1497,7 @@ INSERT INTO olbil.Diagnosis(ICDCode, CompleteDescriptor, ShortDescriptor) VALUES
     ('9898/1','Mielopoyesis anormal transitoria','Mielopoyesis anormal transitoria'),
     ('9898/3','Leucemia mieloide asociada al síndrome de Down','Leucemia mieloide asociada al síndrome, Down'),
     ('9910/3','Leucemia megacarioblástica aguda','Leucemia megacarioblástica aguda'),
-    ('9911/3','Leucemia mieloide aguda (megacarioblástica) con t(1;22)(p13;q13) ON CONFLICT DO NOTHING; RBM15-MKL1','Leucemia mieloide aguda t(1;22)(p13;q13) ON CONFLICT DO NOTHING; RBM15-MKL1'),
+    ('9911/3','Leucemia mieloide aguda (megacarioblástica) con t(1;22)(p13;q13) RBM15-MKL1','Leucemia mieloide aguda t(1;22)(p13;q13) RBM15-MKL1'),
     ('9920/3','Neoplasia mieloide relacionada con tratamiento','Neoplasia mieloide relacionada con tratamiento'),
     ('9930/3','Sarcoma mieloide','Sarcoma mieloide'),
     ('9931/3','Panmielosis aguda con mielofibrosis','Panmielosis aguda con mielofibrosis'),
@@ -1504,6 +1506,7 @@ INSERT INTO olbil.Diagnosis(ICDCode, CompleteDescriptor, ShortDescriptor) VALUES
     ('9946/3','Leucemia mielomonocítica juvenil','Leucemia mielomonocítica juvenil'),
     ('9948/3','Leucemia de células NK agresiva','Leucemia, cél. NK agresiva'),
     ('9950/3','Policitemia vera','Policitemia vera') ON CONFLICT DO NOTHING;
+
 INSERT INTO olbil.Diagnosis(ICDCode, CompleteDescriptor, ShortDescriptor) VALUES
     ('9960/3','Neoplasia mieloproliferativa, SAI','Neoplasia mieloproliferativa, SAI'),
     ('9961/3','Mielofibrosis primaria','Mielofibrosis primaria'),

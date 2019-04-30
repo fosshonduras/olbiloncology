@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AmbulatoryAttentionRecordModel, AmbulatoryAttentionRecordsClient, HealthProfessionalModel, HealthProfessionalsClient, OncologyPatientModel, OncologyPatientsClient } from '../../api-clients';
+import { AmbulatoryAttentionRecordModel, AmbulatoryAttentionRecordsClient, HealthProfessionalModel, HealthProfessionalsClient, OncologyPatientModel, OncologyPatientsClient, DiagnosisModel, DiagnosesClient } from '../../api-clients';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { distinctUntilChanged, switchMap, map, tap, catchError, debounceTime } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ambulatory-attention-record-edit',
@@ -25,11 +26,12 @@ export class AmbulatoryAttentionRecordEditComponent implements OnInit {
   isSearchingOncologyPatient: boolean = false;
   oncologyPatientSearchFailed: boolean = false;
 
-  //ambulatoryAttentionRecordStatuses: any[] = [
-  //  { ambulatoryAttentionRecordStatusId: 1, name: "Libre" },
-  //  { ambulatoryAttentionRecordStatusId: 2, name: "Ocupada" },
-  //  { ambulatoryAttentionRecordStatusId: 3, name: "Reservada" }
-  //];
+  diagnosisModel: DiagnosisModel;
+  isSearchingDiagnosis: boolean = false;
+  diagnosisSearchFailed: boolean = false;
+
+  ambulatoryAttentionRecordDate: string;
+  ambulatoryAttentionRecordNextAppointmentDate: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +39,8 @@ export class AmbulatoryAttentionRecordEditComponent implements OnInit {
     private toastr: ToastrService,
     private client: AmbulatoryAttentionRecordsClient,
     private healthProfessionalsClient: HealthProfessionalsClient,
-    private oncologyPatientsClient: OncologyPatientsClient
+    private oncologyPatientsClient: OncologyPatientsClient,
+    private diagnosesClient: DiagnosesClient
   ) {
     this.ambulatoryAttentionRecord = new AmbulatoryAttentionRecordModel();
   }
@@ -47,6 +50,7 @@ export class AmbulatoryAttentionRecordEditComponent implements OnInit {
 
     if (id === "new" || id === null) {
       this.isNewRecord = true;
+      this.updateDates();
     } else {
       this.ambulatoryAttentionRecordId = +id;
     }
@@ -56,11 +60,18 @@ export class AmbulatoryAttentionRecordEditComponent implements OnInit {
     this.setupTargetRecord();
   }
 
+  private updateDates() {
+    this.ambulatoryAttentionRecordDate = this.ambulatoryAttentionRecord.date && moment(this.ambulatoryAttentionRecord.date).format(moment.HTML5_FMT.DATE);
+    this.ambulatoryAttentionRecordNextAppointmentDate = this.ambulatoryAttentionRecord.nextAppointmentDate && moment(this.ambulatoryAttentionRecord.nextAppointmentDate).format(moment.HTML5_FMT.DATE);
+  }
+
   setupTargetRecord(): any {
     if (!this.isNewRecord) {
       this.client.getAmbulatoryAttentionRecord(this.ambulatoryAttentionRecordId)
         .subscribe(result => {
           this.ambulatoryAttentionRecord = result;
+          this.updateDates();
+
           this.healthProfessionalsClient.getHealthProfessional(this.ambulatoryAttentionRecord.healthProfessionalId)
             .subscribe(result => {
               this.healthProfessionalModel = result;
@@ -72,6 +83,12 @@ export class AmbulatoryAttentionRecordEditComponent implements OnInit {
               this.oncologyPatientModel = result;
             }, err => {
               this.toastr.warning(err);
+              });
+          this.diagnosesClient.getDiagnosis(this.ambulatoryAttentionRecord.diagnosisId)
+            .subscribe(result => {
+              this.diagnosisModel = result;
+            }, err => {
+              this.toastr.warning(err);
             });
         }, err => {
           this.toastr.warning(err);
@@ -79,7 +96,7 @@ export class AmbulatoryAttentionRecordEditComponent implements OnInit {
     }
   }
 
-  healthProfessionalTAFormatter = (x) => `${x.person.firstName} ${x.person.middleName} ${x.person.lastName}`;
+  healthProfessionalTAFormatter = (x: HealthProfessionalModel) => `${x.person.firstName} ${x.person.middleName} ${x.person.lastName}`;
 
   healthProfessionalSearchResultFormatter = (x: HealthProfessionalModel) => `${x.person.firstName} ${x.person.middleName} ${x.person.lastName}`;
 
@@ -101,7 +118,7 @@ export class AmbulatoryAttentionRecordEditComponent implements OnInit {
       tap(() => this.isSearchingHealthProfessional = false)
     )
 
-  oncologyPatientTAFormatter = (x) => `${x.person.firstName} ${x.person.middleName} ${x.person.lastName}`;
+  oncologyPatientTAFormatter = (x: OncologyPatientModel)  => `${x.person.firstName} ${x.person.middleName} ${x.person.lastName}`;
 
   oncologyPatientSearchResultFormatter = (x: OncologyPatientModel) => `${x.person.firstName} ${x.person.middleName} ${x.person.lastName}`;
 
@@ -123,8 +140,32 @@ export class AmbulatoryAttentionRecordEditComponent implements OnInit {
       tap(() => this.isSearchingOncologyPatient = false)
     )
 
+  diagnosisTAFormatter = (x: DiagnosisModel) => `${x.shortDescriptor}`;
+
+  diagnosisSearchResultFormatter = (x: DiagnosisModel) => `${x.icdCode} ${x.shortDescriptor}`;
+
+  searchDiagnosis = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.isSearchingDiagnosis = true),
+      switchMap(term =>
+        this.diagnosesClient.search(term)
+          .pipe(
+            map((bm, bmi) => bm.items),
+            tap(() => this.diagnosisSearchFailed = false),
+            catchError(() => {
+              this.diagnosisSearchFailed = true;
+              return of([]);
+            }))
+      ),
+      tap(() => this.isSearchingDiagnosis = false)
+    )
+
   submitRegistration(regForm) {
     this.isSaving = true;
+    this.ambulatoryAttentionRecord.date = this.ambulatoryAttentionRecordDate && new Date(this.ambulatoryAttentionRecordDate)
+    this.ambulatoryAttentionRecord.nextAppointmentDate = this.ambulatoryAttentionRecordNextAppointmentDate && new Date(this.ambulatoryAttentionRecordNextAppointmentDate)
 
     if (this.healthProfessionalModel && this.healthProfessionalModel.healthProfessionalId > 0) {
       this.ambulatoryAttentionRecord.healthProfessionalId = this.healthProfessionalModel.healthProfessionalId;
@@ -132,6 +173,10 @@ export class AmbulatoryAttentionRecordEditComponent implements OnInit {
 
     if (this.oncologyPatientModel && this.oncologyPatientModel.oncologyPatientId > 0) {
       this.ambulatoryAttentionRecord.oncologyPatientId = this.oncologyPatientModel.oncologyPatientId;
+    }
+
+    if (this.diagnosisModel && this.diagnosisModel.diagnosisId > 0) {
+      this.ambulatoryAttentionRecord.diagnosisId = this.diagnosisModel.diagnosisId;
     }
 
     if (this.isNewRecord) {

@@ -16,6 +16,8 @@ using OLBIL.OncologyWebApp.Filters;
 using OLBIL.OncologyApplication.OncologyPatients.Queries;
 using OLBIL.OncologyApplication.Interfaces;
 using System.IO;
+using OLBIL.Common;
+using OLBIL.OncologyInfrastructure;
 
 namespace OLBIL.OncologyWebApp
 {
@@ -33,6 +35,8 @@ namespace OLBIL.OncologyWebApp
         {
             // Add AutoMapper
             services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
+
+            services.AddTransient(typeof(IDateTime), typeof(SystemDateTime));
 
             // Add MediatR
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));

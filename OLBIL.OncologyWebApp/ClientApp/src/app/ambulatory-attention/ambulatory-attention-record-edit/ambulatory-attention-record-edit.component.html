@@ -6,7 +6,7 @@
     </div>
     <div class="form-row">
       <div class="form-group col col-auto">
-        <label for="ta-healthProInput">Sala</label>
+        <label for="ta-healthProInput">Profesional de Salud</label>
 
         <input name="ta-healthProInput" id="ta-healthProInput" type="text" class="form-control"
                [inputFormatter]="healthProfessionalTAFormatter" [class.is-invalid]="healthProfessionalSearchFailed"
@@ -17,7 +17,7 @@
       </div>
       <div class="form-group col col-auto">
         <label for="dateInput">Fecha de atención</label>
-        <input [(ngModel)]="ambulatoryAttentionRecord.date" type="date" class="form-control" required name="date" id="dateInput" placeholder="Ej. 15 Abril 2019">
+        <input [(ngModel)]="ambulatoryAttentionRecordDate" type="date" class="form-control" required name="date" id="dateInput" placeholder="Ej. 15 Abril 2019">
       </div>
     </div>
 
@@ -34,17 +34,55 @@
       </div>
 
       <div class="form-group col col-auto">
-        <label for="isNewInput">Es nuevo paciente?</label>
-        <input [(ngModel)]="ambulatoryAttentionRecord.isNewPatient" type="checkbox" class="form-control" required name="isNewPatient" id="isNewInput" placeholder="Ej. Yes">
+        <label></label>
+        <div class="form-check">
+          <input [(ngModel)]="ambulatoryAttentionRecord.isNewPatient" type="checkbox" class="form-check-input" required name="isNewPatient" id="isNewInput" placeholder="Ej. Yes">
+          <label class="form-check-label" for="isNewInput">Es nuevo paciente?</label>
+        </div>
       </div>
 
-      <!--<div class="form-group col col-auto">
-        <label for="statusIdInput">Status</label>
-        <select [(ngModel)]="ambulatoryAttentionRecord.ambulatoryAttentionRecordStatusId" name="status" id="statusIdInput" class="form-control">
-          <option *ngFor="let status of ambulatoryAttentionRecordStatuses" [value]="status.ambulatoryAttentionRecordStatusId">{{status.name}}</option>
-        </select>
-      </div>-->
     </div>
+
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="ta-diagnosisIdInput">Diagnóstico</label>
+
+        <input name="ta-diagnosisInput" id="ta-diagnosisInput" type="text" class="form-control"
+               [inputFormatter]="diagnosisTAFormatter" [class.is-invalid]="diagnosisSearchFailed"
+               [(ngModel)]="diagnosisModel" [editable]="false" [resultFormatter]="diagnosisSearchResultFormatter" [ngbTypeahead]="searchDiagnosis" placeholder="Buscar Diagnóstico" />
+
+        <small class="text-muted" *ngIf="isSearchingOncologyPatient">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="oncologyPatientSearchFailed">No se pudieron cargar las sugerencias.</div>
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="diseaseEventInput">Evento de Enfermedad/Síntoma</label>
+        <input [(ngModel)]="ambulatoryAttentionRecord.diseaseEventDescription" type="text" class="form-control" required name="diseaseEvent" id="diseaseEventInput" placeholder="Ej. Fiebre" />
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="treatmentPhaseInput">Fase de Tratamiento</label>
+        <input [(ngModel)]="ambulatoryAttentionRecord.treatmentPhase" type="text" class="form-control" required name="treatmentPhase" id="treatmentPhaseInput" placeholder="Ej. Paciente nuevo" />
+      </div>
+
+      <div class="form-group">
+        <label for="nextAppointmentDateInput">Próxima consulta</label>
+        <input [(ngModel)]="ambulatoryAttentionRecordNextAppointmentDate" type="date" class="form-control" required name="nextAppointmentDate" id="nextAppointmentDateInput" placeholder="Ej. 2019/05/25" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="referredToInput">Referido a</label>
+        <input [(ngModel)]="ambulatoryAttentionRecord.referredTo" type="text" class="form-control" required name="referredTo" id="referredToInput" placeholder="Ej. Hospital Escuela" />
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="receivedFromInput">Recibido de</label>
+        <input [(ngModel)]="ambulatoryAttentionRecord.receivedFrom" type="text" class="form-control" required name="receivedFrom" id="receivedFromInput" placeholder="Ej. IHSS" />
+      </div>
+    </div>
+
     <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
     <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
       <span class="sr-only">Guardando...</span>
