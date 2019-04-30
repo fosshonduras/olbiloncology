@@ -8,7 +8,7 @@ namespace OLBIL.OncologyApplication.Infrastructure
         /// <summary>
         /// The dictionary column-sort-direction for every column of interest
         /// </summary>
-        public List<Tuple<string, bool>> SortInfo { get; set; }
+        public List<Dictionary<string, bool>> SortInfo { get; set; }
 
         /// <summary>
         /// The page index requested

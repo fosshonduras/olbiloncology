@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from "@angular/router";
 
 import { AgGridModule } from 'ag-grid-angular';
-import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeaheadModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AgGridComponentsModule } from '../helper-components/ag-grid-components.module';
 import { BuildingsListComponent } from './buildings-list/buildings-list.component';
@@ -46,7 +46,8 @@ import { DiagnosesListComponent } from './diagnoses-list/diagnoses-list.componen
     RouterModule,
     AgGridComponentsModule,
     AgGridModule.withComponents([]),
-    NgbTypeaheadModule
+    NgbTypeaheadModule,
+    NgbPaginationModule
   ]
 })
 export class AdministrationModule { }
