@@ -53,4 +53,9 @@ export class MedicalSpecialtiesListComponent implements OnInit {
         console.log(err);
       })
   }
+
+  onPageChanged(newPage: number) {
+    this.getParams.pageIndex = newPage;
+    this.retrieveData();
+  }
 }
