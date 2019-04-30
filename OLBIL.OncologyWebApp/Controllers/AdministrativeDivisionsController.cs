@@ -9,9 +9,9 @@ namespace OLBIL.OncologyWebApp.Controllers
     public class AdministrativeDivisionsController: OlbilController
     {
         [HttpGet]
-        public async Task<ActionResult<ListModel<AdministrativeDivisionModel>>> GetAll()
+        public async Task<ActionResult<ListModel<AdministrativeDivisionModel>>> GetAll([FromQuery]GetAdministrativeDivisionsListQuery request)
         {
-            return Ok(await Mediator.Send(new GetAdministrativeDivisionsListQuery()));
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpGet("search")]

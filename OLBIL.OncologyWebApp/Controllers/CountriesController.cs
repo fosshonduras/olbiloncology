@@ -9,9 +9,9 @@ namespace OLBIL.OncologyWebApp.Controllers
     public class CountriesController: OlbilController
     {
         [HttpGet]
-        public async Task<ActionResult<ListModel<CountryModel>>> GetAll()
+        public async Task<ActionResult<ListModel<CountryModel>>> GetAll([FromQuery]GetCountriesListQuery request)
         {
-            return Ok(await Mediator.Send(new GetCountriesListQuery()));
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpGet("search")]

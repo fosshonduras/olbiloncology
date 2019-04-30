@@ -9,9 +9,9 @@ namespace OLBIL.OncologyWebApp.Controllers
     public class BedsController: OlbilController
     {
         [HttpGet]
-        public async Task<ActionResult<ListModel<BedModel>>> GetAll()
+        public async Task<ActionResult<ListModel<BedModel>>> GetAll([FromQuery]GetBedsListQuery request)
         {
-            return Ok(await Mediator.Send(new GetBedsListQuery()));
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpGet("search")]

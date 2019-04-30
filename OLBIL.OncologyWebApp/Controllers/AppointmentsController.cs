@@ -9,9 +9,9 @@ namespace OLBIL.OncologyWebApp.Controllers
     public class AppointmentsController: OlbilController
     {
         [HttpGet]
-        public async Task<ActionResult<ListModel<AppointmentModel>>> GetAll()
+        public async Task<ActionResult<ListModel<AppointmentModel>>> GetAll([FromQuery]GetAppointmentsListQuery request)
         {
-            return Ok(await Mediator.Send(new GetAppointmentsListQuery()));
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpGet("search")]

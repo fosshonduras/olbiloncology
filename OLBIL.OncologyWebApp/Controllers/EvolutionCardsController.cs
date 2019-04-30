@@ -9,9 +9,9 @@ namespace OLBIL.OncologyWebApp.Controllers
     public class EvolutionCardsController: OlbilController
     {
         [HttpGet]
-        public async Task<ActionResult<ListModel<EvolutionCardModel>>> GetAll()
+        public async Task<ActionResult<ListModel<EvolutionCardModel>>> GetAll([FromQuery]GetEvolutionCardsListQuery request)
         {
-            return Ok(await Mediator.Send(new GetEvolutionCardsListQuery()));
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpGet("search")]

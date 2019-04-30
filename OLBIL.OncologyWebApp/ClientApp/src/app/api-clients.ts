@@ -12,6 +12,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 
+
 @Injectable({
     providedIn: 'root'
 })
@@ -25,8 +26,23 @@ export class AdministrativeDivisionsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfAdministrativeDivisionModel | null> {
-        let url_ = this.baseUrl + "/api/AdministrativeDivisions";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAdministrativeDivisionModel | null> {
+        let url_ = this.baseUrl + "/api/AdministrativeDivisions?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -290,8 +306,23 @@ export class AmbulatoryAttentionRecordsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfAmbulatoryAttentionRecordModel | null> {
-        let url_ = this.baseUrl + "/api/AmbulatoryAttentionRecords";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAmbulatoryAttentionRecordModel | null> {
+        let url_ = this.baseUrl + "/api/AmbulatoryAttentionRecords?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -555,8 +586,23 @@ export class AppointmentReasonsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfAppointmentReasonModel | null> {
-        let url_ = this.baseUrl + "/api/AppointmentReasons";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAppointmentReasonModel | null> {
+        let url_ = this.baseUrl + "/api/AppointmentReasons?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -820,8 +866,23 @@ export class AppointmentsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfAppointmentModel | null> {
-        let url_ = this.baseUrl + "/api/Appointments";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAppointmentModel | null> {
+        let url_ = this.baseUrl + "/api/Appointments?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1085,8 +1146,23 @@ export class BedsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfBedModel | null> {
-        let url_ = this.baseUrl + "/api/Beds";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfBedModel | null> {
+        let url_ = this.baseUrl + "/api/Beds?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1350,8 +1426,23 @@ export class BuildingsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfBuildingModel | null> {
-        let url_ = this.baseUrl + "/api/Buildings";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfBuildingModel | null> {
+        let url_ = this.baseUrl + "/api/Buildings?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1615,8 +1706,23 @@ export class CountriesClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfCountryModel | null> {
-        let url_ = this.baseUrl + "/api/Countries";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfCountryModel | null> {
+        let url_ = this.baseUrl + "/api/Countries?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2160,8 +2266,23 @@ export class EvolutionCardsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfEvolutionCardModel | null> {
-        let url_ = this.baseUrl + "/api/EvolutionCards";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfEvolutionCardModel | null> {
+        let url_ = this.baseUrl + "/api/EvolutionCards?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2425,8 +2546,23 @@ export class HealthProfessionalsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfHealthProfessionalModel | null> {
-        let url_ = this.baseUrl + "/api/HealthProfessionals";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfHealthProfessionalModel | null> {
+        let url_ = this.baseUrl + "/api/HealthProfessionals?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2690,8 +2826,23 @@ export class HospitalUnitsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfHospitalUnitModel | null> {
-        let url_ = this.baseUrl + "/api/HospitalUnits";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfHospitalUnitModel | null> {
+        let url_ = this.baseUrl + "/api/HospitalUnits?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -2955,8 +3106,23 @@ export class MedicalSpecialtiesClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfMedicalSpecialtyModel | null> {
-        let url_ = this.baseUrl + "/api/MedicalSpecialties";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfMedicalSpecialtyModel | null> {
+        let url_ = this.baseUrl + "/api/MedicalSpecialties?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -3220,8 +3386,23 @@ export class OncologyPatientsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfOncologyPatientModel | null> {
-        let url_ = this.baseUrl + "/api/OncologyPatients";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfOncologyPatientModel | null> {
+        let url_ = this.baseUrl + "/api/OncologyPatients?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -3537,8 +3718,23 @@ export class WardsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(): Observable<ListModelOfWardModel | null> {
-        let url_ = this.baseUrl + "/api/Wards";
+    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfWardModel | null> {
+        let url_ = this.baseUrl + "/api/Wards?";
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {

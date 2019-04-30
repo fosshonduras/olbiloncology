@@ -9,6 +9,7 @@ namespace OLBIL.OncologyWebApp.Controllers
     public class DiagnosesController: OlbilController
     {
         [HttpGet]
+
         public async Task<ActionResult<ListModel<DiagnosisModel>>> GetAll([FromQuery]GetDiagnosesListQuery request)
         {
             return Ok(await Mediator.Send(request));
