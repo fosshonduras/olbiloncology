@@ -3,7 +3,7 @@ using System;
 
 namespace OLBIL.OncologyInfrastructure
 {
-    public class SystemDateTime : IDateTime
+    public class SystemDateTime : IDateTimeProvider
     {
         public DateTime Now => DateTime.Now;
     }

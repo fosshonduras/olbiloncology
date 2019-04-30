@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from 'src/app/helper-components/LinkRendererComponent';
 import { BuildingModel, BuildingsClient } from 'src/app/api-clients';
 import { GridOptions, ColDef } from 'ag-grid-community';
+import { GetParams } from '../../common/GetParams';
 
 @Component({
   selector: 'app-buildings-list',
@@ -11,6 +12,7 @@ import { GridOptions, ColDef } from 'ag-grid-community';
 export class BuildingsListComponent implements OnInit {
   isLoading: boolean = false;
   rowData: BuildingModel[] = [];
+  getParams: GetParams = new GetParams();
 
   defaultColDef: ColDef = {
     resizable: true
@@ -37,15 +39,24 @@ export class BuildingsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.retrieveData();
+  }
 
-    this.client.getAll()
+  private retrieveData() {
+    this.isLoading = true;    this.getParams.sortInfo.push({ "shortDescriptor": true });
+    this.client.getAll(this.getParams.sortInfo, this.getParams.pageIndex, this.getParams.pageSize)
       .subscribe(result => {
         this.rowData = result.items;
         this.isLoading = false;
+        this.getParams.totalCount = result.totalCount;
       }, err => {
         console.log(err);
       })
+  }
+
+  onPageChanged(newPage: number) {
+    this.getParams.pageIndex = newPage;
+    this.retrieveData();
   }
 
 }

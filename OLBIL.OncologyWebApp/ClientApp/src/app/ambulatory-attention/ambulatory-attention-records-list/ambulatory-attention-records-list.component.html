@@ -1,5 +1,5 @@
 <section id="registered">
-  <h3>Registros de Atención para AT-1</h3>
+  <h3>Registros de Atención</h3>
   <div class="olbil-datagrid-container">
     <ag-grid-angular *ngIf="rowData.length > 0"
                      class="ag-theme-blue"
@@ -14,6 +14,8 @@
       <span class="sr-only">Cargando...</span>
     </div>
   </div>
+
+  <ngb-pagination [collectionSize]="getParams.totalCount" [(page)]="getParams.pageIndex" (pageChange)="onPageChanged($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
 
   <a [routerLink]="['new']" class="btn btn-outline-secondary btn-link">Registrar Nuevo</a>
 </section>

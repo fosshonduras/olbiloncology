@@ -55,8 +55,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OLBIL.OncologyApplication\OLBIL.OncologyApplication.csproj" />
+    <ProjectReference Include="..\OLBIL.OncologyCrossCutting\OLBIL.OncologyCrossCutting.csproj" />
     <ProjectReference Include="..\OLBIL.OncologyData\OLBIL.OncologyData.csproj" />
-    <ProjectReference Include="..\OLBIL.OncologyCrossCutting\OLBIL.OncologyInfrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

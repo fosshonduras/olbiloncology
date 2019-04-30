@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { WardsClient, WardModel } from '../../api-clients';
 import { ColDef, GridOptions } from 'ag-grid-community';
+import { GetParams } from '../../common/GetParams';
 
 @Component({
   selector: 'app-wards-list',
@@ -11,6 +12,7 @@ import { ColDef, GridOptions } from 'ag-grid-community';
 export class WardsListComponent implements OnInit {
   isLoading: boolean = false;
   rowData: WardModel[] = [];
+  getParams: GetParams = new GetParams();
 
   defaultColDef: ColDef = {
     resizable: true
@@ -41,14 +43,23 @@ export class WardsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.retrieveData();
+  }
 
-    this.client.getAll()
+  private retrieveData() {
+    this.isLoading = true;    this.getParams.sortInfo.push({ "shortDescriptor": true });
+    this.client.getAll(this.getParams.sortInfo, this.getParams.pageIndex, this.getParams.pageSize)
       .subscribe(result => {
         this.rowData = result.items;
         this.isLoading = false;
+        this.getParams.totalCount = result.totalCount;
       }, err => {
         console.log(err);
       })
+  }
+
+  onPageChanged(newPage: number) {
+    this.getParams.pageIndex = newPage;
+    this.retrieveData();
   }
 }

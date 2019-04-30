@@ -12,7 +12,6 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -519,6 +518,73 @@ export class AmbulatoryAttentionRecordsClient {
             }));
         }
         return _observableOf<ListModelOfAmbulatoryAttentionRecordModel | null>(<any>null);
+    }
+
+    getReport(searchTerm: string | null | undefined, filters: { [key: string] : FilterSpec; } | null | undefined, sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAT1ReportItemDTO | null> {
+        let url_ = this.baseUrl + "/api/AmbulatoryAttentionRecords/at1-report?";
+        if (searchTerm !== undefined)
+            url_ += "SearchTerm=" + encodeURIComponent("" + searchTerm) + "&"; 
+        if (filters !== undefined)
+            url_ += "Filters=" + encodeURIComponent("" + filters) + "&"; 
+        if (sortInfo !== undefined)
+            sortInfo && sortInfo.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "SortInfo[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
+        if (pageIndex === null)
+            throw new Error("The parameter 'pageIndex' cannot be null.");
+        else if (pageIndex !== undefined)
+            url_ += "PageIndex=" + encodeURIComponent("" + pageIndex) + "&"; 
+        if (pageSize === null)
+            throw new Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReport(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReport(<any>response_);
+                } catch (e) {
+                    return <Observable<ListModelOfAT1ReportItemDTO | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ListModelOfAT1ReportItemDTO | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetReport(response: HttpResponseBase): Observable<ListModelOfAT1ReportItemDTO | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ListModelOfAT1ReportItemDTO.fromJS(resultData200) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ListModelOfAT1ReportItemDTO | null>(<any>null);
     }
 
     getAmbulatoryAttentionRecord(id: number): Observable<AmbulatoryAttentionRecordModel | null> {
@@ -4255,6 +4321,163 @@ export interface IAmbulatoryAttentionRecordModel {
     date?: Date | undefined;
     referredTo?: string | undefined;
     receivedFrom?: string | undefined;
+}
+
+export class ListModelOfAT1ReportItemDTO implements IListModelOfAT1ReportItemDTO {
+    items?: AT1ReportItemDTO[] | undefined;
+    itemCount!: number;
+    pageIndex!: number;
+    totalCount!: number;
+    totalPages!: number;
+    pageSize!: number;
+    hasPreviousPage!: boolean;
+    hasNextPage!: boolean;
+
+    constructor(data?: IListModelOfAT1ReportItemDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [] as any;
+                for (let item of data["items"])
+                    this.items!.push(AT1ReportItemDTO.fromJS(item));
+            }
+            this.itemCount = data["itemCount"];
+            this.pageIndex = data["pageIndex"];
+            this.totalCount = data["totalCount"];
+            this.totalPages = data["totalPages"];
+            this.pageSize = data["pageSize"];
+            this.hasPreviousPage = data["hasPreviousPage"];
+            this.hasNextPage = data["hasNextPage"];
+        }
+    }
+
+    static fromJS(data: any): ListModelOfAT1ReportItemDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListModelOfAT1ReportItemDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["itemCount"] = this.itemCount;
+        data["pageIndex"] = this.pageIndex;
+        data["totalCount"] = this.totalCount;
+        data["totalPages"] = this.totalPages;
+        data["pageSize"] = this.pageSize;
+        data["hasPreviousPage"] = this.hasPreviousPage;
+        data["hasNextPage"] = this.hasNextPage;
+        return data; 
+    }
+}
+
+export interface IListModelOfAT1ReportItemDTO {
+    items?: AT1ReportItemDTO[] | undefined;
+    itemCount: number;
+    pageIndex: number;
+    totalCount: number;
+    totalPages: number;
+    pageSize: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+}
+
+export class AT1ReportItemDTO extends AmbulatoryAttentionRecordModel implements IAT1ReportItemDTO {
+    healthProfessionalFullName?: string | undefined;
+    oncologyPatientFullName?: string | undefined;
+    diagnosisName?: string | undefined;
+
+    constructor(data?: IAT1ReportItemDTO) {
+        super(data);
+    }
+
+    init(data?: any) {
+        super.init(data);
+        if (data) {
+            this.healthProfessionalFullName = data["healthProfessionalFullName"];
+            this.oncologyPatientFullName = data["oncologyPatientFullName"];
+            this.diagnosisName = data["diagnosisName"];
+        }
+    }
+
+    static fromJS(data: any): AT1ReportItemDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new AT1ReportItemDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["healthProfessionalFullName"] = this.healthProfessionalFullName;
+        data["oncologyPatientFullName"] = this.oncologyPatientFullName;
+        data["diagnosisName"] = this.diagnosisName;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IAT1ReportItemDTO extends IAmbulatoryAttentionRecordModel {
+    healthProfessionalFullName?: string | undefined;
+    oncologyPatientFullName?: string | undefined;
+    diagnosisName?: string | undefined;
+}
+
+export class FilterSpec implements IFilterSpec {
+    searchTerm?: string | undefined;
+    type?: string | undefined;
+    maxValue?: string | undefined;
+
+    constructor(data?: IFilterSpec) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.searchTerm = data["searchTerm"];
+            this.type = data["type"];
+            this.maxValue = data["maxValue"];
+        }
+    }
+
+    static fromJS(data: any): FilterSpec {
+        data = typeof data === 'object' ? data : {};
+        let result = new FilterSpec();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["searchTerm"] = this.searchTerm;
+        data["type"] = this.type;
+        data["maxValue"] = this.maxValue;
+        return data; 
+    }
+}
+
+export interface IFilterSpec {
+    searchTerm?: string | undefined;
+    type?: string | undefined;
+    maxValue?: string | undefined;
 }
 
 export class ListModelOfAppointmentReasonModel implements IListModelOfAppointmentReasonModel {

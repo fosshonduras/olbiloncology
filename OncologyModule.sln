@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyData", "OLBIL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.Common", "OLBIL.Common\OLBIL.Common.csproj", "{BD241DF5-CCFF-4D67-9ACF-2716B6F88B96}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyInfrastructure", "OLBIL.OncologyCrossCutting\OLBIL.OncologyInfrastructure.csproj", "{B6BFBEAD-7460-4F24-BE23-F836E330C38F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLBIL.OncologyCrossCutting", "OLBIL.OncologyCrossCutting\OLBIL.OncologyCrossCutting.csproj", "{B6BFBEAD-7460-4F24-BE23-F836E330C38F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,6 +3,7 @@ import { BedModel, BedsClient } from '../../api-clients';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { AgGridNg2 } from 'ag-grid-angular';
 import { GridOptions, ColDef } from 'ag-grid-community';
+import { GetParams } from '../../common/GetParams';
 
 @Component({
   selector: 'app-beds-list',
@@ -11,8 +12,8 @@ import { GridOptions, ColDef } from 'ag-grid-community';
 })
 export class BedsListComponent implements OnInit {
   isLoading: boolean = false;
-
   rowData: BedModel[] = [];
+  getParams: GetParams = new GetParams();
 
   defaultColDef: ColDef = {
     resizable: true
@@ -41,13 +42,23 @@ export class BedsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.retrieveData();
+  }
+
+  private retrieveData() {
     this.isLoading = true;
-    this.client.getAll()
+    this.getParams.sortInfo.push({ "shortDescriptor": true });
+
+    this.client.getAll(this.getParams.sortInfo, this.getParams.pageIndex, this.getParams.pageSize)
       .subscribe(result => {
         this.rowData = result.items;
-        this.isLoading = false;
       }, err => {
         console.log(err);
       })
+  }
+
+  onPageChanged(newPage: number) {
+    this.getParams.pageIndex = newPage;
+    this.retrieveData();
   }
 }

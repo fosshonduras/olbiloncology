@@ -19,9 +19,9 @@ namespace OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Commands
 
         public class Handler : HandlerBase, IRequestHandler<CreateAmbulatoryAttentionRecordCommand, int>
         {
-            private readonly IDateTime _dateTimeProvider;
+            private readonly IDateTimeProvider _dateTimeProvider;
 
-            public Handler(IOncologyContext context, IMapper mapper, IDateTime dateTimeProvider) : base(context, mapper) {
+            public Handler(IOncologyContext context, IMapper mapper, IDateTimeProvider dateTimeProvider) : base(context, mapper) {
 
                 _dateTimeProvider = dateTimeProvider;
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OLBIL.OncologyDomain.Entities
 {
@@ -32,5 +33,8 @@ namespace OLBIL.OncologyDomain.Entities
 
         public Guid? AppUserId { get; set; }
         public virtual AppUser AppUser { get; set; }
+
+        [NotMapped]
+        public string FullName => $"{FirstName} {MiddleName ?? string.Empty} {LastName ?? string.Empty} {AdditionalLastName ?? string.Empty}";
     }
 }

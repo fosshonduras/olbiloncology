@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { OncologyPatientsClient } from '../../api-clients';
 import { ColDef, GridOptions } from 'ag-grid-community';
+import { GetParams } from '../../common/GetParams';
 
 @Component({
   selector: 'app-patients-list',
@@ -10,6 +11,8 @@ import { ColDef, GridOptions } from 'ag-grid-community';
 })
 export class PatientsListComponent implements OnInit {
   isLoading: boolean = true;
+  getParams: GetParams = new GetParams();
+
   defaultColDef: ColDef = {
     resizable: true
   };
@@ -40,18 +43,29 @@ export class PatientsListComponent implements OnInit {
   }
 
   getRegistered() {
-    this.isLoading = true;
-    this.client.getAll()
+    this.retrieveData();
+  }
+
+  private retrieveData() {
+    this.isLoading = true;    this.getParams.sortInfo.push({ "shortDescriptor": true });
+
+    this.client.getAll(this.getParams.sortInfo, this.getParams.pageIndex, this.getParams.pageSize)
       .subscribe(result => {
         this.rowData = result.items.map(r => {
           return { ...r, ...r.person }
         });
         this.isLoading = false;
+        this.getParams.totalCount = result.totalCount;
       }, error => console.error(error));
   }
 
   ngOnInit() {
     this.getRegistered();
+  }
+
+  onPageChanged(newPage: number) {
+    this.getParams.pageIndex = newPage;
+    this.retrieveData();
   }
 
 }

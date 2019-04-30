@@ -36,7 +36,7 @@ namespace OLBIL.OncologyWebApp
             // Add AutoMapper
             services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
-            services.AddTransient(typeof(IDateTime), typeof(SystemDateTime));
+            services.AddTransient(typeof(IDateTimeProvider), typeof(SystemDateTime));
 
             // Add MediatR
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));

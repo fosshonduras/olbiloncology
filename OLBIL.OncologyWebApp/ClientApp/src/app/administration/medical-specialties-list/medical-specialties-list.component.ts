@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GridOptions, ColDef } from 'ag-grid-community';
 import { MedicalSpecialtyModel, MedicalSpecialtiesClient } from '../../api-clients';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
+import { GetParams } from '../../common/GetParams';
 
 @Component({
   selector: 'app-medical-specialties-list',
@@ -11,6 +12,7 @@ import { LinkRendererComponent } from '../../helper-components/LinkRendererCompo
 export class MedicalSpecialtiesListComponent implements OnInit {
   isLoading: boolean = false;
   rowData: MedicalSpecialtyModel[] = [];
+  getParams: GetParams = new GetParams();
 
   defaultColDef: ColDef = {
     resizable: true
@@ -37,13 +39,16 @@ export class MedicalSpecialtiesListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.retrieveData();
+  }
 
-    this.client.getAll()
+  private retrieveData() {
+    this.isLoading = true;    this.getParams.sortInfo.push({ "shortDescriptor": true });
+    this.client.getAll(this.getParams.sortInfo, this.getParams.pageIndex, this.getParams.pageSize)
       .subscribe(result => {
         this.rowData = result.items;
         this.isLoading = false;
-        this.gridOptions.columnApi.autoSizeAllColumns();
+        this.getParams.totalCount = result.totalCount;
       }, err => {
         console.log(err);
       })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { CountryModel, CountriesClient } from '../../api-clients';
+import { GetParams } from '../../common/GetParams';
 
 @Component({
   selector: 'app-countries-list',
@@ -11,6 +12,7 @@ import { CountryModel, CountriesClient } from '../../api-clients';
 export class CountriesListComponent implements OnInit {
   isLoading: boolean = false;
   rowData: CountryModel[] = [];
+  getParams: GetParams = new GetParams();
 
   defaultColDef: ColDef = {
     resizable: true
@@ -40,16 +42,25 @@ export class CountriesListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.retrieveData();
+  }
 
-    this.client.getAll()
+  private retrieveData() {
+    this.isLoading = true;
+    this.getParams.sortInfo.push({ "shortDescriptor": true });
+    this.client.getAll(this.getParams.sortInfo, this.getParams.pageIndex, this.getParams.pageSize)
       .subscribe(result => {
         this.rowData = result.items;
         this.isLoading = false;
-        this.gridOptions.columnApi.autoSizeAllColumns();
+        this.getParams.totalCount = result.totalCount;
       }, err => {
         console.log(err);
       })
+  }
+
+  onPageChanged(newPage: number) {
+    this.getParams.pageIndex = newPage;
+    this.retrieveData();
   }
 }
 

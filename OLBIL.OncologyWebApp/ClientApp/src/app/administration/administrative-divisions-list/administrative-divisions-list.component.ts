@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdministrativeDivisionModel, AdministrativeDivisionsClient } from '../../api-clients';
 import { GridOptions, ColDef } from 'ag-grid-community';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
+import { GetParams } from '../../common/GetParams';
 
 @Component({
   selector: 'app-administrative-divisions-list',
@@ -11,6 +12,7 @@ import { LinkRendererComponent } from '../../helper-components/LinkRendererCompo
 export class AdministrativeDivisionsListComponent implements OnInit {
   isLoading: boolean = false;
   rowData: AdministrativeDivisionModel[] = [];
+  getParams: GetParams = new GetParams();
 
   defaultColDef: ColDef = {
     resizable: true
@@ -40,15 +42,24 @@ export class AdministrativeDivisionsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.retrieveData();
+  }
 
-    this.client.getAll()
+  private retrieveData() {
+    this.isLoading = true;
+    this.getParams.sortInfo.push({ "shortDescriptor": true });
+    this.client.getAll(this.getParams.sortInfo, this.getParams.pageIndex, this.getParams.pageSize)
       .subscribe(result => {
         this.rowData = result.items;
         this.isLoading = false;
-        this.gridOptions.columnApi.autoSizeAllColumns();
+        this.getParams.totalCount = result.totalCount;
       }, err => {
         console.log(err);
       })
+  }
+
+  onPageChanged(newPage: number) {
+    this.getParams.pageIndex = newPage;
+    this.retrieveData();
   }
 }

@@ -3,6 +3,7 @@ using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Commands;
 using OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Queries;
 using System.Threading.Tasks;
+using OLBIL.OncologyApplication.DTOs;
 
 namespace OLBIL.OncologyWebApp.Controllers
 {
@@ -18,6 +19,12 @@ namespace OLBIL.OncologyWebApp.Controllers
         public async Task<ActionResult<ListModel<AmbulatoryAttentionRecordModel>>> Search(string searchTerm)
         {
             return Ok(await Mediator.Send(new SearchAmbulatoryAttentionRecordsQuery { SearchTerm = searchTerm }));
+        }
+
+        [HttpGet("at1-report")]
+        public async Task<ActionResult<ListModel<AT1ReportItemDTO>>> GetReport([FromQuery] GetAT1ReportQuery request)
+        {
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpGet("{id}", Name = "GetAmbulatoryAttentionRecord")]

@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from "@angular/router";
 
 import { AgGridModule } from 'ag-grid-angular';
+import { NgbTypeaheadModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PatientsListComponent } from './patients-list/patients-list.component';
 import { CreatePatientComponent } from './create-patient/create-patient.component';
@@ -23,6 +24,8 @@ import { AppointmentsListComponent } from '../appointments-list/appointments-lis
     RouterModule,
     AgGridComponentsModule,
     AgGridModule.withComponents([]),
+    NgbTypeaheadModule,
+    NgbPaginationModule
   ]
 })
 export class PatientsModule { }

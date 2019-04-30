@@ -1,0 +1,68 @@
+<section id="registered">
+  <h3>Reporte de Atención Ambulatoria AT-1</h3>
+
+  <h4>Filtros</h4>
+  <form #regForm="ngForm" (ngSubmit)="loadReport(regForm)" novalidate>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="ta-healthProInput">Profesional de Salud</label>
+
+        <input name="ta-healthProInput" id="ta-healthProInput" type="text" class="form-control"
+               [inputFormatter]="healthProfessionalTAFormatter" [class.is-invalid]="healthProfessionalSearchFailed"
+               [(ngModel)]="healthProfessionalModel" [editable]="false" [resultFormatter]="healthProfessionalSearchResultFormatter" [ngbTypeahead]="searchHealthProfessional" placeholder="Buscar profesional de salud" />
+
+        <small class="text-muted" *ngIf="isSearchingHealthProfessional">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="healthProfessionalSearchFailed">No se pudieron cargar las sugerencias.</div>
+      </div>
+      <div class="form-group col col-auto">
+        <label for="dateInput">Fecha de atención</label>
+        <input [(ngModel)]="ambulatoryAttentionRecordDate" type="date" class="form-control" required name="date" id="dateInput" placeholder="Ej. 15 Abril 2019">
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="ta-oncologyPatientIdInput">Paciente</label>
+
+        <input name="ta-oncologyPatientInput" id="ta-oncologyPatientInput" type="text" class="form-control"
+               [inputFormatter]="oncologyPatientTAFormatter" [class.is-invalid]="oncologyPatientSearchFailed"
+               [(ngModel)]="oncologyPatientModel" [editable]="false" [resultFormatter]="oncologyPatientSearchResultFormatter" [ngbTypeahead]="searchOncologyPatient" placeholder="Buscar Paciente" />
+
+        <small class="text-muted" *ngIf="isSearchingOncologyPatient">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="oncologyPatientSearchFailed">No se pudieron cargar las sugerencias.</div>
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="ta-diagnosisIdInput">Diagnóstico</label>
+
+        <input name="ta-diagnosisInput" id="ta-diagnosisInput" type="text" class="form-control"
+               [inputFormatter]="diagnosisTAFormatter" [class.is-invalid]="diagnosisSearchFailed"
+               [(ngModel)]="diagnosisModel" [editable]="false" [resultFormatter]="diagnosisSearchResultFormatter" [ngbTypeahead]="searchDiagnosis" placeholder="Buscar Diagnóstico" />
+
+        <small class="text-muted" *ngIf="isSearchingDiagnosis">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="diagnosisSearchFailed">No se pudieron cargar las sugerencias.</div>
+      </div>
+    </div>
+
+    <button type="submit" *ngIf="!isLoadingReport" class="btn btn-primary">Buscar</button>
+    <div *ngIf="isLoadingReport" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Buscando...</span>
+    </div>
+  </form>
+
+  <div class="olbil-datagrid-container">
+    <ag-grid-angular *ngIf="rowData.length > 0"
+                     class="ag-theme-blue"
+                     [rowData]="rowData"
+                     [defaultColDef]="defaultColDef"
+                     [columnDefs]="columnDefs">
+    </ag-grid-angular>
+    <div class="text-center" *ngIf="!isLoading && rowData.length == 0">
+      <p>No se encontraron datos.</p>
+    </div>
+    <div *ngIf="isLoading" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Cargando...</span>
+    </div>
+  </div>
+
+  <ngb-pagination [collectionSize]="getParams.totalCount" [(page)]="getParams.pageIndex" (pageChange)="onPageChanged($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+
+</section>

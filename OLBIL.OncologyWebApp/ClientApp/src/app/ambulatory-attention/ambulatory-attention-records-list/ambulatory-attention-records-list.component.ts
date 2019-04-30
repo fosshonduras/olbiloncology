@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AmbulatoryAttentionRecordModel, AmbulatoryAttentionRecordsClient } from '../../api-clients';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { GridOptions, ColDef } from 'ag-grid-community';
+import { GetParams } from '../../common/GetParams';
 
 @Component({
   selector: 'app-ambulatory-attention-records-list',
@@ -11,6 +12,7 @@ import { GridOptions, ColDef } from 'ag-grid-community';
 export class AmbulatoryAttentionRecordsListComponent implements OnInit {
   isLoading: boolean = false;
   rowData: AmbulatoryAttentionRecordModel[] = [];
+  getParams: GetParams = new GetParams();
 
   defaultColDef: ColDef = {
     resizable: true
@@ -47,15 +49,23 @@ export class AmbulatoryAttentionRecordsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.retrieveData();
+  }
 
-    this.client.getAll()
+  private retrieveData() {
+    this.isLoading = true;    this.getParams.sortInfo.push({ "shortDescriptor": true });
+    this.client.getAll(this.getParams.sortInfo, this.getParams.pageIndex, this.getParams.pageSize)
       .subscribe(result => {
         this.rowData = result.items;
         this.isLoading = false;
-        //this.gridOptions.columnApi.autoSizeAllColumns();
+        this.getParams.totalCount = result.totalCount;
       }, err => {
         console.log(err);
       })
+  }
+
+  onPageChanged(newPage: number) {
+    this.getParams.pageIndex = newPage;
+    this.retrieveData();
   }
 }

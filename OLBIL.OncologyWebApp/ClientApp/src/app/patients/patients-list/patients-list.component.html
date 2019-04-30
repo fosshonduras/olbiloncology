@@ -16,5 +16,7 @@
     </div>
   </div>
 
+  <ngb-pagination [collectionSize]="getParams.totalCount" [(page)]="getParams.pageIndex" (pageChange)="onPageChanged($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+
   <a [routerLink]="['../create']" class="btn btn-outline-secondary btn-link">Registrar Nuevo</a>
 </section>

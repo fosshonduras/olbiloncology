@@ -20,7 +20,7 @@ namespace OLBIL.OncologyApplication.Infrastructure
         /// 
         /// maxValue is only needed if the type is Range
         /// </summary>
-        public List<Dictionary<string, FilterSpec>> Filters { get; set; }
+        public Dictionary<string, FilterSpec> Filters { get; set; }
 
         public class FilterSpec
         {

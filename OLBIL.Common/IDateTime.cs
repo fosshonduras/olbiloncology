@@ -2,7 +2,7 @@
 
 namespace OLBIL.Common
 {
-    public interface IDateTime
+    public interface IDateTimeProvider
     {
         DateTime Now { get; }
     }
