@@ -52,6 +52,8 @@ export class BedsListComponent implements OnInit {
     this.client.getAll(this.getParams.sortInfo, this.getParams.pageIndex, this.getParams.pageSize)
       .subscribe(result => {
         this.rowData = result.items;
+        this.isLoading = false;
+        this.getParams.totalCount = result.totalCount;
       }, err => {
         console.log(err);
       })

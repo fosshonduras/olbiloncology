@@ -19,3 +19,7 @@
 .admin-tile-header{
   padding: 0.5rem 0.75rem;
 }
+
+.admin-tile-body:hover {
+  background-color: skyblue;
+}
