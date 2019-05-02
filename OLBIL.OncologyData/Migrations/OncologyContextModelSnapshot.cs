@@ -418,6 +418,31 @@ namespace OLBIL.OncologyData.Migrations
                     b.ToTable("oncologypatient");
                 });
 
+            modelBuilder.Entity("OLBIL.OncologyDomain.Entities.PatientPhysicalRecord", b =>
+                {
+                    b.Property<int>("PatientPhysicalRecordId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("patientphysicalrecordid");
+
+                    b.Property<int>("OncologyPatientId")
+                        .HasColumnName("oncologypatientid");
+
+                    b.Property<string>("RecordNumber")
+                        .HasColumnName("recordnumber");
+
+                    b.Property<int>("RecordStorageLocationId")
+                        .HasColumnName("recordstoragelocationid");
+
+                    b.HasKey("PatientPhysicalRecordId");
+
+                    b.HasIndex("OncologyPatientId")
+                        .IsUnique();
+
+                    b.HasIndex("RecordStorageLocationId");
+
+                    b.ToTable("patientphysicalrecord");
+                });
+
             modelBuilder.Entity("OLBIL.OncologyDomain.Entities.Person", b =>
                 {
                     b.Property<Guid>("PersonId")
@@ -498,6 +523,55 @@ namespace OLBIL.OncologyData.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("person","olbil");
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyDomain.Entities.PhysicalRecordTransfer", b =>
+                {
+                    b.Property<int>("PhysicalRecordTransferId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("physicalrecordtransferid");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnName("date");
+
+                    b.Property<string>("DeliveredBy")
+                        .HasColumnName("deliveredby");
+
+                    b.Property<int>("PatientPhysicalRecordId")
+                        .HasColumnName("patientphysicalrecordid");
+
+                    b.Property<string>("ReceivedBy")
+                        .HasColumnName("receivedby");
+
+                    b.Property<int>("TargetLocationId")
+                        .HasColumnName("targetlocationid");
+
+                    b.HasKey("PhysicalRecordTransferId");
+
+                    b.HasIndex("PatientPhysicalRecordId");
+
+                    b.HasIndex("TargetLocationId");
+
+                    b.ToTable("physicalrecordtransfer");
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyDomain.Entities.RecordStorageLocation", b =>
+                {
+                    b.Property<int>("RecordStorageLocationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("recordstoragelocationid");
+
+                    b.Property<string>("Name")
+                        .HasColumnName("name");
+
+                    b.Property<int>("ParentLocationId")
+                        .HasColumnName("parentlocationid");
+
+                    b.HasKey("RecordStorageLocationId");
+
+                    b.HasIndex("ParentLocationId");
+
+                    b.ToTable("recordstoragelocation");
                 });
 
             modelBuilder.Entity("OLBIL.OncologyDomain.Entities.Ward", b =>
@@ -641,11 +715,45 @@ namespace OLBIL.OncologyData.Migrations
                         .HasForeignKey("PersonId");
                 });
 
+            modelBuilder.Entity("OLBIL.OncologyDomain.Entities.PatientPhysicalRecord", b =>
+                {
+                    b.HasOne("OLBIL.OncologyDomain.Entities.OncologyPatient", "OncologyPatient")
+                        .WithOne("PatientPhysicalRecord")
+                        .HasForeignKey("OLBIL.OncologyDomain.Entities.PatientPhysicalRecord", "OncologyPatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OLBIL.OncologyDomain.Entities.RecordStorageLocation", "RecordStorageLocation")
+                        .WithMany()
+                        .HasForeignKey("RecordStorageLocationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("OLBIL.OncologyDomain.Entities.Person", b =>
                 {
                     b.HasOne("OLBIL.OncologyDomain.Entities.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("AppUserId");
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyDomain.Entities.PhysicalRecordTransfer", b =>
+                {
+                    b.HasOne("OLBIL.OncologyDomain.Entities.PatientPhysicalRecord", "PatientPhysicalRecord")
+                        .WithMany("Transactions")
+                        .HasForeignKey("PatientPhysicalRecordId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OLBIL.OncologyDomain.Entities.RecordStorageLocation", "TargetLocation")
+                        .WithMany("Transfers")
+                        .HasForeignKey("TargetLocationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OLBIL.OncologyDomain.Entities.RecordStorageLocation", b =>
+                {
+                    b.HasOne("OLBIL.OncologyDomain.Entities.RecordStorageLocation", "ParentLocation")
+                        .WithMany()
+                        .HasForeignKey("ParentLocationId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OLBIL.OncologyDomain.Entities.Ward", b =>

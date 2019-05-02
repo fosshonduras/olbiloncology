@@ -12,6 +12,7 @@ namespace OLBIL.OncologyApplication.Interfaces
         DbSet<Country> Countries { get; set; }
         DbSet<AdministrativeDivision> AdministrativeDivisions { get; set; }
         DbSet<OncologyPatient> OncologyPatients { get; set; }
+        DbSet<PatientPhysicalRecord> PatientPhysicalRecords { get; set; }
         DbSet<EvolutionCard> EvolutionCards { get; set; }
         DbSet<Appointment> Appointments { get; set; }
         DbSet<Person> People { get; set; }
@@ -23,6 +24,9 @@ namespace OLBIL.OncologyApplication.Interfaces
         DbSet<Bed> Beds { get; set; }
         DbSet<AppointmentReason> AppointmentReasons { get; set; }
         DbSet<AmbulatoryAttentionRecord> AmbulatoryAttentionRecords { get; set; }
+        DbSet<RecordStorageLocation> RecordStorageLocations { get; set; }
+        DbSet<PhysicalRecordTransfer> PhysicalRecordTransfers { get; set; }
+
 
         DbSet<T> Set<T>() where T: class;
 

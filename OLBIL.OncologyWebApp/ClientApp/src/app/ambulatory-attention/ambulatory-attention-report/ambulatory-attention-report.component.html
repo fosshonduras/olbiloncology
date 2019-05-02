@@ -58,9 +58,6 @@
     <div class="text-center" *ngIf="!isLoadingReport && rowData.length == 0">
       <p>No se encontraron datos.</p>
     </div>
-    <div *ngIf="isLoadingReport" class="spinner-border text-primary" role="status">
-      <span class="sr-only">Cargando...</span>
-    </div>
   </div>
 
   <ngb-pagination [collectionSize]="searchParams.totalCount" [(page)]="searchParams.pageIndex" (pageChange)="onPageChanged($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>

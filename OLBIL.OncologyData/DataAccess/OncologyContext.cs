@@ -19,6 +19,7 @@ namespace OLBIL.OncologyData
         public DbSet<Country> Countries { get; set; }
         public DbSet<AdministrativeDivision> AdministrativeDivisions { get; set; }
         public DbSet<OncologyPatient> OncologyPatients { get; set; }
+        public DbSet<PatientPhysicalRecord> PatientPhysicalRecords { get; set; }
         public DbSet<EvolutionCard> EvolutionCards { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Person> People { get; set; }
@@ -30,6 +31,8 @@ namespace OLBIL.OncologyData
         public DbSet<Bed> Beds { get; set; }
         public DbSet<AppointmentReason> AppointmentReasons { get; set; }
         public DbSet<AmbulatoryAttentionRecord> AmbulatoryAttentionRecords { get; set; }
+        public DbSet<RecordStorageLocation> RecordStorageLocations { get; set; }
+        public DbSet<PhysicalRecordTransfer> PhysicalRecordTransfers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

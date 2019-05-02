@@ -23,5 +23,6 @@ namespace OLBIL.OncologyDomain.Entities
         public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual ICollection<EvolutionCard> EvolutionCards { get; set; }
         public virtual Diagnosis MainDiagnosis { get; set; }
+        public virtual PatientPhysicalRecord PatientPhysicalRecord { get; set; }
     }
 }

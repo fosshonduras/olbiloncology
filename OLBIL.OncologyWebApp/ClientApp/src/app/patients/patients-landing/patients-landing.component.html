@@ -1,0 +1,39 @@
+<section id="patients_section">
+  <div class="admin-grid card-deck">
+
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['./list']">Registro de Pacientes</a></h4>
+      </div>
+
+      <div class="card-body text-primary admin-tile-body">
+        <a [routerLink]="['./list']">
+          <img class="card-img" src="../../../assets/img/hospital-ward-icon.svg" width="150" height="150" alt="Icon of hospital ward">
+        </a>
+      </div>
+    </div>
+
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['/ambulatoryattention/ambulatoryattentionrecords']">Registros de Atención</a></h4>
+      </div>
+      <div class="card-body text-primary admin-tile-body">
+        <a [routerLink]="['/ambulatoryattention/ambulatoryattentionrecords']">
+          <img class="card-img" src="../../../assets/img/hospital-building-icon.svg" width="150" height="150" alt="Icon of hospital building">
+        </a>
+      </div>
+    </div>
+
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['./appointments']">Programación de citas</a></h4>
+      </div>
+      <div class="card-body text-primary admin-tile-body">
+        <a [routerLink]="['./appointments']">
+          <img class="card-img" src="../../../assets/img/hospital-building-icon.svg" width="150" height="150" alt="Icon of hospital building">
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>

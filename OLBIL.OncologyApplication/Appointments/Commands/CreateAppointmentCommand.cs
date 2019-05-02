@@ -37,6 +37,12 @@ namespace OLBIL.OncologyApplication.Appointments.Commands
                     AttentionBlocks = model.AttentionBlocks,
                     Date = model.Date.Value,
                     OncologyPatientId = model.OncologyPatientId.Value,
+                    HealthProfessionalId = model.HealthProfessionalId,
+                    PatientAttended = model.PatientAttended,
+                    AppointmentStatusId = model.AppointmentStatusId.Value,
+                    Notes = model.Notes,
+                    SpecialNotes = model.SpecialNotes,
+                    RescheduledAppointmentId = model.RescheduledAppointmentId.Value
                 };
 
                 Context.Appointments.Add(newRecord);

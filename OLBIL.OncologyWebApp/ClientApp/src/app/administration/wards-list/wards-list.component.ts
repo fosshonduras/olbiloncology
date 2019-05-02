@@ -32,7 +32,7 @@ export class WardsListComponent implements OnInit {
         });
       }
     },
-    { headerName: 'Unidad', field: 'unitId' },
+    { headerName: 'Unidad', field: 'hospitalUnitId' },
     { headerName: 'Edificio', field: 'buildingId' },
     { headerName: 'Nivel', field: 'floorNumber' },
     { headerName: 'Género', field: 'wardGenderId' }

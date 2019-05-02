@@ -1,0 +1,76 @@
+<section id="edit-container">
+  <h3>{{ pageTitle }}</h3>
+  <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
+    <div class="form-row">
+      <p>Id en Sistema: {{appointment.appointmentId || '(nuevo)'}}</p>
+    </div>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="dateInput">Fecha de atención</label>
+        <input [(ngModel)]="appointmentDate" type="date" class="form-control" required name="date" id="dateInput" placeholder="Ej. 15 Abril 2019">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="healthProfessionalIdInput">Médico</label>
+
+        <input name="ta-healthProfessionalInput" id="ta-healthProfessionalInput" type="text" class="form-control"
+               [inputFormatter]="healthProfessionalTAFormatter" [class.is-invalid]="healthProfessionalSearchFailed"
+               [(ngModel)]="healthProfessionalModel" [editable]="false" [resultFormatter]="healthProfessionalSearchResultFormatter" [ngbTypeahead]="searchHealthProfessional" placeholder="Buscar Médico" />
+
+        <small class="text-muted" *ngIf="isSearchingHealthProfessional">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="healthProfessionalSearchFailed">Sorry, suggestions could not be loaded.</div>
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="ta-oncologyPatientInput">Paciente</label>
+
+        <input name="ta-oncologyPatientInput" id="ta-oncologyPatientInput" type="text" class="form-control"
+               [inputFormatter]="oncologyPatientTAFormatter" [class.is-invalid]="oncologyPatientSearchFailed"
+               [(ngModel)]="oncologyPatientModel" [editable]="false" [resultFormatter]="oncologyPatientSearchResultFormatter" [ngbTypeahead]="searchOncologyPatient" placeholder="Buscar Paciente" />
+
+        <small class="text-muted" *ngIf="isSearchingOncologyPatient">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="oncologyPatientSearchFailed">Sorry, suggestions could not be loaded.</div>
+      </div>
+
+      <div class="form-group col col-auto">
+        <label></label>
+        <div class="form-check">
+          <input [(ngModel)]="appointment.patientAttended" type="checkbox" class="form-check-input" required name="patientAttended" id="patientAttendedInput">
+          <label class="form-check-label" for="isNewInput">Paciente se presentó?</label>
+        </div>
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="statusIdInput">Status</label>
+        <select [(ngModel)]="appointment.appointmentStatusId" name="status" id="statusIdInput" class="form-control">
+          <option *ngFor="let status of appointmentStatuses" [value]="status.appointmentStatusId">{{status.name}}</option>
+        </select>
+      </div>
+      <div class="form-group col col-auto">
+        <label for="appointmentReasonIdInput">Motivo</label>
+
+        <input name="ta-appointmentReasonInput" id="ta-appointmentReasonInput" type="text" class="form-control"
+               [inputFormatter]="appointmentReasonTAFormatter" [class.is-invalid]="appointmentReasonSearchFailed"
+               [(ngModel)]="appointmentReasonModel" [editable]="false" [resultFormatter]="appointmentReasonSearchResultFormatter" [ngbTypeahead]="searchAppointmentReason" placeholder="Buscar Motivo" />
+
+        <small class="text-muted" *ngIf="isSearchingAppointmentReason">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="appointmentReasonSearchFailed">Sorry, suggestions could not be loaded.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="notesInput">Notas</label>
+        <input [(ngModel)]="appointment.notes" type="text" class="form-control" required name="notes" id="notesInput" placeholder="Ej. Notas">
+      </div>
+      <div class="form-group col col-auto">
+        <label for="specialNotesInput">Notas especiales</label>
+        <input [(ngModel)]="appointment.specialNotes" type="text" class="form-control" required name="specialNotes" id="specialNotesInput" placeholder="Ej. Notas especiales">
+      </div>
+    </div>
+    <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
+    <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Guardando...</span>
+    </div>
+  </form>
+</section>

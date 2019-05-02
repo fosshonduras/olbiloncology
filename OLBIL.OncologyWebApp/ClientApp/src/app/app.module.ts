@@ -9,13 +9,13 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { PatientsComponent } from './patients/root/patients.component';
-import { AppointmentsComponent } from './appointments/appointments.component';
 import { PatientsModule } from './patients/patients.module';
 import { AppRoutingModule } from "./app-routing.module";
 import { OncologyPatientsClient } from './api-clients';
 import { AdminRootComponent } from './administration/admin-root/admin-root.component';
 import { AdministrationModule } from './administration/administration.module';
 import { AmbulatoryAttentionModule } from './ambulatory-attention/ambulatory-attention.module';
+import { ArchivesModule } from './archives/archives.module';
 
 @NgModule({
   declarations: [
@@ -23,8 +23,7 @@ import { AmbulatoryAttentionModule } from './ambulatory-attention/ambulatory-att
     NavMenuComponent,
     HomeComponent,
     PatientsComponent,
-    AdminRootComponent,
-    AppointmentsComponent
+    AdminRootComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -33,7 +32,7 @@ import { AmbulatoryAttentionModule } from './ambulatory-attention/ambulatory-att
     PatientsModule,
     AdministrationModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(), AmbulatoryAttentionModule,
+    ToastrModule.forRoot(), AmbulatoryAttentionModule, ArchivesModule,
   ],
   providers: [OncologyPatientsClient],
   bootstrap: [AppComponent]
