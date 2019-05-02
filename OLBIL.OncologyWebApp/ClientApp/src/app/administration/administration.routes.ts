@@ -20,6 +20,8 @@ import { MedicalSpecialtiesListComponent } from './medical-specialties-list/medi
 import { MedicalSpecialtyEditComponent } from './medical-specialty-edit/medical-specialty-edit.component';
 import { DiagnosisEditComponent } from './diagnosis-edit/diagnosis-edit.component';
 import { DiagnosesListComponent } from './diagnoses-list/diagnoses-list.component';
+import { RecordStorageLocationsListComponent } from "./record-storage-locations-list/record-storage-locations-list.component";
+import { RecordStorageLocationEditComponent } from "./record-storage-location-edit/record-storage-location-edit.component";
 
 export const ADMINISTRATION_ROUTES: Routes = [
   { path: '', pathMatch: 'full', component: AdminLandingComponent },
@@ -55,4 +57,9 @@ export const ADMINISTRATION_ROUTES: Routes = [
   { path: 'countries', component: CountriesListComponent },
   { path: 'countries/new', component: CountryEditComponent },
   { path: 'countries/:countryId', component: CountryEditComponent, pathMatch: 'full' },
+
+  { path: 'recordstoragelocations', component: RecordStorageLocationsListComponent },
+  { path: 'recordstoragelocations/new', component: RecordStorageLocationEditComponent },
+  { path: 'recordstoragelocations/:recordStorageLocationId', component: RecordStorageLocationEditComponent, pathMatch: 'full' },
+
 ];

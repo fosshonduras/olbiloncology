@@ -1,0 +1,37 @@
+<section id="administration_section">
+  <div class="admin-grid card-deck">
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['./patientphysicalrecords']">Expedientes Físicos</a></h4>
+      </div>
+      <div class="card-body text-primary admin-tile-body">
+        <a [routerLink]="['./patientphysicalrecrods']">
+          <img class="card-img" src="../../../assets/img/hospital-building-icon.svg" width="150" height="150" alt="Icon of hospital building">
+        </a>
+      </div>
+    </div>
+
+    <div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['./physicalrecordtransfers']">Transferencia de Expedientes</a></h4>
+      </div>
+
+      <div class="card-body text-primary admin-tile-body">
+        <a [routerLink]="['./physicalrecordtransfers']">
+          <img class="card-img" src="../../../assets/img/appointment-icon.svg" width="150" height="150" alt="Icon of an appointment">
+        </a>
+      </div>
+    </div>
+    
+    <!--<div class="card mb-2 admin-tile">
+      <div class="card-header admin-tile-header">
+        <h4><a [routerLink]="['./recordstoragelocations']">Ubicaciones de Expedientes</a></h4>
+      </div>
+      <div class="card-body text-primary admin-tile-body">
+        <a [routerLink]="['./recordstoragelocations']">
+          <img class="card-img" src="../../../assets/img/hospital-building-icon.svg" width="150" height="150" alt="Icon of hospital building">
+        </a>
+      </div>
+    </div>-->
+  </div>
+</section>

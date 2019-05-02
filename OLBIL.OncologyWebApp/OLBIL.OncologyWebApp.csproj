@@ -34,6 +34,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\administration\administration.routes.ts" />
     <None Remove="ClientApp\src\app\ambulatory-attention\ambulatory-attention.routes.ts" />
+    <None Remove="ClientApp\src\app\archives\archives.routes.ts" />
     <None Remove="ClientApp\src\app\helper-components\ag-grid-components.module.ts" />
     <None Remove="ClientApp\src\app\helper-components\LinkRendererComponent.ts" />
     <None Remove="ClientApp\src\app\patients\patients.routes.ts" />
@@ -61,6 +62,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\administration\administration.routes.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\ambulatory-attention\ambulatory-attention.routes.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\archives\archives.routes.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\helper-components\ag-grid-components.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\helper-components\LinkRendererComponent.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\patients\patients.routes.ts" />

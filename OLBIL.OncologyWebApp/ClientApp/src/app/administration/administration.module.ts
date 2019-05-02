@@ -29,6 +29,8 @@ import { MedicalSpecialtiesListComponent } from './medical-specialties-list/medi
 import { MedicalSpecialtyEditComponent } from './medical-specialty-edit/medical-specialty-edit.component';
 import { DiagnosisEditComponent } from './diagnosis-edit/diagnosis-edit.component';
 import { DiagnosesListComponent } from './diagnoses-list/diagnoses-list.component';
+import { RecordStorageLocationsListComponent } from './record-storage-locations-list/record-storage-locations-list.component';
+import { RecordStorageLocationEditComponent } from './record-storage-location-edit/record-storage-location-edit.component';
 
 @NgModule({
   declarations: [BuildingsListComponent, BuildingEditComponent, WardEditComponent,
@@ -38,7 +40,8 @@ import { DiagnosesListComponent } from './diagnoses-list/diagnoses-list.componen
     AdministrativeDivisionsListComponent, AppointmentReasonEditComponent,
     AppointmentReasonsListComponent, CountryEditComponent, CountriesListComponent,
     MedicalSpecialtiesListComponent, MedicalSpecialtyEditComponent,
-    DiagnosisEditComponent, DiagnosesListComponent],
+    DiagnosisEditComponent, DiagnosesListComponent, RecordStorageLocationsListComponent,
+    RecordStorageLocationEditComponent],
   imports: [
     CommonModule,
     FormsModule,
