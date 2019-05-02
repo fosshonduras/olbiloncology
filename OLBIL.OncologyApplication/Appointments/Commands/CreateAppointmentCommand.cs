@@ -42,7 +42,7 @@ namespace OLBIL.OncologyApplication.Appointments.Commands
                     AppointmentStatusId = model.AppointmentStatusId.Value,
                     Notes = model.Notes,
                     SpecialNotes = model.SpecialNotes,
-                    RescheduledAppointmentId = model.RescheduledAppointmentId.Value
+                    RescheduledAppointmentId = model.RescheduledAppointmentId
                 };
 
                 Context.Appointments.Add(newRecord);
