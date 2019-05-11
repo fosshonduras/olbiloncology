@@ -3,6 +3,8 @@ init:
   - git config --global core.autocrlf true
 environment:
   nodejs_version: "10"
+
+configuration: Debug
 build:
   publish_wap_xcopy: true
   verbosity: minimal
@@ -11,35 +13,52 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - dotnet --version
   - dotnet restore --verbosity m
-build_script:
   - node --version
   - npm -g install npm@latest
-  - cd OLBIL.OncologyWebApp
-  - dotnet publish -c Release
 before_build:
   - appveyor-retry dotnet restore -v Minimal
   - ps: ((Get-Content -path C:\projects\olbiloncology\OLBIL.OncologyWebApp\ClientApp\src\app\app.component.html -Raw) -replace '{{BuildNumber}}',$env:APPVEYOR_BUILD_VERSION)| Set-Content -Path C:\projects\olbiloncology\OLBIL.OncologyWebApp\ClientApp\src\app\app.component.html
-test_script:
-  - cd C:\projects\olbiloncology\OLBIL.OncologyTests
-  - nuget install Appveyor.TestLogger -Version 2.0.0
-  - cd C:\projects\olbiloncology
-  - dotnet test --no-build --no-restore --test-adapter-path:. --logger:Appveyor OLBIL.OncologyTests
 cache:
   - packages -> **\packages.config      # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
-  - node_modules                        # local npm modules
+  - OLBIL.OncologyWebApp\ClientApp\node_modules                        # local npm modules
   - '%APPDATA%\npm-cache'               # npm cache
   - '%USERPROFILE%\.nuget\packages -> **\*.csproj'  # project.json cache
   - '%LocalAppData%\NuGet\v3-cache'
-artifacts:
- - path: '\OLBIL.OncologyWebApp\bin\Release\netcoreapp2.2\publish'
-   name: website
-   type: WebDeployPackage
-deploy:
-  - provider: Environment
-    name: Olbil Oncology Beta 3
-    on:
-      branch: master
-  - provider: Environment
-    name: Oncology Azure Beta
-    on:
-      branch: master
+
+for:
+-
+  branches:
+    only:
+      - master
+  configuration: Release
+  artifacts:
+  - path: '\OLBIL.OncologyWebApp\bin\Release\netcoreapp2.2\publish'
+    name: website
+    type: WebDeployPackage
+  deploy:
+    - provider: Environment
+      name: Olbil Oncology Beta 3
+      on:
+        branch: master
+    - provider: Environment
+      name: Oncology Azure Beta
+      on:
+        branch: master
+  build_script:
+    - cd OLBIL.OncologyWebApp
+    - dotnet publish -c Release
+
+-
+  branches:
+    only:
+      - /dev.*/
+  configuration: Debug
+  deploy:
+    provider: Local
+  build_script:
+    - dotnet build
+  test_script:
+    - cd C:\projects\olbiloncology\OLBIL.OncologyTests
+    - nuget install Appveyor.TestLogger -Version 2.0.0
+    - cd C:\projects\olbiloncology
+    - dotnet test --no-build --no-restore --test-adapter-path:. --logger:Appveyor OLBIL.OncologyTests
