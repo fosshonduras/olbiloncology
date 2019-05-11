@@ -53,8 +53,7 @@ for:
     only:
       - /dev.*/
   configuration: Debug
-  deploy:
-    provider: Local
+  deploy: off
   build_script:
     - dotnet build
   test_script:
