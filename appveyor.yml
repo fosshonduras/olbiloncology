@@ -11,14 +11,10 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - dotnet --version
   - dotnet restore --verbosity m
-#  - choco install googlechrome  --ignore-checksums
 build_script:
-  - dotnet build
   - node --version
   - npm -g install npm@latest
-  - cd OLBIL.OncologyWebApp\ClientApp
-  - npm ci
-  - cd ..
+  - cd OLBIL.OncologyWebApp
   - dotnet publish -c Release
 before_build:
   - appveyor-retry dotnet restore -v Minimal
