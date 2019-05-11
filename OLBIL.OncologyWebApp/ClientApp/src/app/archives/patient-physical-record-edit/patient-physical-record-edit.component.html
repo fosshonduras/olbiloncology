@@ -1,3 +1,43 @@
-<p>
-  patient-physical-record-edit works!
-</p>
+<section id="edit-container">
+  <h3>{{ pageTitle }}</h3>
+  <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
+    <div class="form-row">
+      <p>Id en Sistema: {{patientPhysicalRecord.patientPhysicalRecordId || '(nuevo)'}}</p>
+    </div>
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="recordNumberInput">Número de Expediente</label>
+        <input [(ngModel)]="patientPhysicalRecord.recordNumber" type="text" class="form-control" required name="recordNumber" id="recordNumberInput" placeholder="Ej. 0501200400102">
+      </div>
+    </div>
+    <div class="form-row">
+
+      <div class="form-group col col-auto">
+        <label for="ta-oncologyPatientInput">Paciente</label>
+
+        <input name="ta-oncologyPatientInput" id="ta-oncologyPatientInput" type="text" class="form-control"
+               [inputFormatter]="oncologyPatientTAFormatter" [class.is-invalid]="oncologyPatientSearchFailed"
+               [(ngModel)]="oncologyPatientModel" [editable]="false" [resultFormatter]="oncologyPatientSearchResultFormatter" [ngbTypeahead]="searchOncologyPatient" placeholder="Buscar Paciente" />
+
+        <small class="text-muted" *ngIf="isSearchingOncologyPatient">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="oncologyPatientSearchFailed">Sorry, suggestions could not be loaded.</div>
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="ta-recordStorageLocationInput">Ubicación</label>
+        <input name="ta-parentInput" id="ta-recordStorageLocationInput" type="text" class="form-control"
+               [inputFormatter]="recordStorageLocationTAFormatter" [class.is-invalid]="recordStorageLocationSearchFailed"
+               [(ngModel)]="recordStorageLocationModel" [editable]="false" [resultFormatter]="recordStorageLocationSearchResultFormatter"
+               [ngbTypeahead]="searchRecordStorageLocation" placeholder="Buscar Ubicación" />
+
+        <small class="text-muted" *ngIf="isSearchingRecordStorageLocation">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="recordStorageLocationSearchFailed">No se pudieron cargar las sugerencias.</div>
+      </div>
+    </div>
+
+    <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
+    <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Guardando...</span>
+    </div>
+  </form>
+</section>

@@ -1,3 +1,56 @@
-<p>
-  physical-record-transfer-edit works!
-</p>
+<section id="edit-container">
+  <h3>{{ pageTitle }}</h3>
+  <form #regForm="ngForm" (ngSubmit)="submitRegistration(regForm)" novalidate>
+    <div class="form-row">
+      <p>Id en Sistema: {{physicalRecordTransfer.physicalRecordTransferId || '(nuevo)'}}</p>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="ta-patientPhysicalRecordInput">Expediente</label>
+        <input name="ta-patientPhysicalRecordInput" id="ta-patientPhysicalRecordInput" type="text" class="form-control"
+               [inputFormatter]="patientPhysicalRecordTAFormatter" [class.is-invalid]="patientPhysicalRecordSearchFailed"
+               [(ngModel)]="patientPhysicalRecordModel" [editable]="false" [resultFormatter]="patientPhysicalRecordSearchResultFormatter"
+               [ngbTypeahead]="searchPatientPhysicalRecord" placeholder="Buscar Expediente" />
+
+        <small class="text-muted" *ngIf="isSearchingPatientPhysicalRecord">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="patientPhysicalRecordSearchFailed">No se pudieron cargar las sugerencias.</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="dateInput">Fecha de transferencia</label>
+        <input [(ngModel)]="physicalRecordTransferDate" type="date" class="form-control" required name="date" id="dateInput" placeholder="Ej. 15 Abril 2019">
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="deliveredByInput">Recibido por:</label>
+        <input [(ngModel)]="physicalRecordTransfer.deliveredBy" type="text" class="form-control" required name="deliveredBy" id="deliveredByInput" placeholder="Ej. Maria Rodriguez">
+      </div>
+
+      <div class="form-group col col-auto">
+        <label for="receivedByInput">Recibido por:</label>
+        <input [(ngModel)]="physicalRecordTransfer.receivedBy" type="text" class="form-control" required name="receivedBy" id="receivedByInput" placeholder="Ej. Juan Perez">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col col-auto">
+        <label for="ta-recordStorageLocationInput">Ubicación Destino</label>
+        <input name="ta-recordStorageLocationInput" id="ta-recordStorageLocationInput" type="text" class="form-control"
+                [inputFormatter]="recordStorageLocationTAFormatter" [class.is-invalid]="recordStorageLocationSearchFailed"
+                [(ngModel)]="recordStorageLocationModel" [editable]="false" [resultFormatter]="recordStorageLocationSearchResultFormatter"
+                [ngbTypeahead]="searchRecordStorageLocation" placeholder="Buscar Ubicación" />
+
+        <small class="text-muted" *ngIf="isSearchingRecordStorageLocation">Buscando...</small>
+        <div class="invalid-feedback" *ngIf="recordStorageLocationSearchFailed">No se pudieron cargar las sugerencias.</div>
+      </div>
+    </div>
+
+    <button type="submit" *ngIf="!isSaving" class="btn btn-primary">Guardar</button>
+    <div *ngIf="isSaving" class="spinner-border text-primary" role="status">
+      <span class="sr-only">Guardando...</span>
+    </div>
+  </form>
+</section>

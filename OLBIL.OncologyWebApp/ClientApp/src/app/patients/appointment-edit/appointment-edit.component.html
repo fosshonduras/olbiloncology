@@ -12,9 +12,9 @@
     </div>
     <div class="form-row">
       <div class="form-group col col-auto">
-        <label for="healthProfessionalIdInput">Médico</label>
+        <label for="ta-healthProfessionalIdInput">Médico</label>
 
-        <input name="ta-healthProfessionalInput" id="ta-healthProfessionalInput" type="text" class="form-control"
+        <input name="ta-healthProfessionalIdInput" id="ta-healthProfessionalIdInput" type="text" class="form-control"
                [inputFormatter]="healthProfessionalTAFormatter" [class.is-invalid]="healthProfessionalSearchFailed"
                [(ngModel)]="healthProfessionalModel" [editable]="false" [resultFormatter]="healthProfessionalSearchResultFormatter" [ngbTypeahead]="searchHealthProfessional" placeholder="Buscar Médico" />
 
@@ -48,7 +48,7 @@
         </select>
       </div>
       <div class="form-group col col-auto">
-        <label for="appointmentReasonIdInput">Motivo</label>
+        <label for="ta-appointmentReasonInput">Motivo</label>
 
         <input name="ta-appointmentReasonInput" id="ta-appointmentReasonInput" type="text" class="form-control"
                [inputFormatter]="appointmentReasonTAFormatter" [class.is-invalid]="appointmentReasonSearchFailed"
