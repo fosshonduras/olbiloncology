@@ -34,7 +34,7 @@ namespace OLBIL.OncologyApplication.RecordStorageLocations.Commands
                 var newRecord = new RecordStorageLocation
                 {
                     Name = model.Name,
-                    ParentLocationId = model.ParentLocationId.Value
+                    ParentLocationId = model.ParentLocationId
                 };
 
                 Context.RecordStorageLocations.Add(newRecord);
