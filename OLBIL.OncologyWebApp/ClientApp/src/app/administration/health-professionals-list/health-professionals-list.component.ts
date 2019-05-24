@@ -3,6 +3,7 @@ import { LinkRendererComponent } from '../../helper-components/LinkRendererCompo
 import { HealthProfessionalsClient } from '../../api-clients';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { GetParams } from '../../common/GetParams';
+import { renderDate } from '../../common/AgGridRenderers';
 
 @Component({
   selector: 'app-health-professionals-list',
@@ -34,7 +35,10 @@ export class HealthProfessionalsListComponent implements OnInit {
     { headerName: 'Nombre', field: 'firstName' },
     { headerName: 'Apellido', field: 'lastName' },
     { headerName: 'Nacionalidad', field: 'nationality' },
-    { headerName: 'Fecha de Nacimiento', field: 'birthdate' }
+    {
+      headerName: 'Fecha de Nacimiento', field: 'birthdate',
+      cellRenderer: ({ data }) => renderDate(data.birthdate)
+    }
   ];
 
   constructor(

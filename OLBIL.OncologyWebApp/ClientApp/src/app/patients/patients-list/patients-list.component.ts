@@ -3,6 +3,7 @@ import { LinkRendererComponent } from '../../helper-components/LinkRendererCompo
 import { OncologyPatientsClient } from '../../api-clients';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { GetParams } from '../../common/GetParams';
+import { renderDate } from '../../common/AgGridRenderers';
 
 @Component({
   selector: 'app-patients-list',
@@ -33,7 +34,10 @@ export class PatientsListComponent implements OnInit {
     { headerName: 'Nombre', field: 'firstName' },
     { headerName: 'Apellido', field: 'lastName' },
     { headerName: 'Nacionalidad', field: 'nationality' },
-    { headerName: 'Fecha de Nacimiento', field: 'birthdate' }
+    {
+      headerName: 'Fecha de Nacimiento', field: 'birthdate',
+      cellRenderer: ({ data }) => renderDate(data.birthdate)
+    }
   ];
 
   rowData: any[] = [ ];

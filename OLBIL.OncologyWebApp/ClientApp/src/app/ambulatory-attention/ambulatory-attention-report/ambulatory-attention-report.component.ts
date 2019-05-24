@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 import { distinctUntilChanged, debounceTime, tap, switchMap, map, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { renderDate, renderYesNo } from '../../common/AgGridRenderers';
 
 @Component({
   selector: 'app-ambulatory-attention-report',
@@ -52,11 +53,20 @@ export class AmbulatoryAttentionReportComponent implements OnInit {
     },
     { headerName: 'Professional de Salud', field: 'healthProfessionalFullName' },
     { headerName: 'Paciente', field: 'oncologyPatientFullName' },
-    { headerName: 'Fecha', field: 'date' },
-    { headerName: 'Es Nuevo?', field: 'isNewPatient' },
+    {
+      headerName: 'Fecha', field: 'date',
+      cellRenderer: ({ data }) => renderDate(data.date)
+    },
+    {
+      headerName: 'Es Nuevo?', field: 'isNewPatient',
+      cellRenderer: ({data}) => renderYesNo(data.isNewPatient)
+    },
     { headerName: 'Dianóstico', field: 'diagnosisName' },
     { headerName: 'Fase de tratamiento', field: 'treatmentPhase' },
-    { headerName: 'Siguiente consulta', field: 'nextAppointmentDate' },
+    {
+      headerName: 'Siguiente consulta', field: 'nextAppointmentDate',
+      cellRenderer: ({ data }) => renderDate(data.nextAppointmentDate)
+    },
     { headerName: 'Evento de Enfermedad', field: 'diseaseEventDescription' },
     { headerName: 'Referido a', field: 'referredTo' },
     { headerName: 'Recibido de', field: 'receivedFrom' },

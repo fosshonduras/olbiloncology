@@ -6,9 +6,9 @@
     </div>
     <div class="form-row">
       <div class="form-group col col-auto">
-        <label for="ta-healthProInput">Profesional de Salud</label>
+        <label for="ta_healthProInput">Profesional de Salud</label>
 
-        <input name="ta-healthProInput" id="ta-healthProInput" type="text" class="form-control"
+        <input name="ta_healthPro" id="ta_healthProInput" type="text" class="form-control"
                [inputFormatter]="healthProfessionalTAFormatter" [class.is-invalid]="healthProfessionalSearchFailed"
                [(ngModel)]="healthProfessionalModel" [editable]="false" [resultFormatter]="healthProfessionalSearchResultFormatter" [ngbTypeahead]="searchHealthProfessional" placeholder="Buscar profesional de salud" />
 
@@ -23,9 +23,9 @@
 
     <div class="form-row">
       <div class="form-group col col-auto">
-        <label for="ta-oncologyPatientIdInput">Paciente</label>
+        <label for="ta_oncologyPatientIdInput">Paciente</label>
 
-        <input name="ta-oncologyPatientInput" id="ta-oncologyPatientInput" type="text" class="form-control"
+        <input name="ta_oncology PatientInput" id="ta_oncologyPatientInput" type="text" class="form-control"
                [inputFormatter]="oncologyPatientTAFormatter" [class.is-invalid]="oncologyPatientSearchFailed"
                [(ngModel)]="oncologyPatientModel" [editable]="false" [resultFormatter]="oncologyPatientSearchResultFormatter" [ngbTypeahead]="searchOncologyPatient" placeholder="Buscar Paciente" />
 
@@ -45,9 +45,9 @@
 
     <div class="form-row">
       <div class="form-group col col-auto">
-        <label for="ta-diagnosisIdInput">Diagnóstico</label>
+        <label for="ta_diagnosisIdInput">Diagnóstico</label>
 
-        <input name="ta-diagnosisInput" id="ta-diagnosisInput" type="text" class="form-control"
+        <input name="ta_diagnosisInput" id="ta_diagnosisInput" type="text" class="form-control"
                [inputFormatter]="diagnosisTAFormatter" [class.is-invalid]="diagnosisSearchFailed"
                [(ngModel)]="diagnosisModel" [editable]="false" [resultFormatter]="diagnosisSearchResultFormatter" [ngbTypeahead]="searchDiagnosis" placeholder="Buscar Diagnóstico" />
 

@@ -4,38 +4,37 @@ init:
 environment:
   nodejs_version: "10"
 
-configuration: Debug
+configuration: Debug # Tells MS Build which configuration to use when compiling
 build:
   publish_wap_xcopy: true
   verbosity: minimal
 install:
   - ECHO %APPVEYOR_BUILD_WORKER_IMAGE%
-  - ps: Install-Product node $env:nodejs_version
+  - ps: Install-Product node $env:nodejs_version # Installs node on the machine
   - dotnet --version
-  - dotnet restore --verbosity m
   - node --version
   - npm -g install npm@latest
 before_build:
   - appveyor-retry dotnet restore -v Minimal
+  # Line below replaces the build number placeholder in the html for the actual value from the current environment variable
   - ps: ((Get-Content -path C:\projects\olbiloncology\OLBIL.OncologyWebApp\ClientApp\src\app\app.component.html -Raw) -replace '{{BuildNumber}}',$env:APPVEYOR_BUILD_VERSION)| Set-Content -Path C:\projects\olbiloncology\OLBIL.OncologyWebApp\ClientApp\src\app\app.component.html
 cache:
-  - packages -> **\packages.config      # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
-  - OLBIL.OncologyWebApp\ClientApp\node_modules                        # local npm modules
   - '%APPDATA%\npm-cache'               # npm cache
   - '%USERPROFILE%\.nuget\packages -> **\*.csproj'  # project.json cache
   - '%LocalAppData%\NuGet\v3-cache'
 
+# Creating AppVeyor settings per branch. They will override anything above if present.
 for:
 -
   branches:
     only:
-      - master
+      - master # Will only work on a branch exactly named "master"
   configuration: Release
-  artifacts:
+  artifacts: # Will pack whatever is output to this folder into a zip file
   - path: '\OLBIL.OncologyWebApp\bin\Release\netcoreapp2.2\publish'
     name: website
     type: WebDeployPackage
-  deploy:
+  deploy: # Will deploy the above artifact to these environments
     - provider: Environment
       name: Olbil Oncology Beta 3
       on:
@@ -44,20 +43,21 @@ for:
       name: Oncology Azure Beta
       on:
         branch: master
-  build_script:
+  build_script: # the actual build script is here
     - cd OLBIL.OncologyWebApp
     - dotnet publish -c Release
 
 -
   branches:
-    only:
+    only: # will work for branches that start with "dev" or "Dev"
       - /dev.*/
+      - /Dev.*/
   configuration: Debug
-  deploy: off
-  build_script:
+  deploy: off # will not deploy
+  build_script: # the build script is simply compiling in Debug mode
     - dotnet build
-  test_script:
+  test_script: # Enables unit test execution
     - cd C:\projects\olbiloncology\OLBIL.OncologyTests
-    - nuget install Appveyor.TestLogger -Version 2.0.0
+    - nuget install Appveyor.TestLogger -Version 2.0.0 # Installs a depedency which allows dotnet to generate an AppVeyor readable report
     - cd C:\projects\olbiloncology
     - dotnet test --no-build --no-restore --test-adapter-path:. --logger:Appveyor OLBIL.OncologyTests

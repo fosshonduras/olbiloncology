@@ -3,6 +3,7 @@ import { PhysicalRecordTransfersClient, PhysicalRecordTransferModel } from '../.
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { GetParams } from '../../common/GetParams';
+import { renderDate } from '../../common/AgGridRenderers';
 
 @Component({
   selector: 'app-physical-record-transfers-list',
@@ -32,7 +33,10 @@ export class PhysicalRecordTransfersListComponent implements OnInit {
     },
     { headerName: 'Expendiente ID', field: 'patientPhysicalRecordId' },
     { headerName: 'Ubicación Destino', field: 'targetLocationId' },
-    { headerName: 'Fecha', field: 'date' },
+    {
+      headerName: 'Fecha', field: 'date',
+      cellRenderer: ({ data }) => renderDate(data.date)
+    },
     { headerName: 'Entregado por', field: 'deliveredBy' },
     { headerName: 'Recibido por', field: 'receivedBy' }
   ];

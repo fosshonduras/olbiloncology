@@ -3,6 +3,7 @@ import { AmbulatoryAttentionRecordModel, AmbulatoryAttentionRecordsClient } from
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { GridOptions, ColDef } from 'ag-grid-community';
 import { GetParams } from '../../common/GetParams';
+import { renderYesNo, renderDate } from '../../common/AgGridRenderers';
 
 @Component({
   selector: 'app-ambulatory-attention-records-list',
@@ -33,11 +34,20 @@ export class AmbulatoryAttentionRecordsListComponent implements OnInit {
     },
     { headerName: 'Professional de Salud ID', field: 'healthProfessionalId' },
     { headerName: 'Paciente ID', field: 'oncologyPatientId' },
-    { headerName: 'Fecha', field: 'date' },
-    { headerName: 'Es Nuevo?', field: 'isNewPatient' },
+    {
+      headerName: 'Fecha', field: 'date',
+      cellRenderer: ({ data }) => renderDate(data.date)
+    },
+    {
+      headerName: 'Es Nuevo?', field: 'isNewPatient',
+      cellRenderer: ({ data }) => renderYesNo(data.isNewPatient)
+    },
     { headerName: 'Dianóstico ID', field: 'diagnosisId' },
     { headerName: 'Fase de tratamiento', field: 'treatmentPhase' },
-    { headerName: 'Siguiente consulta', field: 'nextAppointmentDate' },
+    {
+      headerName: 'Siguiente consulta', field: 'nextAppointmentDate',
+      cellRenderer: ({ data }) => renderDate(data.nextAppointmentDate)
+    },
     { headerName: 'Evento de Enfermedad', field: 'diseaseEventDescription' },
     { headerName: 'Referido a', field: 'referredTo' },
     { headerName: 'Recibido de', field: 'receivedFrom' },
