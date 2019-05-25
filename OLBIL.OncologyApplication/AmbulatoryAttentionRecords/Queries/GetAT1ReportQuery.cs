@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using OLBIL.Common;
 using OLBIL.OncologyApplication.DTOs;
 using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Interfaces;
@@ -17,7 +18,11 @@ namespace OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Queries
     {
         public class GetAT1ReportQqueryHandler : SearchHandlerBase, IRequestHandler<GetAT1ReportQuery, ListModel<AT1ReportItemDTO>>
         {
-            public GetAT1ReportQqueryHandler(IOncologyContext context, IMapper mapper) : base(context, mapper) { }
+            private readonly IDateTimeProvider _datetimeProvider;
+
+            public GetAT1ReportQqueryHandler(IOncologyContext context, IMapper mapper, IDateTimeProvider datetimeProvider) : base(context, mapper) {
+                _datetimeProvider = datetimeProvider;
+            }
 
             public async Task<ListModel<AT1ReportItemDTO>> Handle(GetAT1ReportQuery request, CancellationToken cancellationToken)
             {
@@ -40,7 +45,22 @@ namespace OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Queries
                     //&& (dateFilter == null || i.Date == DateTime.Parse(dateFilter.SearchTerm))
                     && (diagnosisFilter == null || i.DiagnosisId == int.Parse(diagnosisFilter.SearchTerm));
 
-                return await RetrieveSearchResults<AmbulatoryAttentionRecord, AT1ReportItemDTO>(predicate, request, cancellationToken);
+                var bareResults = await RetrieveSearchResults<AmbulatoryAttentionRecord, AT1ReportItemDTO>(predicate, request, cancellationToken);
+                return await TapWithAgeValues(bareResults);
+            }
+
+            private Task<ListModel<AT1ReportItemDTO>> TapWithAgeValues(ListModel<AT1ReportItemDTO> bareResults)
+            {
+                var currentDate = _datetimeProvider.Now;
+                bareResults.Items.ForEach(item =>
+                {
+                    if (item.Birthdate == null) return;
+                    var ageTuple = _datetimeProvider.CalculateDifference(item.Birthdate.Value, currentDate);
+                    item.AgeInYears = ageTuple.Item1;
+                    item.AgeInMonthsOverYears = ageTuple.Item2;
+                    item.AgeInDaysOverMonths = ageTuple.Item3;
+                });
+                return Task.FromResult(bareResults);
             }
         }
     }

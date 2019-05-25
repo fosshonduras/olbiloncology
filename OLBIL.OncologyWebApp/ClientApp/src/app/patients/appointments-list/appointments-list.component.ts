@@ -32,22 +32,22 @@ export class AppointmentsListComponent implements OnInit {
         });
       }
     },
-    { headerName: 'Professional de Salud ID', field: 'healthProfessionalId' },
-    { headerName: 'Paciente ID', field: 'oncologyPatientId' },
+    { headerName: 'Professional de Salud', field: 'healthProfessionalFullName' },
+    { headerName: 'Paciente', field: 'oncologyPatientFullName' },
     {
       headerName: 'Fecha', field: 'date',
       cellRenderer: ({ data }) => renderDate(data.date)
     },
-    { headerName: 'Estado', field: 'appointementStatus' },
+    { headerName: 'Estado', field: 'appointementStatusName' },
     {
       headerName: 'Se presentó?', field: 'patientAttended',
       cellRenderer: ({ data }) => renderYesNo(data.patientAttended)
     },
     { headerName: 'Fase de tratamiento', field: 'treatmentPhase' },
-    { headerName: 'Motivo de Cita', field: 'appointmentReason' },
+    { headerName: 'Motivo de Cita', field: 'appointmentReasonName' },
     { headerName: 'Notas', field: 'notes' },
     { headerName: 'Notas Especiales', field: 'specialNotes' },
-    { headerName: 'Cita Reprogramada', field: 'rescheduledAppointmentId' },
+    { headerName: 'Cita Reprogramada', field: 'rescheduledAppointmentDate' },
   ];
 
   constructor(

@@ -2,6 +2,7 @@
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyDomain.Entities;
 using System;
+using System.Linq;
 
 namespace OLBIL.OncologyApplication.Models
 {
@@ -31,6 +32,8 @@ namespace OLBIL.OncologyApplication.Models
         public string FamilyStatus { get; set; }
         public string SchoolLevel { get; set; }
         public string MethodOfTranspotation { get; set; }
+
+        public string FullName => string.Join(" ", FirstName, MiddleName, LastName, AdditionalLastName);
 
         public void CreateMappings(Profile configuration)
         {

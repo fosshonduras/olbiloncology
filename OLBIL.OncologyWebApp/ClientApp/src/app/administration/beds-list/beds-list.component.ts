@@ -33,7 +33,7 @@ export class BedsListComponent implements OnInit {
         });
       }
     },
-    { headerName: 'Sala Id', field: 'wardId' },
+    { headerName: 'Sala', field: 'wardName' },
     { headerName: 'Status', field: 'bedStatusName' },
   ];
 

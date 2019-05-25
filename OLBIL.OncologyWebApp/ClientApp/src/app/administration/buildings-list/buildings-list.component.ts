@@ -19,7 +19,8 @@ export class BuildingsListComponent implements OnInit {
   };
 
   gridOptions: GridOptions = {};
-  columnDefs: ColDef[] = [    { headerName: 'Edificio ID', field: 'buildingId' },
+  columnDefs: ColDef[] = [
+    { headerName: 'Edificio ID', field: 'buildingId' },
     {
       headerName: 'Código', field: 'code',
       cellRendererFramework: LinkRendererComponent,

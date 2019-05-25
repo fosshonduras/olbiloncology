@@ -20,7 +20,7 @@ export class AdministrativeDivisionsListComponent implements OnInit {
 
   gridOptions: GridOptions = {};
   columnDefs: ColDef[] = [
-    { headerName: 'División Administrativa ID', field: 'administrativeDivisionId' },
+    { headerName: 'División ID', field: 'administrativeDivisionId' },
     {
       headerName: 'Código', field: 'code',
       cellRendererFramework: LinkRendererComponent,
@@ -34,7 +34,7 @@ export class AdministrativeDivisionsListComponent implements OnInit {
     },
     { headerName: 'Nombre (Es)', field: 'name' },
     { headerName: 'Nivel', field: 'level' },
-    { headerName: 'División Padre', field: 'parentId' },
+    { headerName: 'División Padre', field: 'parentName' },
   ];
 
   constructor(

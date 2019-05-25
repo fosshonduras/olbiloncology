@@ -32,10 +32,11 @@ export class WardsListComponent implements OnInit {
         });
       }
     },
-    { headerName: 'Unidad', field: 'hospitalUnitId' },
-    { headerName: 'Edificio', field: 'buildingId' },
+    { headerName: 'Unidad', field: 'hospitalUnitName' },
+    { headerName: 'Edificio', field: 'buildingName' },
     { headerName: 'Nivel', field: 'floorNumber' },
-    { headerName: 'Género', field: 'wardGenderId' }
+    { headerName: 'Género', field: 'wardGenderName' },
+    { headerName: 'Status', field: 'wardStatusName' }
   ];
 
   constructor(

@@ -31,8 +31,8 @@ export class PatientPhysicalRecordsListComponent implements OnInit {
         });
       }
     },
-    { headerName: 'Paciente Id', field: 'oncologyPatientId' },
-    { headerName: 'Ubicación ID', field: 'recordStorageLocationId' },
+    { headerName: 'Paciente', field: 'oncologyPatientFullName' },
+    { headerName: 'Ubicación', field: 'recordStorageLocationName' },
   ];
 
   constructor(

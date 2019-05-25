@@ -22,27 +22,28 @@ export class AmbulatoryAttentionRecordsListComponent implements OnInit {
   gridOptions: GridOptions = {};
   columnDefs: ColDef[] = [
     {
-      headerName: 'Registro de AT-1 ID', field: 'ambulatoryAttentionRecordId',
+      headerName: 'Registro de AT-1 ID', field: 'ambulatoryAttentionRecordId'
+    },
+    { headerName: 'Professional de Salud', field: 'healthProfessionalFullName' },
+    {
+      headerName: 'Fecha', field: 'date',
+      cellRenderer: ({ data }) => renderDate(data.date)
+    },
+    { headerName: 'Paciente', field: 'oncologyPatientFullName',
       cellRendererFramework: LinkRendererComponent,
       cellRendererParams: ({ data }) => {
         return ({
           inRouterLink: `./`,
           routeParam: data.ambulatoryAttentionRecordId,
-          value: data.ambulatoryAttentionRecordId
+          value: data.oncologyPatientFullName
         });
       }
-    },
-    { headerName: 'Professional de Salud ID', field: 'healthProfessionalId' },
-    { headerName: 'Paciente ID', field: 'oncologyPatientId' },
-    {
-      headerName: 'Fecha', field: 'date',
-      cellRenderer: ({ data }) => renderDate(data.date)
     },
     {
       headerName: 'Es Nuevo?', field: 'isNewPatient',
       cellRenderer: ({ data }) => renderYesNo(data.isNewPatient)
     },
-    { headerName: 'Dianóstico ID', field: 'diagnosisId' },
+    { headerName: 'Dianóstico', field: 'diagnosisName' },
     { headerName: 'Fase de tratamiento', field: 'treatmentPhase' },
     {
       headerName: 'Siguiente consulta', field: 'nextAppointmentDate',

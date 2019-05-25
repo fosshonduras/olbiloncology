@@ -32,7 +32,7 @@ export class RecordStorageLocationsListComponent implements OnInit {
         });
       }
     },
-    { headerName: 'Ubicación Padre', field: 'parentLocationId' },
+    { headerName: 'Ubicación Padre', field: 'parentLocationName' },
   ];
 
   constructor(

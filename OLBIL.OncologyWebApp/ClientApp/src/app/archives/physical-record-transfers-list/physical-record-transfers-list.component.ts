@@ -21,18 +21,18 @@ export class PhysicalRecordTransfersListComponent implements OnInit {
 
   gridOptions: GridOptions = {};
   columnDefs: ColDef[] = [
-    { headerName: 'Transferencia ID', field: 'physicalRecordTransferId' ,
+    { headerName: 'Transferencia ID', field: 'physicalRecordTransferId' },
+    { headerName: 'Expendiente ID', field: 'patientPhysicalRecordNumber',
       cellRendererFramework: LinkRendererComponent,
       cellRendererParams: ({ data }) => {
         return ({
           inRouterLink: `./`,
           routeParam: data.physicalRecordTransferId,
-          value: data.physicalRecordTransferId
+          value: data.patientPhysicalRecordNumber
         });
       }
     },
-    { headerName: 'Expendiente ID', field: 'patientPhysicalRecordId' },
-    { headerName: 'Ubicación Destino', field: 'targetLocationId' },
+    { headerName: 'Ubicación Destino', field: 'targetLocationName' },
     {
       headerName: 'Fecha', field: 'date',
       cellRenderer: ({ data }) => renderDate(data.date)

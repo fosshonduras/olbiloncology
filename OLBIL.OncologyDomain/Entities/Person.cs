@@ -35,6 +35,6 @@ namespace OLBIL.OncologyDomain.Entities
         public virtual AppUser AppUser { get; set; }
 
         [NotMapped]
-        public string FullName => $"{FirstName} {MiddleName ?? string.Empty} {LastName ?? string.Empty} {AdditionalLastName ?? string.Empty}";
+        public string FullName => $"{FirstName + " " ?? string.Empty}{MiddleName + " " ?? string.Empty}{LastName + " " ?? string.Empty}{AdditionalLastName ?? string.Empty}";
     }
 }

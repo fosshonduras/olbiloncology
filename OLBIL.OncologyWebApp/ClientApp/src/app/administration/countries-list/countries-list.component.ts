@@ -21,20 +21,21 @@ export class CountriesListComponent implements OnInit {
   gridOptions: GridOptions = {};
   columnDefs: ColDef[] = [
     { headerName: 'País ID', field: 'countryId' },
-    {
-      headerName: 'ISO2', field: 'isoCode2',
+    { headerName: 'Nombre (Es)', field: 'nameEs',
       cellRendererFramework: LinkRendererComponent,
       cellRendererParams: ({ data }) => {
         return ({
           inRouterLink: `./`,
           routeParam: data.countryId,
-          value: data.isoCode2
+          value: data.nameEs
         });
       }
     },
-    { headerName: 'ISO3', field: 'isoCode3' },
-    { headerName: 'Nombre (Es)', field: 'nameEs' },
     { headerName: 'Nombre (En)', field: 'nameEn' },
+    {
+      headerName: 'ISO2', field: 'isoCode2'
+    },
+    { headerName: 'ISO3', field: 'isoCode3' },
   ];
 
   constructor(

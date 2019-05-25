@@ -51,12 +51,22 @@ export class AmbulatoryAttentionReportComponent implements OnInit {
         });
       }
     },
-    { headerName: 'Professional de Salud', field: 'healthProfessionalFullName' },
-    { headerName: 'Paciente', field: 'oncologyPatientFullName' },
     {
       headerName: 'Fecha', field: 'date',
       cellRenderer: ({ data }) => renderDate(data.date)
     },
+    { headerName: 'Professional de Salud', field: 'healthProfessionalFullName' },
+    { headerName: 'Paciente', field: 'oncologyPatientFullName' },
+    { headerName: 'Número de Historial Clínico', field: 'patientPhysicalRecordNumber' },
+    { headerName: 'Número de Identidad del Paciente', field: 'oncologyPatientGovernmentIDNumber' },
+    { headerName: 'Género', field: 'gender' },
+    {
+      headerName: 'Fecha de Nacimiento', field: 'date',
+      cellRenderer: ({ data }) => renderDate(data.birthdate)
+    },
+    { headerName: 'Edad Años', field: 'ageInYears' },
+    { headerName: 'Edad Meses', field: 'ageInMonthsOverYears' },
+    { headerName: 'Edad Días', field: 'ageInDaysOverMonths' },
     {
       headerName: 'Es Nuevo?', field: 'isNewPatient',
       cellRenderer: ({data}) => renderYesNo(data.isNewPatient)
