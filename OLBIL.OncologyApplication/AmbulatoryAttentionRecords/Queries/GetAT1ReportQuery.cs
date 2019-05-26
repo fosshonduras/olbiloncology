@@ -27,23 +27,23 @@ namespace OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Queries
             public async Task<ListModel<AT1ReportItemDTO>> Handle(GetAT1ReportQuery request, CancellationToken cancellationToken)
             {
                 FilterSpec healthProfessionalFilter = null;
-                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.HealthProfessionalId).ToLowerInvariant(), out healthProfessionalFilter);
+                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.HealthProfessionalId), out healthProfessionalFilter, caseSensitive: false);
                 
                 FilterSpec oncologyPatientFilter = null;
-                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.OncologyPatientId).ToLowerInvariant(), out oncologyPatientFilter);
+                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.OncologyPatientId), out oncologyPatientFilter, caseSensitive: false);
 
                 FilterSpec dateFilter = null;
-                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.Date).ToLowerInvariant(), out dateFilter);
+                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.Date), out dateFilter, caseSensitive: false);
 
                 FilterSpec diagnosisFilter = null;
-                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.DiagnosisId).ToLowerInvariant(), out diagnosisFilter);
-
+                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.DiagnosisId), out diagnosisFilter, caseSensitive: false);
+                
+                int dateValueFilter = dateFilter == null? DateTime.Now.DayOfYear : DateTime.Parse(dateFilter.SearchTerm).DayOfYear;
                 Expression<Func<AmbulatoryAttentionRecord, bool>> predicate = i =>
-                    (healthProfessionalFilter == null || i.HealthProfessionalId == int.Parse(healthProfessionalFilter.SearchTerm))
-                    && (oncologyPatientFilter == null || i.OncologyPatientId == int.Parse(oncologyPatientFilter.SearchTerm))
-                    //&& (dateFilter == null || EF.Functions.)
-                    //&& (dateFilter == null || i.Date == DateTime.Parse(dateFilter.SearchTerm))
-                    && (diagnosisFilter == null || i.DiagnosisId == int.Parse(diagnosisFilter.SearchTerm));
+                            (healthProfessionalFilter == null || i.HealthProfessionalId == int.Parse(healthProfessionalFilter.SearchTerm))
+                        && (oncologyPatientFilter == null || i.OncologyPatientId == int.Parse(oncologyPatientFilter.SearchTerm))
+                        && (dateFilter == null || i.Date.DayOfYear == dateValueFilter)
+                        && (diagnosisFilter == null || i.DiagnosisId == int.Parse(diagnosisFilter.SearchTerm));
 
                 var bareResults = await RetrieveSearchResults<AmbulatoryAttentionRecord, AT1ReportItemDTO>(predicate, request, cancellationToken);
                 return await TapWithAgeValues(bareResults);

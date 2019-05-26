@@ -67,7 +67,8 @@ export class AppointmentsListComponent implements OnInit {
   }
 
   private retrieveData() {
-    this.isLoading = true; this.getParams.sortInfo.push({ "shortDescriptor": true });
+    this.isLoading = true;
+
     this.client.getAll(this.getParams.sortInfo, this.getParams.pageIndex, this.getParams.pageSize)
       .subscribe(result => {
         this.rowData = result.items;

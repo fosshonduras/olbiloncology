@@ -127,7 +127,7 @@ export class AmbulatoryAttentionReportComponent implements OnInit {
 
   oncologyPatientTAFormatter = (x: OncologyPatientModel) => `${x.person.firstName} ${x.person.middleName} ${x.person.lastName}`;
 
-  oncologyPatientSearchResultFormatter = (x: OncologyPatientModel) => `${x.person.firstName} ${x.person.middleName} ${x.person.lastName}`;
+  oncologyPatientSearchResultFormatter = (x: OncologyPatientModel) => `${x.person.governmentIDNumber} ${x.person.firstName} ${x.person.middleName} ${x.person.lastName}`;
 
   searchOncologyPatient = (text$: Observable<string>) =>
     text$.pipe(
@@ -209,27 +209,41 @@ export class AmbulatoryAttentionReportComponent implements OnInit {
     this.gridColumnApi.autoSizeAllColumns();
   }
 
-  buildFilters(): { [key: string]: FilterSpec } {
-    let newFilters: { [key: string]: FilterSpec } = {};
+  buildFilters(): FilterSpec[] {
+    let newFilters: FilterSpec[] = [];
     if (this.healthProfessionalModel) {
-      let healthProfessionalFilter = new FilterSpec();
-      healthProfessionalFilter.searchTerm = this.healthProfessionalModel.healthProfessionalId.toString();
-      newFilters["healthProfessionalId"] = healthProfessionalFilter;
+      let healthProfessionalFilter = new FilterSpec({
+        searchTerm: this.healthProfessionalModel.healthProfessionalId.toString(),
+        column: "healthProfessionalId"
+      });
+     
+      newFilters.push( healthProfessionalFilter );
     }
 
     if (this.oncologyPatientModel) {
-      let oncologyPatientFilter = new FilterSpec();
-      oncologyPatientFilter.searchTerm = this.oncologyPatientModel.oncologyPatientId.toString();
-      newFilters["oncologyPatientId"] = oncologyPatientFilter;
+      let oncologyPatientFilter = new FilterSpec({
+        searchTerm : this.oncologyPatientModel.oncologyPatientId.toString(),
+        column : "oncologyPatientId"
+      });
+      
+      newFilters.push(oncologyPatientFilter);
     }
 
     if (this.diagnosisModel) {
       let diagnosisFilter = new FilterSpec({
+        column: "diagnosisId",
         searchTerm: this.diagnosisModel.diagnosisId.toString()
       });
-      newFilters["diagnosisId"] = diagnosisFilter;
+      newFilters.push(diagnosisFilter);
     }
 
+    if (this.ambulatoryAttentionRecordDate) {
+      let dateFilter = new FilterSpec({
+        column: "date",
+        searchTerm:this.ambulatoryAttentionRecordDate
+      });
+      newFilters.push(dateFilter);
+    }
     return newFilters;
   }
 }

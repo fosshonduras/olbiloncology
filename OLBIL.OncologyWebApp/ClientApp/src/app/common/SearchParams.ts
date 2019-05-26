@@ -3,5 +3,5 @@ import { FilterSpec } from "../api-clients";
 
 export class SearchParams extends GetParams {
   searchTerm: string;
-  filters: { [key: string]: FilterSpec; } = {};
+  filters: FilterSpec[] = [];
 }

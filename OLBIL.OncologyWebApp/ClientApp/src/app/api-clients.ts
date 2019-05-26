@@ -25,7 +25,7 @@ export class AdministrativeDivisionsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAdministrativeDivisionModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAdministrativeDivisionModel | null> {
         let url_ = this.baseUrl + "/api/AdministrativeDivisions?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -305,7 +305,7 @@ export class AmbulatoryAttentionRecordsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAmbulatoryAttentionRecordModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAmbulatoryAttentionRecordModel | null> {
         let url_ = this.baseUrl + "/api/AmbulatoryAttentionRecords?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -520,12 +520,17 @@ export class AmbulatoryAttentionRecordsClient {
         return _observableOf<ListModelOfAmbulatoryAttentionRecordModel | null>(<any>null);
     }
 
-    getReport(searchTerm: string | null | undefined, filters: { [key: string] : FilterSpec; } | null | undefined, sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAT1ReportItemDTO | null> {
+    getReport(searchTerm: string | null | undefined, filters: FilterSpec[] | null | undefined, sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAT1ReportItemDTO | null> {
         let url_ = this.baseUrl + "/api/AmbulatoryAttentionRecords/at1-report?";
         if (searchTerm !== undefined)
             url_ += "SearchTerm=" + encodeURIComponent("" + searchTerm) + "&"; 
         if (filters !== undefined)
-            url_ += "Filters=" + encodeURIComponent("" + filters) + "&"; 
+            filters && filters.forEach((item, index) => { 
+                for (let attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "Filters[" + index + "]." + attr + "=" + encodeURIComponent("" + (<any>item)[attr]) + "&";
+        			}
+            });
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
                 for (let attr in item)
@@ -652,7 +657,7 @@ export class AppointmentReasonsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAppointmentReasonModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAppointmentReasonModel | null> {
         let url_ = this.baseUrl + "/api/AppointmentReasons?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -932,7 +937,7 @@ export class AppointmentsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAppointmentModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfAppointmentModel | null> {
         let url_ = this.baseUrl + "/api/Appointments?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -1212,7 +1217,7 @@ export class BedsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfBedModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfBedModel | null> {
         let url_ = this.baseUrl + "/api/Beds?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -1492,7 +1497,7 @@ export class BuildingsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfBuildingModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfBuildingModel | null> {
         let url_ = this.baseUrl + "/api/Buildings?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -1772,7 +1777,7 @@ export class CountriesClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfCountryModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfCountryModel | null> {
         let url_ = this.baseUrl + "/api/Countries?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -2052,7 +2057,7 @@ export class DiagnosesClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfDiagnosisModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfDiagnosisModel | null> {
         let url_ = this.baseUrl + "/api/Diagnoses?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -2332,7 +2337,7 @@ export class EvolutionCardsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfEvolutionCardModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfEvolutionCardModel | null> {
         let url_ = this.baseUrl + "/api/EvolutionCards?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -2612,7 +2617,7 @@ export class HealthProfessionalsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfHealthProfessionalModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfHealthProfessionalModel | null> {
         let url_ = this.baseUrl + "/api/HealthProfessionals?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -2892,7 +2897,7 @@ export class HospitalUnitsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfHospitalUnitModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfHospitalUnitModel | null> {
         let url_ = this.baseUrl + "/api/HospitalUnits?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -3172,7 +3177,7 @@ export class MedicalSpecialtiesClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfMedicalSpecialtyModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfMedicalSpecialtyModel | null> {
         let url_ = this.baseUrl + "/api/MedicalSpecialties?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -3452,7 +3457,7 @@ export class OncologyPatientsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfOncologyPatientModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfOncologyPatientModel | null> {
         let url_ = this.baseUrl + "/api/OncologyPatients?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -3784,7 +3789,7 @@ export class PatientPhysicalRecordsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfPatientPhysicalRecordModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfPatientPhysicalRecordModel | null> {
         let url_ = this.baseUrl + "/api/PatientPhysicalRecords?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -4064,7 +4069,7 @@ export class PhysicalRecordTransfersClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfPhysicalRecordTransferModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfPhysicalRecordTransferModel | null> {
         let url_ = this.baseUrl + "/api/PhysicalRecordTransfers?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -4344,7 +4349,7 @@ export class RecordStorageLocationsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfRecordStorageLocationModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfRecordStorageLocationModel | null> {
         let url_ = this.baseUrl + "/api/RecordStorageLocations?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -4624,7 +4629,7 @@ export class WardsClient {
         this.baseUrl = baseUrl ? baseUrl : "http://localhost:44330";
     }
 
-    getAll(sortInfo: { [key: string] : boolean; }[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfWardModel | null> {
+    getAll(sortInfo: SortSpec[] | null | undefined, pageIndex: number | undefined, pageSize: number | undefined): Observable<ListModelOfWardModel | null> {
         let url_ = this.baseUrl + "/api/Wards?";
         if (sortInfo !== undefined)
             sortInfo && sortInfo.forEach((item, index) => { 
@@ -5019,6 +5024,46 @@ export interface IAdministrativeDivisionModel {
     parentName?: string | undefined;
 }
 
+export class SortSpec implements ISortSpec {
+    column?: string | undefined;
+    descending!: boolean;
+
+    constructor(data?: ISortSpec) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.column = data["column"];
+            this.descending = data["descending"];
+        }
+    }
+
+    static fromJS(data: any): SortSpec {
+        data = typeof data === 'object' ? data : {};
+        let result = new SortSpec();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["column"] = this.column;
+        data["descending"] = this.descending;
+        return data; 
+    }
+}
+
+export interface ISortSpec {
+    column?: string | undefined;
+    descending: boolean;
+}
+
 export class ListModelOfAmbulatoryAttentionRecordModel implements IListModelOfAmbulatoryAttentionRecordModel {
     items?: AmbulatoryAttentionRecordModel[] | undefined;
     itemCount!: number;
@@ -5321,6 +5366,7 @@ export interface IAT1ReportItemDTO extends IAmbulatoryAttentionRecordModel {
 }
 
 export class FilterSpec implements IFilterSpec {
+    column?: string | undefined;
     searchTerm?: string | undefined;
     type?: string | undefined;
     maxValue?: string | undefined;
@@ -5336,6 +5382,7 @@ export class FilterSpec implements IFilterSpec {
 
     init(data?: any) {
         if (data) {
+            this.column = data["column"];
             this.searchTerm = data["searchTerm"];
             this.type = data["type"];
             this.maxValue = data["maxValue"];
@@ -5351,6 +5398,7 @@ export class FilterSpec implements IFilterSpec {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["column"] = this.column;
         data["searchTerm"] = this.searchTerm;
         data["type"] = this.type;
         data["maxValue"] = this.maxValue;
@@ -5359,6 +5407,7 @@ export class FilterSpec implements IFilterSpec {
 }
 
 export interface IFilterSpec {
+    column?: string | undefined;
     searchTerm?: string | undefined;
     type?: string | undefined;
     maxValue?: string | undefined;
