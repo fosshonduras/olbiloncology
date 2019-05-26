@@ -19,9 +19,12 @@ namespace OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Queries
         public class GetAT1ReportQqueryHandler : SearchHandlerBase, IRequestHandler<GetAT1ReportQuery, ListModel<AT1ReportItemDTO>>
         {
             private readonly IDateTimeProvider _datetimeProvider;
+            private readonly IDateTimeCalculationsDomainService _dateTimeCalculationsDomainService;
 
-            public GetAT1ReportQqueryHandler(IOncologyContext context, IMapper mapper, IDateTimeProvider datetimeProvider) : base(context, mapper) {
+            public GetAT1ReportQqueryHandler(IOncologyContext context, IMapper mapper,
+                IDateTimeProvider datetimeProvider, IDateTimeCalculationsDomainService dateTimeCalculationsDomainService) : base(context, mapper) {
                 _datetimeProvider = datetimeProvider;
+                _dateTimeCalculationsDomainService = dateTimeCalculationsDomainService;
             }
 
             public async Task<ListModel<AT1ReportItemDTO>> Handle(GetAT1ReportQuery request, CancellationToken cancellationToken)
@@ -56,10 +59,10 @@ namespace OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Queries
                 bareResults.Items.ForEach(item =>
                 {
                     if (item.Birthdate == null) return;
-                    var ageTuple = _datetimeProvider.CalculateDifference(item.Birthdate.Value, currentDate);
-                    item.AgeInYears = ageTuple.Item1;
-                    item.AgeInMonthsOverYears = ageTuple.Item2;
-                    item.AgeInDaysOverMonths = ageTuple.Item3;
+                    var ageTuple = _dateTimeCalculationsDomainService.CalculateDifference(item.Birthdate.Value, currentDate);
+                    item.AgeInYears = ageTuple.Years;
+                    item.AgeInMonthsOverYears = ageTuple.Months;
+                    item.AgeInDaysOverMonths = ageTuple.Days;
                 });
                 return Task.FromResult(bareResults);
             }
