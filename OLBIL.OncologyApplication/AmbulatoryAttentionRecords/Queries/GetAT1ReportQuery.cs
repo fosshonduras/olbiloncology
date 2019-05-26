@@ -44,8 +44,9 @@ namespace OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Queries
                         && (oncologyPatientFilter == null || i.OncologyPatientId == int.Parse(oncologyPatientFilter.SearchTerm))
                         && (dateFilter == null || i.Date.DayOfYear == dateValueFilter)
                         && (diagnosisFilter == null || i.DiagnosisId == int.Parse(diagnosisFilter.SearchTerm));
+                var defaultSort = BuildSortList<AmbulatoryAttentionRecord>(i => i.AmbulatoryAttentionRecordId);
 
-                var bareResults = await RetrieveSearchResults<AmbulatoryAttentionRecord, AT1ReportItemDTO>(predicate, request, cancellationToken);
+                var bareResults = await RetrieveSearchResults<AmbulatoryAttentionRecord, AT1ReportItemDTO>(predicate, defaultSort, request, cancellationToken);
                 return await TapWithAgeValues(bareResults);
             }
 

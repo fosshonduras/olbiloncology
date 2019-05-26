@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.Appointments.Queries
 
             public async Task<ListModel<AppointmentModel>> Handle(GetAppointmentsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<Appointment, AppointmentModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<Appointment>(i => i.AppointmentId);
+
+                return await RetrieveListResults<Appointment, AppointmentModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

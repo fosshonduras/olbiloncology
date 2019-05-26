@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.RecordStorageLocations.Queries
 
             public async Task<ListModel<RecordStorageLocationModel>> Handle(GetRecordStorageLocationsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<RecordStorageLocation, RecordStorageLocationModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<RecordStorageLocation>(i => i.RecordStorageLocationId);
+
+                return await RetrieveListResults<RecordStorageLocation, RecordStorageLocationModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

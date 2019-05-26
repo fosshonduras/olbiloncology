@@ -34,8 +34,9 @@ namespace OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Queries
 
                     || EF.Functions.ILike(i.Diagnosis.CompleteDescriptor, $"%{request.SearchTerm}%")
                     || EF.Functions.ILike(i.Diagnosis.CompleteDescriptor, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<AmbulatoryAttentionRecord>(i => i.AmbulatoryAttentionRecordId);
 
-                return await RetrieveSearchResults<AmbulatoryAttentionRecord, AmbulatoryAttentionRecordModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<AmbulatoryAttentionRecord, AmbulatoryAttentionRecordModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

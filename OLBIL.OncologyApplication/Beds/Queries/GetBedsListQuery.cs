@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using OLBIL.OncologyApplication.Infrastructure;
+using OLBIL.OncologyApplication.Infrastructure.EF;
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyDomain.Entities;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +19,9 @@ namespace OLBIL.OncologyApplication.Beds.Queries
 
             public async Task<ListModel<BedModel>> Handle(GetBedsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<Bed, BedModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<Bed>(i => i.BedId);
+
+                return await RetrieveListResults<Bed, BedModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

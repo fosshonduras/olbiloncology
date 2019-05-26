@@ -21,8 +21,9 @@ namespace OLBIL.OncologyApplication.PhysicalRecordTransfers.Queries
             {
                 Expression<Func<PhysicalRecordTransfer, bool>> predicate = i => EF.Functions.ILike(i.TargetLocation.Name, $"%{request.SearchTerm}%")
                                             || EF.Functions.ILike(i.PatientPhysicalRecord.RecordNumber, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<PhysicalRecordTransfer>(i => i.PhysicalRecordTransferId);
 
-                return await RetrieveSearchResults<PhysicalRecordTransfer, PhysicalRecordTransferModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<PhysicalRecordTransfer, PhysicalRecordTransferModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

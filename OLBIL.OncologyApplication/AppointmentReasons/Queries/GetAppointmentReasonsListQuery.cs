@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using OLBIL.OncologyApplication.Infrastructure;
+using OLBIL.OncologyApplication.Infrastructure.EF;
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyDomain.Entities;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +19,9 @@ namespace OLBIL.OncologyApplication.AppointmentReasons.Queries
 
             public async Task<ListModel<AppointmentReasonModel>> Handle(GetAppointmentReasonsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<AppointmentReason, AppointmentReasonModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<AppointmentReason>(i => i.AppointmentReasonId);
+
+                return await RetrieveListResults<AppointmentReason, AppointmentReasonModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

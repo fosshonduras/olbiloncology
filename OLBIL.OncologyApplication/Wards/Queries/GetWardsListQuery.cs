@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.Wards.Queries
 
             public async Task<ListModel<WardModel>> Handle(GetWardsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<Ward, WardModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<Ward>( i => i.WardId );
+
+                return await RetrieveListResults<Ward, WardModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

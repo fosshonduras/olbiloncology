@@ -21,8 +21,9 @@ namespace OLBIL.OncologyApplication.PatientPhysicalRecords.Queries
             {
                 Expression<Func<PatientPhysicalRecord, bool>> predicate = i => EF.Functions.ILike(i.RecordNumber, $"%{request.SearchTerm}%")
                                             || EF.Functions.ILike(i.RecordStorageLocation.Name, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<PatientPhysicalRecord>(i => i.PatientPhysicalRecordId);
 
-                return await RetrieveSearchResults<PatientPhysicalRecord, PatientPhysicalRecordModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<PatientPhysicalRecord, PatientPhysicalRecordModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

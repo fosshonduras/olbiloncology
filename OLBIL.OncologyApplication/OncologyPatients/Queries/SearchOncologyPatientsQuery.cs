@@ -27,8 +27,9 @@ namespace OLBIL.OncologyApplication.OncologyPatients.Queries
                                           || EF.Functions.ILike(i.Person.AdditionalLastName, $"%{request.SearchTerm}%")
                                           || EF.Functions.ILike(i.Person.PreferredName, $"%{request.SearchTerm}%")
                                           || EF.Functions.ILike(i.Person.GovernmentIDNumber, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<OncologyPatient>(i => i.OncologyPatientId);
 
-                return await RetrieveSearchResults<OncologyPatient, OncologyPatientModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<OncologyPatient, OncologyPatientModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

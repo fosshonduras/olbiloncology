@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.Diagnosiss.Queries
 
             public async Task<ListModel<DiagnosisModel>> Handle(GetDiagnosesListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<Diagnosis, DiagnosisModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<Diagnosis>(i => i.DiagnosisId);
+
+                return await RetrieveListResults<Diagnosis, DiagnosisModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

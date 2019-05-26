@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.Countries.Queries
 
             public async Task<ListModel<CountryModel>> Handle(GetCountriesListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<Country, CountryModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<Country>(i => i.CountryId);
+
+                return await RetrieveListResults<Country, CountryModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

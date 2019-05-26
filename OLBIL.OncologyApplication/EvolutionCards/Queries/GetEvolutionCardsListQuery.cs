@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.EvolutionCards.Queries
 
             public async Task<ListModel<EvolutionCardModel>> Handle(GetEvolutionCardsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<EvolutionCard, EvolutionCardModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<EvolutionCard>(i => i.EvolutionCardId);
+
+                return await RetrieveListResults<EvolutionCard, EvolutionCardModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

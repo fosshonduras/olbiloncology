@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.HospitalUnits.Queries
 
             public async Task<ListModel<HospitalUnitModel>> Handle(GetHospitalUnitsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<HospitalUnit, HospitalUnitModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<HospitalUnit>(i => i.HospitalUnitId);
+
+                return await RetrieveListResults<HospitalUnit, HospitalUnitModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

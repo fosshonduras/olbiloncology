@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using OLBIL.OncologyApplication.Infrastructure;
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
+using OLBIL.OncologyDomain.Entities;
 using System;
 using System.Linq.Expressions;
 using System.Threading;
@@ -19,12 +20,13 @@ namespace OLBIL.OncologyApplication.Countries.Queries
 
             public async Task<ListModel<CountryModel>> Handle(SearchCountriesQuery request, CancellationToken cancellationToken)
             {
-                Expression<Func<CountryModel, bool>> predicate = i => EF.Functions.ILike(i.NameEn, $"%{request.SearchTerm}%")
+                Expression<Func<Country, bool>> predicate = i => EF.Functions.ILike(i.NameEn, $"%{request.SearchTerm}%")
                                      || EF.Functions.ILike(i.NameEs, $"%{request.SearchTerm}%")
                                      || EF.Functions.ILike(i.ISOCode2, $"%{request.SearchTerm}%")
                                      || EF.Functions.ILike(i.ISOCode3, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<Country>(i => i.CountryId);
 
-                return await RetrieveSearchResults<CountryModel, CountryModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<Country, CountryModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

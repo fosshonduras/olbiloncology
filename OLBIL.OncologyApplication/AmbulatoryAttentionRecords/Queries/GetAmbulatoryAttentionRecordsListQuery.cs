@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using OLBIL.OncologyApplication.Infrastructure;
+using OLBIL.OncologyApplication.Infrastructure.EF;
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyDomain.Entities;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +19,8 @@ namespace OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Queries
 
             public async Task<ListModel<AmbulatoryAttentionRecordModel>> Handle(GetAmbulatoryAttentionRecordsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<AmbulatoryAttentionRecord, AmbulatoryAttentionRecordModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<AmbulatoryAttentionRecord>(i => i.AmbulatoryAttentionRecordId);
+                return await RetrieveListResults<AmbulatoryAttentionRecord, AmbulatoryAttentionRecordModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

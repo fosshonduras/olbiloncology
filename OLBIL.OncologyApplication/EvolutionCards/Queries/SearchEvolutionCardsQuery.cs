@@ -23,8 +23,9 @@ namespace OLBIL.OncologyApplication.EvolutionCards.Queries
                 Expression<Func<EvolutionCard, bool>> predicate = i => EF.Functions.ILike(i.Observations, $"%{request.SearchTerm}%")
                                      || EF.Functions.ILike(i.ReferredTo, $"%{request.SearchTerm}%")
                                      || EF.Functions.ILike(i.Directions, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<EvolutionCard>(i => i.EvolutionCardId);
 
-                return await RetrieveSearchResults<EvolutionCard, EvolutionCardModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<EvolutionCard, EvolutionCardModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

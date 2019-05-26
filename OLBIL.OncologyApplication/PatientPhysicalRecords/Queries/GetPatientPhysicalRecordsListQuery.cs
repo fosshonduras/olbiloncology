@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.PatientPhysicalRecords.Queries
 
             public async Task<ListModel<PatientPhysicalRecordModel>> Handle(GetPatientPhysicalRecordsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<PatientPhysicalRecord, PatientPhysicalRecordModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<PatientPhysicalRecord>(i => i.PatientPhysicalRecordId);
+
+                return await RetrieveListResults<PatientPhysicalRecord, PatientPhysicalRecordModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

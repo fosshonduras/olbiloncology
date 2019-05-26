@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.MedicalSpecialties.Queries
 
             public async Task<ListModel<MedicalSpecialtyModel>> Handle(GetMedicalSpecialtiesListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<MedicalSpecialty,MedicalSpecialtyModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<MedicalSpecialty>(i => i.MedicalSpecialtyId);
+
+                return await RetrieveListResults<MedicalSpecialty,MedicalSpecialtyModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

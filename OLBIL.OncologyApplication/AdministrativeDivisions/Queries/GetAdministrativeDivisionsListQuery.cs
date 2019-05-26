@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using OLBIL.OncologyApplication.Infrastructure;
+using OLBIL.OncologyApplication.Infrastructure.EF;
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
 using OLBIL.OncologyDomain.Entities;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +20,9 @@ namespace OLBIL.OncologyApplication.AdministrativeDivisions.Queries
 
             public async Task<ListModel<AdministrativeDivisionModel>> Handle(GetAdministrativeDivisionsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<AdministrativeDivision, AdministrativeDivisionModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<AdministrativeDivision>(i => i.AdministrativeDivisionId);
+
+                return await RetrieveListResults<AdministrativeDivision, AdministrativeDivisionModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

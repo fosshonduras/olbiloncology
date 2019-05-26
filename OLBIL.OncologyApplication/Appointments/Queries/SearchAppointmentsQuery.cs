@@ -22,8 +22,9 @@ namespace OLBIL.OncologyApplication.Appointments.Queries
             {
                 Expression<Func<Appointment, bool>> predicate = i => EF.Functions.ILike(i.Notes, $"%{request.SearchTerm}%")
                                         || EF.Functions.ILike(i.SpecialNotes, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<Appointment>(i => i.AppointmentId);
 
-                return await RetrieveSearchResults<Appointment, AppointmentModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<Appointment, AppointmentModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

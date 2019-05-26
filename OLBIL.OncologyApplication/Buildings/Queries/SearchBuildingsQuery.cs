@@ -22,8 +22,9 @@ namespace OLBIL.OncologyApplication.Buildings.Queries
             {
                 Expression<Func<Building, bool>> predicate = i => EF.Functions.ILike(i.Name, $"%{request.SearchTerm}%")
                                          || EF.Functions.ILike(i.Code, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<Building>(i => i.BuildingId);
 
-                return await RetrieveSearchResults<Building, BuildingModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<Building, BuildingModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

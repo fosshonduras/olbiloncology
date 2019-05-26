@@ -24,8 +24,9 @@ namespace OLBIL.OncologyApplication.Diagnosiss.Queries
                                          EF.Functions.ILike(i.ICDCode, $"%{request.SearchTerm}%")
                                          || EF.Functions.ILike(i.CompleteDescriptor, $"%{request.SearchTerm}%")
                                          || EF.Functions.ILike(i.ShortDescriptor, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<Diagnosis>(i => i.DiagnosisId);
 
-                return await RetrieveSearchResults<Diagnosis, DiagnosisModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<Diagnosis, DiagnosisModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

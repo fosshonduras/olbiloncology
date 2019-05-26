@@ -21,8 +21,9 @@ namespace OLBIL.OncologyApplication.MedicalSpecialties.Queries
             public async Task<ListModel<MedicalSpecialtyModel>> Handle(SearchMedicalSpecialtiesQuery request, CancellationToken cancellationToken)
             {
                 Expression<Func<MedicalSpecialty, bool>> predicate = i => EF.Functions.ILike(i.Description, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<MedicalSpecialty>(i => i.MedicalSpecialtyId);
 
-                return await RetrieveSearchResults<MedicalSpecialty, MedicalSpecialtyModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<MedicalSpecialty, MedicalSpecialtyModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

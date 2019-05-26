@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.PhysicalRecordTransfers.Queries
 
             public async Task<ListModel<PhysicalRecordTransferModel>> Handle(GetPhysicalRecordTransfersListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<PhysicalRecordTransfer, PhysicalRecordTransferModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<PhysicalRecordTransfer>(i => i.PhysicalRecordTransferId);
+
+                return await RetrieveListResults<PhysicalRecordTransfer, PhysicalRecordTransferModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

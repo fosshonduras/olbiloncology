@@ -21,8 +21,9 @@ namespace OLBIL.OncologyApplication.AppointmentReasons.Queries
             public async Task<ListModel<AppointmentReasonModel>> Handle(SearchAppointmentReasonsQuery request, CancellationToken cancellationToken)
             {
                 Expression<Func<AppointmentReason, bool>> predicate = i => EF.Functions.ILike(i.Description, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<AppointmentReason>(i => i.AppointmentReasonId);
 
-                return await RetrieveSearchResults<AppointmentReason, AppointmentReasonModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<AppointmentReason, AppointmentReasonModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

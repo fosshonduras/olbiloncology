@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using OLBIL.OncologyApplication.Infrastructure.EF;
 using OLBIL.OncologyApplication.Interfaces;
 using OLBIL.OncologyApplication.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -19,14 +21,23 @@ namespace OLBIL.OncologyApplication.Infrastructure
             return Context.Set<T>().Where(predicate);
         }
 
-        protected async Task<ListModel<TResult>> RetrieveSearchResults<TSource, TResult>(Expression<Func<TSource, bool>> predicate, SearchBase request, CancellationToken cancellationToken)
+        protected async Task<ListModel<TResult>> RetrieveSearchResults<TSource, TResult>(
+                Expression<Func<TSource, bool>> predicate,
+                List<SortTuple<TSource>> orderFunctions,
+                SearchBase request, CancellationToken cancellationToken
+            )
             where TSource : class
             where TResult : class
         {
             var filteredQuery = ApplyFilters(predicate);
-            var count = await filteredQuery.CountAsync();
-            var pagedQuery = ApplyPaging(request, filteredQuery);
-            return await ProjectTo<TSource, TResult>(pagedQuery,  request, count, cancellationToken);
+            var count = filteredQuery.CountAsync();
+            var sortedQuery = filteredQuery;
+            if (orderFunctions != null)
+            {
+                sortedQuery = ApplyOrdering(filteredQuery, orderFunctions);
+            }
+            var pagedQuery = ApplyPaging(request, sortedQuery);
+            return await ProjectTo<TSource, TResult>(pagedQuery, await count, cancellationToken);
         }
     }
 }

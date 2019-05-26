@@ -17,7 +17,9 @@ namespace OLBIL.OncologyApplication.HealthProfessionals.Queries
 
             public async Task<ListModel<HealthProfessionalModel>> Handle(GetHealthProfessionalsListQuery request, CancellationToken cancellationToken)
             {
-                return await RetrieveListResults<HealthProfessional, HealthProfessionalModel>(null, request, cancellationToken);
+                var defaultSort = BuildSortList<HealthProfessional>(i => i.HealthProfessionalId);
+
+                return await RetrieveListResults<HealthProfessional, HealthProfessionalModel>(null, defaultSort, request, cancellationToken);
             }
         }
     }

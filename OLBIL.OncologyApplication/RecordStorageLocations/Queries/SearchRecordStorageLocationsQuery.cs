@@ -20,8 +20,9 @@ namespace OLBIL.OncologyApplication.RecordStorageLocations.Queries
             public async Task<ListModel<RecordStorageLocationModel>> Handle(SearchRecordStorageLocationsQuery request, CancellationToken cancellationToken)
             {
                 Expression<Func<RecordStorageLocation, bool>> predicate = i => EF.Functions.ILike(i.Name, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<RecordStorageLocation>(i => i.RecordStorageLocationId);
 
-                return await RetrieveSearchResults<RecordStorageLocation, RecordStorageLocationModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<RecordStorageLocation, RecordStorageLocationModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }

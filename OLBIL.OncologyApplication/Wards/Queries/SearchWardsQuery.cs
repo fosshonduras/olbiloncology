@@ -21,8 +21,9 @@ namespace OLBIL.OncologyApplication.Wards.Queries
             public async Task<ListModel<WardModel>> Handle(SearchWardsQuery request, CancellationToken cancellationToken)
             {
                 Expression<Func<Ward, bool>> predicate = i => EF.Functions.ILike(i.Name, $"%{request.SearchTerm}%");
+                var defaultSort = BuildSortList<Ward>(i => i.WardId);
 
-                return await RetrieveSearchResults<Ward, WardModel>(predicate, request, cancellationToken);
+                return await RetrieveSearchResults<Ward, WardModel>(predicate, defaultSort, request, cancellationToken);
             }
         }
     }
