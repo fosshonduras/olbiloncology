@@ -194,8 +194,8 @@ export class AmbulatoryAttentionReportComponent implements OnInit {
   }
 
   onPageChanged(newPage: number) {
-    this.getParams.pageIndex = newPage;
-    this.retrieveData();
+    this.searchParams.pageIndex = newPage;
+    this.loadReport();
   }
 
   onGridReady(params) {
