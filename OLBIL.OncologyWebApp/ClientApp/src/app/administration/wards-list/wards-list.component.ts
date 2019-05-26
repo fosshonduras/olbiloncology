@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { WardsClient, WardModel } from '../../api-clients';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridOptions, ColumnApi, GridApi } from 'ag-grid-community';
 import { GetParams } from '../../common/GetParams';
 
 @Component({
@@ -18,7 +18,15 @@ export class WardsListComponent implements OnInit {
     resizable: true
   };
 
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    defaultColDef: {
+      resizable: true
+    },
+    suppressColumnVirtualisation: true
+  };
+  gridApi: GridApi;
+  gridColumnApi: ColumnApi;
+
   columnDefs: ColDef[] = [
     { headerName: 'Sala ID', field: 'wardId' },
     {
@@ -54,13 +62,31 @@ export class WardsListComponent implements OnInit {
         this.rowData = result.items;
         this.isLoading = false;
         this.getParams.totalCount = result.totalCount;
+        this.autoSizeAll();
       }, err => {
         console.log(err);
       })
   }
 
+  autoSizeAll() {
+    if (this.gridColumnApi) {
+      this.gridColumnApi.autoSizeAllColumns();
+    }
+  }
+
   onPageChanged(newPage: number) {
     this.getParams.pageIndex = newPage;
     this.retrieveData();
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  firstDataRendered(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridColumnApi.autoSizeAllColumns();
   }
 }

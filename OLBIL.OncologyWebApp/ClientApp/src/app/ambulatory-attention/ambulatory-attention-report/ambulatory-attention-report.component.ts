@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HealthProfessionalModel, OncologyPatientModel, DiagnosisModel, AmbulatoryAttentionRecordModel, AmbulatoryAttentionRecordsClient, FilterSpec, DiagnosesClient, HealthProfessionalsClient, OncologyPatientsClient, AT1ReportItemDTO } from '../../api-clients';
-import { GridOptions, ColDef } from 'ag-grid-community';
+import { GridOptions, ColDef, ColumnApi, GridApi } from 'ag-grid-community';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { SearchParams } from '../../common/SearchParams';
 import { Observable, of } from 'rxjs';
@@ -38,7 +38,15 @@ export class AmbulatoryAttentionReportComponent implements OnInit {
     resizable: true
   };
 
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    defaultColDef: {
+      resizable: true
+    },
+    suppressColumnVirtualisation: true
+  };
+  gridApi: GridApi;
+  gridColumnApi: ColumnApi;
+
   columnDefs: ColDef[] = [
     {
       headerName: 'Registro de AT-1 ID', field: 'ambulatoryAttentionRecordId',
@@ -173,9 +181,32 @@ export class AmbulatoryAttentionReportComponent implements OnInit {
         this.rowData = result.items;
         this.isLoadingReport = false;
         this.searchParams.totalCount = result.totalCount;
+        this.autoSizeAll();
       }, err => {
         console.log(err);
       })
+  }
+
+  autoSizeAll() {
+    if (this.gridColumnApi) {
+      this.gridColumnApi.autoSizeAllColumns();
+    }
+  }
+
+  onPageChanged(newPage: number) {
+    this.getParams.pageIndex = newPage;
+    this.retrieveData();
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  firstDataRendered(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridColumnApi.autoSizeAllColumns();
   }
 
   buildFilters(): { [key: string]: FilterSpec } {
@@ -200,10 +231,5 @@ export class AmbulatoryAttentionReportComponent implements OnInit {
     }
 
     return newFilters;
-  }
-
-  onPageChanged(newPage: number) {
-    this.searchParams.pageIndex = newPage;
-    this.loadReport();
   }
 }

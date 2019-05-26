@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { OncologyPatientsClient } from '../../api-clients';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridOptions, ColumnApi, GridApi } from 'ag-grid-community';
 import { GetParams } from '../../common/GetParams';
 import { renderDate } from '../../common/AgGridRenderers';
 
@@ -18,7 +18,15 @@ export class PatientsListComponent implements OnInit {
     resizable: true
   };
 
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    defaultColDef: {
+      resizable: true
+    },
+    suppressColumnVirtualisation: true
+  };
+  gridApi: GridApi;
+  gridColumnApi: ColumnApi;
+
   columnDefs: ColDef[] = [
     {
       headerName: 'Identidad Nacional', field: 'governmentIDNumber',
@@ -46,6 +54,10 @@ export class PatientsListComponent implements OnInit {
 
   }
 
+  ngOnInit() {
+    this.getRegistered();
+  }
+
   getRegistered() {
     this.retrieveData();
   }
@@ -60,11 +72,16 @@ export class PatientsListComponent implements OnInit {
         });
         this.isLoading = false;
         this.getParams.totalCount = result.totalCount;
-      }, error => console.error(error));
+        this.autoSizeAll();
+      }, err => {
+        console.log(err);
+      })
   }
 
-  ngOnInit() {
-    this.getRegistered();
+  autoSizeAll() {
+    if (this.gridColumnApi) {
+      this.gridColumnApi.autoSizeAllColumns();
+    }
   }
 
   onPageChanged(newPage: number) {
@@ -72,4 +89,14 @@ export class PatientsListComponent implements OnInit {
     this.retrieveData();
   }
 
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  firstDataRendered(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridColumnApi.autoSizeAllColumns();
+  }
 }

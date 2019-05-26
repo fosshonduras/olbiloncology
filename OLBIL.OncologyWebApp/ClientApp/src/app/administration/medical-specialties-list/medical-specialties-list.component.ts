@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GridOptions, ColDef } from 'ag-grid-community';
+import { GridOptions, ColDef, ColumnApi, GridApi } from 'ag-grid-community';
 import { MedicalSpecialtyModel, MedicalSpecialtiesClient } from '../../api-clients';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { GetParams } from '../../common/GetParams';
@@ -18,7 +18,15 @@ export class MedicalSpecialtiesListComponent implements OnInit {
     resizable: true
   };
 
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    defaultColDef: {
+      resizable: true
+    },
+    suppressColumnVirtualisation: true
+  };
+  gridApi: GridApi;
+  gridColumnApi: ColumnApi;
+
   columnDefs: ColDef[] = [
     { headerName: 'Especialidad Médica ID', field: 'medicalSpecialtyId' },
     {
@@ -49,13 +57,31 @@ export class MedicalSpecialtiesListComponent implements OnInit {
         this.rowData = result.items;
         this.isLoading = false;
         this.getParams.totalCount = result.totalCount;
+        this.autoSizeAll();
       }, err => {
         console.log(err);
       })
   }
 
+  autoSizeAll() {
+    if (this.gridColumnApi) {
+      this.gridColumnApi.autoSizeAllColumns();
+    }
+  }
+
   onPageChanged(newPage: number) {
     this.getParams.pageIndex = newPage;
     this.retrieveData();
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  firstDataRendered(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridColumnApi.autoSizeAllColumns();
   }
 }

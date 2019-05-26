@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from 'src/app/helper-components/LinkRendererComponent';
 import { BuildingModel, BuildingsClient } from 'src/app/api-clients';
-import { GridOptions, ColDef } from 'ag-grid-community';
+import { GridOptions, ColDef, ColumnApi, GridApi } from 'ag-grid-community';
 import { GetParams } from '../../common/GetParams';
 
 @Component({
@@ -18,7 +18,15 @@ export class BuildingsListComponent implements OnInit {
     resizable: true
   };
 
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    defaultColDef: {
+      resizable: true
+    },
+    suppressColumnVirtualisation: true
+  };
+  gridApi: GridApi;
+  gridColumnApi: ColumnApi;
+
   columnDefs: ColDef[] = [
     { headerName: 'Edificio ID', field: 'buildingId' },
     {
@@ -50,9 +58,16 @@ export class BuildingsListComponent implements OnInit {
         this.rowData = result.items;
         this.isLoading = false;
         this.getParams.totalCount = result.totalCount;
+        this.autoSizeAll();
       }, err => {
         console.log(err);
       })
+  }
+
+  autoSizeAll() {
+    if (this.gridColumnApi) {
+      this.gridColumnApi.autoSizeAllColumns();
+    }
   }
 
   onPageChanged(newPage: number) {
@@ -60,4 +75,14 @@ export class BuildingsListComponent implements OnInit {
     this.retrieveData();
   }
 
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  firstDataRendered(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridColumnApi.autoSizeAllColumns();
+  }
 }

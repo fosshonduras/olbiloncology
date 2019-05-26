@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { RecordStorageLocationsClient, RecordStorageLocationModel } from '../../api-clients';
-import { GridOptions, ColDef } from 'ag-grid-community';
+import { GridOptions, ColDef, ColumnApi, GridApi } from 'ag-grid-community';
 import { GetParams } from '../../common/GetParams';
 
 @Component({
@@ -18,7 +18,15 @@ export class RecordStorageLocationsListComponent implements OnInit {
     resizable: true
   };
 
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    defaultColDef: {
+      resizable: true
+    },
+    suppressColumnVirtualisation: true
+  };
+  gridApi: GridApi;
+  gridColumnApi: ColumnApi;
+
   columnDefs: ColDef[] = [
     { headerName: 'Ubicacion ID', field: 'recordStorageLocationId' },
     {
@@ -51,13 +59,31 @@ export class RecordStorageLocationsListComponent implements OnInit {
         this.rowData = result.items;
         this.isLoading = false;
         this.getParams.totalCount = result.totalCount;
+        this.autoSizeAll();
       }, err => {
         console.log(err);
       })
   }
 
+  autoSizeAll() {
+    if (this.gridColumnApi) {
+      this.gridColumnApi.autoSizeAllColumns();
+    }
+  }
+
   onPageChanged(newPage: number) {
     this.getParams.pageIndex = newPage;
     this.retrieveData();
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  firstDataRendered(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridColumnApi.autoSizeAllColumns();
   }
 }

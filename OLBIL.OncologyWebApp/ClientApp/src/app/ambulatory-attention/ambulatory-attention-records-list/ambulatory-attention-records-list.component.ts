@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AmbulatoryAttentionRecordModel, AmbulatoryAttentionRecordsClient } from '../../api-clients';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
-import { GridOptions, ColDef } from 'ag-grid-community';
+import { GridOptions, ColDef, ColumnApi, GridApi } from 'ag-grid-community';
 import { GetParams } from '../../common/GetParams';
 import { renderYesNo, renderDate } from '../../common/AgGridRenderers';
 
@@ -19,7 +19,15 @@ export class AmbulatoryAttentionRecordsListComponent implements OnInit {
     resizable: true
   };
 
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    defaultColDef: {
+      resizable: true
+    },
+    suppressColumnVirtualisation: true
+  };
+  gridApi: GridApi;
+  gridColumnApi: ColumnApi;
+
   columnDefs: ColDef[] = [
     {
       headerName: 'Registro de AT-1 ID', field: 'ambulatoryAttentionRecordId'
@@ -70,13 +78,31 @@ export class AmbulatoryAttentionRecordsListComponent implements OnInit {
         this.rowData = result.items;
         this.isLoading = false;
         this.getParams.totalCount = result.totalCount;
+        this.autoSizeAll();
       }, err => {
         console.log(err);
       })
   }
 
+  autoSizeAll() {
+    if (this.gridColumnApi) {
+      this.gridColumnApi.autoSizeAllColumns();
+    }
+  }
+
   onPageChanged(newPage: number) {
     this.getParams.pageIndex = newPage;
     this.retrieveData();
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  firstDataRendered(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridColumnApi.autoSizeAllColumns();
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppointmentModel, AppointmentsClient } from '../../api-clients';
 import { GetParams } from '../../common/GetParams';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridOptions, GridApi, ColumnApi } from 'ag-grid-community';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { renderDate, renderYesNo } from '../../common/AgGridRenderers';
 
@@ -19,7 +19,15 @@ export class AppointmentsListComponent implements OnInit {
     resizable: true
   };
 
-  gridOptions: GridOptions = {};
+  gridOptions: GridOptions = {
+    defaultColDef: {
+      resizable: true
+    },
+    suppressColumnVirtualisation: true
+  };
+  gridApi: GridApi;
+  gridColumnApi: ColumnApi;
+
   columnDefs: ColDef[] = [
     {
       headerName: 'Cita ID', field: 'appointmentId',
@@ -65,13 +73,31 @@ export class AppointmentsListComponent implements OnInit {
         this.rowData = result.items;
         this.isLoading = false;
         this.getParams.totalCount = result.totalCount;
+        this.autoSizeAll();
       }, err => {
         console.log(err);
       })
   }
 
+  autoSizeAll() {
+    if (this.gridColumnApi) {
+      this.gridColumnApi.autoSizeAllColumns();
+    }
+  }
+
   onPageChanged(newPage: number) {
     this.getParams.pageIndex = newPage;
     this.retrieveData();
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  firstDataRendered(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridColumnApi.autoSizeAllColumns();
   }
 }

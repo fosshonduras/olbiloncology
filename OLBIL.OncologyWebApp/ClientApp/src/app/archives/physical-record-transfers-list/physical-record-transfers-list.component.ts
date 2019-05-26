@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PhysicalRecordTransfersClient, PhysicalRecordTransferModel } from '../../api-clients';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridOptions, GridApi, ColumnApi } from 'ag-grid-community';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { GetParams } from '../../common/GetParams';
 import { renderDate } from '../../common/AgGridRenderers';
@@ -15,11 +15,15 @@ export class PhysicalRecordTransfersListComponent implements OnInit {
   rowData: PhysicalRecordTransferModel[] = [];
   getParams: GetParams = new GetParams();
 
-  defaultColDef: ColDef = {
-    resizable: true
+  gridOptions: GridOptions = {
+    defaultColDef: {
+      resizable: true
+    },
+    suppressColumnVirtualisation: true
   };
+  gridApi: GridApi;
+  gridColumnApi: ColumnApi;
 
-  gridOptions: GridOptions = {};
   columnDefs: ColDef[] = [
     { headerName: 'Transferencia ID', field: 'physicalRecordTransferId' },
     { headerName: 'Expendiente ID', field: 'patientPhysicalRecordNumber',
@@ -56,13 +60,32 @@ export class PhysicalRecordTransfersListComponent implements OnInit {
         this.rowData = result.items;
         this.isLoading = false;
         this.getParams.totalCount = result.totalCount;
+
+        this.autoSizeAll();
       }, err => {
         console.log(err);
       })
   }
 
+  autoSizeAll() {
+    if (this.gridColumnApi) {
+      this.gridColumnApi.autoSizeAllColumns();
+    }
+  }
+
   onPageChanged(newPage: number) {
     this.getParams.pageIndex = newPage;
     this.retrieveData();
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+
+  firstDataRendered(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridColumnApi.autoSizeAllColumns();
   }
 }
