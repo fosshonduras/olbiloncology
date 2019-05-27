@@ -21,11 +21,11 @@ namespace OLBIL.OncologyApplication.AdministrativeDivisions.Commands
             public async Task<int> Handle(CreateAdministrativeDivisionCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var ward = await Context.AdministrativeDivisions
+                var item = await Context.AdministrativeDivisions
                     .Where(p => p.AdministrativeDivisionId == model.AdministrativeDivisionId)
                     .FirstOrDefaultAsync(cancellationToken);
 
-                ThrowAlreadyExistsExceptionIfNull(model, ward);
+                ThrowAlreadyExistsExceptionIfNull(model, item);
 
                 var newRecord = new AdministrativeDivision
                 {

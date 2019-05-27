@@ -23,10 +23,10 @@ namespace OLBIL.OncologyApplication.Buildings.Commands
             public async Task<int> Handle(CreateBuildingCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var building = await Context.Buildings
+                var item = await Context.Buildings
                     .Where(p => p.Code == model.Code)
                     .FirstOrDefaultAsync(cancellationToken);
-                if (building != null)
+                if (item != null)
                 {
                     throw new AlreadyExistsException(nameof(Building), nameof(model.Code), model.Code);
                 }

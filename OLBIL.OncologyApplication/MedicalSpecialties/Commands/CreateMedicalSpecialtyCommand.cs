@@ -23,10 +23,10 @@ namespace OLBIL.OncologyApplication.MedicalSpecialties.Commands
             public async Task<int> Handle(CreateMedicalSpecialtyCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var ward = await Context.MedicalSpecialties
+                var item = await Context.MedicalSpecialties
                     .Where(p => p.MedicalSpecialtyId == model.MedicalSpecialtyId)
                     .FirstOrDefaultAsync(cancellationToken);
-                if (ward != null)
+                if (item != null)
                 {
                     throw new AlreadyExistsException(nameof(MedicalSpecialty), nameof(model.MedicalSpecialtyId), model.MedicalSpecialtyId);
                 }

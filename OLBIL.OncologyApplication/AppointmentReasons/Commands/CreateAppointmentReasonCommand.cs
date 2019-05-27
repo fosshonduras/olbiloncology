@@ -23,10 +23,10 @@ namespace OLBIL.OncologyApplication.AppointmentReasons.Commands
             public async Task<int> Handle(CreateAppointmentReasonCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var ward = await Context.AppointmentReasons
+                var item = await Context.AppointmentReasons
                     .Where(p => p.AppointmentReasonId == model.AppointmentReasonId)
                     .FirstOrDefaultAsync(cancellationToken);
-                if (ward != null)
+                if (item != null)
                 {
                     throw new AlreadyExistsException(nameof(AppointmentReason), nameof(model.AppointmentReasonId), model.AppointmentReasonId);
                 }

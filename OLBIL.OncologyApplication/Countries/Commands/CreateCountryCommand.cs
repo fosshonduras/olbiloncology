@@ -23,10 +23,10 @@ namespace OLBIL.OncologyApplication.Countries.Commands
             public async Task<int> Handle(CreateCountryCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var ward = await Context.Countries
+                var item = await Context.Countries
                     .Where(p => p.CountryId == model.CountryId)
                     .FirstOrDefaultAsync(cancellationToken);
-                if (ward != null)
+                if (item != null)
                 {
                     throw new AlreadyExistsException(nameof(Country), nameof(model.CountryId), model.CountryId);
                 }

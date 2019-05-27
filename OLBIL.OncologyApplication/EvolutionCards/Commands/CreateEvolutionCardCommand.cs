@@ -23,10 +23,10 @@ namespace OLBIL.OncologyApplication.EvolutionCards.Commands
             public async Task<int> Handle(CreateEvolutionCardCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var ward = await Context.EvolutionCards
+                var item = await Context.EvolutionCards
                     .Where(p => p.EvolutionCardId == model.EvolutionCardId)
                     .FirstOrDefaultAsync(cancellationToken);
-                if (ward != null)
+                if (item != null)
                 {
                     throw new AlreadyExistsException(nameof(EvolutionCard), nameof(model.EvolutionCardId), model.EvolutionCardId);
                 }

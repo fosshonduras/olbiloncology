@@ -23,10 +23,10 @@ namespace OLBIL.OncologyApplication.Diagnosiss.Commands
             public async Task<int> Handle(CreateDiagnosisCommand request, CancellationToken cancellationToken)
             {
                 var model = request.Model;
-                var ward = await Context.Diagnoses
+                var item = await Context.Diagnoses
                     .Where(p => p.DiagnosisId == model.DiagnosisId)
                     .FirstOrDefaultAsync(cancellationToken);
-                if (ward != null)
+                if (item != null)
                 {
                     throw new AlreadyExistsException(nameof(Diagnosis), nameof(model.DiagnosisId), model.DiagnosisId);
                 }
