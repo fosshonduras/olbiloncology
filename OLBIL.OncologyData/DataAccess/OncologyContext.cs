@@ -33,6 +33,10 @@ namespace OLBIL.OncologyData
         public DbSet<AmbulatoryAttentionRecord> AmbulatoryAttentionRecords { get; set; }
         public DbSet<RecordStorageLocation> RecordStorageLocations { get; set; }
         public DbSet<PhysicalRecordTransfer> PhysicalRecordTransfers { get; set; }
+        public DbSet<BloodTransfusion> BloodTransfusions { get; set; }
+        public DbSet<TransfusionProductDetail> TransfusionProductDetails { get; set; }
+        public DbSet<TransfusionVitalSignsDetail> TransfusionVitalSignsDetails { get; set; }
+        public DbSet<TransfusionPhase> TransfusionPhases { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

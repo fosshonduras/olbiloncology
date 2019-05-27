@@ -26,7 +26,10 @@ namespace OLBIL.OncologyApplication.Interfaces
         DbSet<AmbulatoryAttentionRecord> AmbulatoryAttentionRecords { get; set; }
         DbSet<RecordStorageLocation> RecordStorageLocations { get; set; }
         DbSet<PhysicalRecordTransfer> PhysicalRecordTransfers { get; set; }
-
+        DbSet<BloodTransfusion> BloodTransfusions { get; set; }
+        DbSet<TransfusionProductDetail> TransfusionProductDetails { get; set; }
+        DbSet<TransfusionVitalSignsDetail> TransfusionVitalSignsDetails { get; set; }
+        DbSet<TransfusionPhase> TransfusionPhases { get; set; }
 
         DbSet<T> Set<T>() where T: class;
 

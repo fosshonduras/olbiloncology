@@ -8,6 +8,7 @@ namespace OLBIL.OncologyDomain.Entities
         public OncologyPatient()
         {
             Appointments = new HashSet<Appointment>();
+            BloodTransfusions = new HashSet<BloodTransfusion>();
         }
 
         public int OncologyPatientId { get; set; }
@@ -24,5 +25,6 @@ namespace OLBIL.OncologyDomain.Entities
         public virtual ICollection<EvolutionCard> EvolutionCards { get; set; }
         public virtual Diagnosis MainDiagnosis { get; set; }
         public virtual PatientPhysicalRecord PatientPhysicalRecord { get; set; }
+        public virtual ICollection<BloodTransfusion> BloodTransfusions { get; set; }
     }
 }

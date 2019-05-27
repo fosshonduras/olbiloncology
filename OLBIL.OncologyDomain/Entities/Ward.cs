@@ -8,6 +8,7 @@ namespace OLBIL.OncologyDomain.Entities
         public Ward()
         {
             Beds = new HashSet<Bed>();
+            BloodTransfusions = new HashSet<BloodTransfusion>();
         }
 
         public int WardId { get; set; }
@@ -21,5 +22,6 @@ namespace OLBIL.OncologyDomain.Entities
         public virtual Building Building { get; set; }
         public virtual HospitalUnit Unit { get; set; }
         public virtual ICollection<Bed> Beds { get; set; }
+        public virtual ICollection<BloodTransfusion> BloodTransfusions { get; set; }
     }
 }
