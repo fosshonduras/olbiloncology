@@ -18,6 +18,8 @@ using OLBIL.OncologyApplication.Interfaces;
 using System.IO;
 using OLBIL.Common;
 using OLBIL.OncologyInfrastructure;
+using OLBIL.OncologyApplication.Infrastructure;
+using OLBIL.OncologyCrossCutting;
 
 namespace OLBIL.OncologyWebApp
 {
@@ -36,11 +38,13 @@ namespace OLBIL.OncologyWebApp
             // Add AutoMapper
             services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
-            services.AddTransient(typeof(IDateTimeProvider), typeof(SystemDateTime));
+            services.AddSingleton(typeof(IDateTimeProvider), typeof(SystemDateTime));
 
             // Add MediatR
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
-            services.AddMediatR(typeof(GetOncologyPatientsListQuery).GetTypeInfo().Assembly);    
+            services.AddMediatR(typeof(GetOncologyPatientsListQuery).GetTypeInfo().Assembly);
+            services.AddSingleton<IExcelFileExporter, ExcelFileExporter>();
+            services.AddSingleton<IDateTimeCalculationsDomainService, DateTimeCalculationsDomainService>();
 
             services.AddDbContext<IOncologyContext, OncologyContext>(
                     options => options.UseNpgsql(Configuration.GetConnectionString("ElephantDB"))

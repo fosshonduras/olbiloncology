@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HealthProfessionalModel, OncologyPatientModel, DiagnosisModel, AmbulatoryAttentionRecordModel, AmbulatoryAttentionRecordsClient, FilterSpec, DiagnosesClient, HealthProfessionalsClient, OncologyPatientsClient, AT1ReportItemDTO } from '../../api-clients';
+import { HealthProfessionalModel, OncologyPatientModel, DiagnosisModel, AmbulatoryAttentionRecordModel, AmbulatoryAttentionRecordsClient, FilterSpec, DiagnosesClient, HealthProfessionalsClient, OncologyPatientsClient, AT1ReportItemDTO, FileResponse } from '../../api-clients';
 import { GridOptions, ColDef, ColumnApi, GridApi } from 'ag-grid-community';
 import { LinkRendererComponent } from '../../helper-components/LinkRendererComponent';
 import { SearchParams } from '../../common/SearchParams';
@@ -207,6 +207,51 @@ export class AmbulatoryAttentionReportComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.gridColumnApi.autoSizeAllColumns();
+  }
+
+  exportToExcel($event) {
+    this.isLoadingReport = true;
+    this.searchParams.filters = this.buildFilters();
+    this.client
+      .getAmbulatoryAttentionReportFile(
+        this.searchParams.searchTerm, this.searchParams.filters,
+        this.searchParams.sortInfo, this.searchParams.pageIndex, this.searchParams.pageSize
+      )
+      .subscribe(result => {
+        let reportFile = result;
+        let filename = result.fileName;
+        
+        this.showFile(result);
+        this.isLoadingReport = false;
+
+      }, err => {
+        console.log(err);
+      })
+  }
+
+  private showFile(fileResponse : FileResponse) {
+    // It is necessary to create a new blob object with mime-type 
+    // explicitly set otherwise only Chrome works like it should
+    let newBlob = new Blob([fileResponse.data], { type: fileResponse.data.type });
+
+    // IE doesn't allow using a blob object directly as link href 
+    // instead it is necessary to use msSaveOrOpenBlob
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveOrOpenBlob(newBlob);
+      return;
+    }
+
+    // For other browsers: 
+    // Create a link pointing to the ObjectURL containing the blob.
+    let data = window.URL.createObjectURL(newBlob);
+    let link = document.createElement('a');
+    link.href = data;
+    link.download = fileResponse.fileName;
+    link.click();
+    setTimeout(() => {
+      // For Firefox it is necessary to delay revoking the ObjectURL
+      window.URL.revokeObjectURL(data);
+    }, 100);
   }
 
   buildFilters(): FilterSpec[] {

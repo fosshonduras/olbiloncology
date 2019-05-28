@@ -49,6 +49,7 @@
   </form>
 
   <div class="olbil-datagrid-container">
+    <button type="button" class="btn btn-info pull-right" *ngIf="rowData.length > 0" (click)="exportToExcel($event)"><span class="glyphicon glyphicon-download"></span>Exportar a Excel</button>
     <ag-grid-angular *ngIf="rowData.length > 0"
                      class="ag-theme-blue"
                      [rowData]="rowData"

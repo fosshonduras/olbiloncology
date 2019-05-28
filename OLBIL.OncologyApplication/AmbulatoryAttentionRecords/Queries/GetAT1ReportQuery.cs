@@ -30,17 +30,18 @@ namespace OLBIL.OncologyApplication.AmbulatoryAttentionRecords.Queries
             public async Task<ListModel<AT1ReportItemDTO>> Handle(GetAT1ReportQuery request, CancellationToken cancellationToken)
             {
                 FilterSpec healthProfessionalFilter = null;
-                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.HealthProfessionalId), out healthProfessionalFilter, caseSensitive: false);
-                
                 FilterSpec oncologyPatientFilter = null;
-                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.OncologyPatientId), out oncologyPatientFilter, caseSensitive: false);
-
                 FilterSpec dateFilter = null;
-                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.Date), out dateFilter, caseSensitive: false);
-
                 FilterSpec diagnosisFilter = null;
-                request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.DiagnosisId), out diagnosisFilter, caseSensitive: false);
-                
+
+                if (request.Filters != null)
+                {
+                    request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.HealthProfessionalId), out healthProfessionalFilter, caseSensitive: false);
+                    request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.OncologyPatientId), out oncologyPatientFilter, caseSensitive: false);
+                    request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.Date), out dateFilter, caseSensitive: false);
+                    request.Filters.TryGetValue(nameof(AmbulatoryAttentionRecord.DiagnosisId), out diagnosisFilter, caseSensitive: false);
+                }
+
                 int dateValueFilter = dateFilter == null? DateTime.Now.DayOfYear : DateTime.Parse(dateFilter.SearchTerm).DayOfYear;
                 Expression<Func<AmbulatoryAttentionRecord, bool>> predicate = i =>
                             (healthProfessionalFilter == null || i.HealthProfessionalId == int.Parse(healthProfessionalFilter.SearchTerm))
